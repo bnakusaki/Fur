@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "663808641554",
+    "project_id": "fur-petcare-72f58",
+    "storage_bucket": "fur-petcare-72f58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663808641554:android:69e889d27a0896f2ca26cb",
+        "android_client_info": {
+          "package_name": "com.fur.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1wZr7VI3wcDIrhFXXN8_ZTVpM40A8_SE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
