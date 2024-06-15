@@ -9,6 +9,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
+import 'package:fur/shared/widgets/app_snack_bar.dart';
 import 'package:fur/src/profile/presentation/bloc/profile_mixin.dart';
 import 'package:fur/src/profile/presentation/interface/screens/select_pet_type_screen.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,8 +30,10 @@ class AddProfilePictureScreen extends HookWidget with ProfileMixin {
         if (pickedFile != null) {
           profilePicture.value = pickedFile;
         }
-      } catch (e) {
-        debugPrint('Error picking image: $e');
+      } on Failure catch (e) {
+        if (context.mounted) {
+          AppSnackBar.error(context, e.code);
+        }
       }
     }
 
@@ -107,7 +110,9 @@ class AddProfilePictureScreen extends HookWidget with ProfileMixin {
                     );
                   }
                 } on Failure catch (e) {
-                  debugPrint('Error adding profile picture: $e');
+                  if (context.mounted) {
+                    AppSnackBar.error(context, e.code);
+                  }
                 }
               }),
             ).animate().fadeIn().slideY(begin: 0.1)

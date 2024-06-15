@@ -5,11 +5,12 @@ import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
-import 'package:fur/src/profile/presentation/interface/widgets/animal_card.dart';
+import 'package:fur/src/dog/entities/dog_breeds.dart';
+import 'package:fur/src/dog/presentation/interface/widgets/dog_breed_card.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectPetTypeScreen extends HookWidget {
-  const SelectPetTypeScreen({super.key});
+class SelectDogBreed extends HookWidget {
+  const SelectDogBreed({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +36,13 @@ class SelectPetTypeScreen extends HookWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                'What kind of pet do you own?',
+                'What is the breed of your dog?',
                 style: textStyles.h2,
               ),
               const SizedBox(height: 20),
               AppTextFormField(
                 controller: searchController,
-                hintText: 'Search pets',
+                hintText: 'Search breeds',
                 onChanged: (value) {
                   if (value!.trim().isEmpty) {
                     animationController.reverse();
@@ -69,13 +70,18 @@ class SelectPetTypeScreen extends HookWidget {
               Expanded(
                 child: GridView.count(
                   shrinkWrap: true,
-                  childAspectRatio: 0.8,
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  children: const [
-                    AnimalCard(),
-                  ].animate(interval: 250.milliseconds).fadeIn().scaleXY(begin: 0.9),
+                  childAspectRatio: 0.9,
+                  // crossAxisSpacing: 10,
+                  children: DogBreed.values
+                      .map(
+                        (breed) => DogBreedCard(breed: breed),
+                      )
+                      .toList()
+                      .animate(interval: 10.milliseconds)
+                      .fadeIn()
+                      .scaleXY(begin: 0.9),
                 ),
               ),
             ],

@@ -5,8 +5,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
 import 'package:fur/src/authentication/presentation/interface/screens/sign_in_screen.dart';
-import 'package:fur/src/authentication/presentation/interface/screens/sign_up_screen.dart';
-import 'package:fur/src/profile/presentation/interface/screens/add_profile_picture_screen.dart';
+import 'package:fur/src/profile/presentation/interface/screens/select_pet_type_screen.dart';
 import 'package:fur/src/profile/providers/retrieve_has_profile.dart';
 
 class Wrapper extends ConsumerWidget {
@@ -22,13 +21,13 @@ class Wrapper extends ConsumerWidget {
     return currentUser == null
         ? SignInScreen()
         : switch (hasProfile) {
-            AsyncData(:final value) => value ? const Placeholder() : AddProfilePictureScreen(),
+            AsyncData(:final value) => value ? const Placeholder() : const SelectPetTypeScreen(),
             AsyncError(:final error as Failure) => Builder(builder: (context) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   AppSnackBar.error(context, error.code);
                 });
 
-                return SignUpScreen();
+                return SignInScreen();
               }),
             _ => Scaffold(
                   body: SafeArea(
