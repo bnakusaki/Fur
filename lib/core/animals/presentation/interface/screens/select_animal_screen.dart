@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
+import 'package:fur/core/animals/presentation/interface/screens/select_animal_breed_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_animals.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
@@ -88,63 +89,87 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
               const SizedBox(height: 20),
               Expanded(
                 child: switch (animals) {
-                  AsyncData(:final value) => Builder(builder: (context) {
-                      late List<Animal> filteredAnimals;
-                      if (searchTerm.value.isEmpty) {
-                        filteredAnimals = value;
-                      } else {
-                        filteredAnimals = value.where((animal) {
-                          return animal.name.toLowerCase().contains(searchTerm.value.toLowerCase());
-                        }).toList();
-                      }
+                  AsyncData(:final value) => Builder(
+                      builder: (context) {
+                        late List<Animal> filteredAnimals;
+                        if (searchTerm.value.isEmpty) {
+                          filteredAnimals = value;
+                        } else {
+                          filteredAnimals = value.where((animal) {
+                            return animal.name
+                                .toLowerCase()
+                                .contains(searchTerm.value.toLowerCase());
+                          }).toList();
+                        }
 
-                      return filteredAnimals.isEmpty
-                          ? Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.6,
-                                    height: MediaQuery.of(context).size.width * 0.6,
-                                    child: Card(
-                                      shape: CircleBorder(
-                                        side: BorderSide(
-                                          color: Colors.grey.shade300,
-                                          width: 4,
+                        return filteredAnimals.isEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width * 0.6,
+                                      height: MediaQuery.of(context).size.width * 0.6,
+                                      child: Card(
+                                        shape: CircleBorder(
+                                          side: BorderSide(
+                                            color: Colors.grey.shade300,
+                                            width: 4,
+                                          ),
                                         ),
+                                        child: Image.asset(
+                                          sadPets[randInt.value],
+                                          fit: BoxFit.cover,
+                                        ).animate().fadeIn(),
                                       ),
-                                      child: Image.asset(
-                                        sadPets[randInt.value],
-                                        fit: BoxFit.cover,
-                                      ).animate().fadeIn(),
                                     ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    localizations.noPetsFound,
-                                    style: textStyles.emptyState,
-                                  ),
-                                  const SizedBox(height: 120),
-                                ],
-                              ),
-                            )
-                          : GridView.count(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              shrinkWrap: true,
-                              childAspectRatio: 0.8,
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 5,
-                              crossAxisSpacing: 5,
-                              children: filteredAnimals.map((animal) {
-                                return ImageAndLabel(
-                                  imageUrl: animal.imageUrl,
-                                  label: animal.name,
-                                  onTap: () {},
-                                  image: '',
-                                );
-                              }).toList(),
-                            );
-                    }),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      localizations.noPetsFound,
+                                      style: textStyles.emptyState,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 120),
+                                  ],
+                                ),
+                              )
+                            : ListView.separated(
+                                itemBuilder: (context, index) {
+                                  late List<Animal> row;
+                                  try {
+                                    row = filteredAnimals.sublist(index * 2, (index * 2) + 2);
+                                  } catch (e) {
+                                    row = [filteredAnimals[index * 2], Animal.empty()];
+                                  }
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: row
+                                        .map((animal) => Expanded(
+                                              child: animal == Animal.empty()
+                                                  ? const SizedBox()
+                                                  : ImageAndLabel(
+                                                      imageUrl: animal.imageUrl,
+                                                      label: animal.name,
+                                                      onTap: () {
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context) {
+                                                          return SelectAnimalBreedScreen(
+                                                            animal: animal,
+                                                          );
+                                                        }));
+                                                      },
+                                                    ),
+                                            ))
+                                        .toList(),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(height: 10);
+                                },
+                                itemCount: (filteredAnimals.length / 2).ceil(),
+                              );
+                      },
+                    ),
                   AsyncError(:final error) => Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -169,6 +194,7 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
                           Text(
                             error.toString(),
                             style: textStyles.emptyState,
+                            textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 120),
                         ],

@@ -1,13 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fur/firebase_options.dart';
 import 'package:fur/injection_container.dart';
 import 'package:fur/shared/styles/app_theme.dart';
 import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:fur/src/onboarding/presentation/interface/screens/onboarding_screen.dart';
 import 'package:fur/wrapper.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +20,6 @@ Future<void> main() async {
     (failure) => false,
     (success) => success,
   );
-
   runApp(
     ProviderScope(
       child: FurApp(

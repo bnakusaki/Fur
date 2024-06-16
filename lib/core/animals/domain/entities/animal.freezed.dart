@@ -23,7 +23,6 @@ mixin _$Animal {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
-  List<Breed> get breeds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +34,7 @@ abstract class $AnimalCopyWith<$Res> {
   factory $AnimalCopyWith(Animal value, $Res Function(Animal) then) =
       _$AnimalCopyWithImpl<$Res, Animal>;
   @useResult
-  $Res call({String id, String name, String imageUrl, List<Breed> breeds});
+  $Res call({String id, String name, String imageUrl});
 }
 
 /// @nodoc
@@ -54,7 +53,6 @@ class _$AnimalCopyWithImpl<$Res, $Val extends Animal>
     Object? id = null,
     Object? name = null,
     Object? imageUrl = null,
-    Object? breeds = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,10 +67,6 @@ class _$AnimalCopyWithImpl<$Res, $Val extends Animal>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      breeds: null == breeds
-          ? _value.breeds
-          : breeds // ignore: cast_nullable_to_non_nullable
-              as List<Breed>,
     ) as $Val);
   }
 }
@@ -84,7 +78,7 @@ abstract class _$$AnimalImplCopyWith<$Res> implements $AnimalCopyWith<$Res> {
       __$$AnimalImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String imageUrl, List<Breed> breeds});
+  $Res call({String id, String name, String imageUrl});
 }
 
 /// @nodoc
@@ -101,7 +95,6 @@ class __$$AnimalImplCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? imageUrl = null,
-    Object? breeds = null,
   }) {
     return _then(_$AnimalImpl(
       id: null == id
@@ -116,10 +109,6 @@ class __$$AnimalImplCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      breeds: null == breeds
-          ? _value._breeds
-          : breeds // ignore: cast_nullable_to_non_nullable
-              as List<Breed>,
     ));
   }
 }
@@ -128,11 +117,7 @@ class __$$AnimalImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AnimalImpl implements _Animal {
   const _$AnimalImpl(
-      {required this.id,
-      required this.name,
-      required this.imageUrl,
-      required final List<Breed> breeds})
-      : _breeds = breeds;
+      {required this.id, required this.name, required this.imageUrl});
 
   factory _$AnimalImpl.fromJson(Map<String, dynamic> json) =>
       _$$AnimalImplFromJson(json);
@@ -143,17 +128,10 @@ class _$AnimalImpl implements _Animal {
   final String name;
   @override
   final String imageUrl;
-  final List<Breed> _breeds;
-  @override
-  List<Breed> get breeds {
-    if (_breeds is EqualUnmodifiableListView) return _breeds;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_breeds);
-  }
 
   @override
   String toString() {
-    return 'Animal(id: $id, name: $name, imageUrl: $imageUrl, breeds: $breeds)';
+    return 'Animal(id: $id, name: $name, imageUrl: $imageUrl)';
   }
 
   @override
@@ -164,14 +142,12 @@ class _$AnimalImpl implements _Animal {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
-            const DeepCollectionEquality().equals(other._breeds, _breeds));
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, imageUrl,
-      const DeepCollectionEquality().hash(_breeds));
+  int get hashCode => Object.hash(runtimeType, id, name, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -191,8 +167,7 @@ abstract class _Animal implements Animal {
   const factory _Animal(
       {required final String id,
       required final String name,
-      required final String imageUrl,
-      required final List<Breed> breeds}) = _$AnimalImpl;
+      required final String imageUrl}) = _$AnimalImpl;
 
   factory _Animal.fromJson(Map<String, dynamic> json) = _$AnimalImpl.fromJson;
 
@@ -202,8 +177,6 @@ abstract class _Animal implements Animal {
   String get name;
   @override
   String get imageUrl;
-  @override
-  List<Breed> get breeds;
   @override
   @JsonKey(ignore: true)
   _$$AnimalImplCopyWith<_$AnimalImpl> get copyWith =>

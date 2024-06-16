@@ -20,9 +20,9 @@ Breed _$BreedFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Breed {
-  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String get animal => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $BreedCopyWith<$Res> {
   factory $BreedCopyWith(Breed value, $Res Function(Breed) then) =
       _$BreedCopyWithImpl<$Res, Breed>;
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String name, String imageUrl, String animal});
 }
 
 /// @nodoc
@@ -50,15 +50,11 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? imageUrl = null,
+    Object? animal = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -66,6 +62,10 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      animal: null == animal
+          ? _value.animal
+          : animal // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -78,7 +78,7 @@ abstract class _$$BreedImplCopyWith<$Res> implements $BreedCopyWith<$Res> {
       __$$BreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String imageUrl});
+  $Res call({String name, String imageUrl, String animal});
 }
 
 /// @nodoc
@@ -92,15 +92,11 @@ class __$$BreedImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? name = null,
     Object? imageUrl = null,
+    Object? animal = null,
   }) {
     return _then(_$BreedImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -108,6 +104,10 @@ class __$$BreedImplCopyWithImpl<$Res>
       imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      animal: null == animal
+          ? _value.animal
+          : animal // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -117,21 +117,21 @@ class __$$BreedImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BreedImpl implements _Breed {
   const _$BreedImpl(
-      {required this.id, required this.name, required this.imageUrl});
+      {required this.name, required this.imageUrl, required this.animal});
 
   factory _$BreedImpl.fromJson(Map<String, dynamic> json) =>
       _$$BreedImplFromJson(json);
 
   @override
-  final String id;
-  @override
   final String name;
   @override
   final String imageUrl;
+  @override
+  final String animal;
 
   @override
   String toString() {
-    return 'Breed(id: $id, name: $name, imageUrl: $imageUrl)';
+    return 'Breed(name: $name, imageUrl: $imageUrl, animal: $animal)';
   }
 
   @override
@@ -139,15 +139,15 @@ class _$BreedImpl implements _Breed {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BreedImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+                other.imageUrl == imageUrl) &&
+            (identical(other.animal, animal) || other.animal == animal));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, imageUrl);
+  int get hashCode => Object.hash(runtimeType, name, imageUrl, animal);
 
   @JsonKey(ignore: true)
   @override
@@ -165,18 +165,18 @@ class _$BreedImpl implements _Breed {
 
 abstract class _Breed implements Breed {
   const factory _Breed(
-      {required final String id,
-      required final String name,
-      required final String imageUrl}) = _$BreedImpl;
+      {required final String name,
+      required final String imageUrl,
+      required final String animal}) = _$BreedImpl;
 
   factory _Breed.fromJson(Map<String, dynamic> json) = _$BreedImpl.fromJson;
 
   @override
-  String get id;
-  @override
   String get name;
   @override
   String get imageUrl;
+  @override
+  String get animal;
   @override
   @JsonKey(ignore: true)
   _$$BreedImplCopyWith<_$BreedImpl> get copyWith =>

@@ -4,28 +4,30 @@ import 'package:flutter/material.dart';
 class ImageAndLabel extends StatelessWidget {
   const ImageAndLabel({
     super.key,
-    required this.image,
     required this.label,
-    this.imageUrl,
+    required this.imageUrl,
     this.onTap,
   });
 
-  final String image;
   final String label;
-  final String? imageUrl;
+  final String imageUrl;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
+        AspectRatio(
+          aspectRatio: 1,
           child: Card(
             color: Colors.transparent,
             child: InkWell(
               onTap: onTap,
               child: CachedNetworkImage(
-                imageUrl: imageUrl ?? image,
+                imageUrl: imageUrl,
+                errorWidget: (context, url, error) {
+                  return const Icon(Icons.error);
+                },
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.maxFinite,
@@ -38,6 +40,7 @@ class ImageAndLabel extends StatelessWidget {
           style: const TextStyle(
             fontWeight: FontWeight.w600,
           ),
+          textAlign: TextAlign.center,
         ),
       ],
     );
