@@ -10,8 +10,8 @@ import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
+import 'package:fur/src/pets/presentation/interface/screens/select_pet_screen.dart';
 import 'package:fur/src/profile/presentation/bloc/profile_mixin.dart';
-import 'package:fur/src/profile/presentation/interface/screens/select_pet_type_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddProfilePictureScreen extends HookWidget with ProfileMixin {
@@ -105,7 +105,7 @@ class AddProfilePictureScreen extends HookWidget with ProfileMixin {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SelectPetTypeScreen(),
+                        builder: (context) => const SelectPetScreen(),
                       ),
                     );
                   }

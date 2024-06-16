@@ -27,6 +27,10 @@ class AppTheme {
         fontWeight: FontWeight.bold,
         color: _colorScheme().primary,
       ),
+      emptyState: TextStyle(
+        fontWeight: FontWeight.w600,
+        color: Colors.grey.shade600,
+      ),
     );
   }
 

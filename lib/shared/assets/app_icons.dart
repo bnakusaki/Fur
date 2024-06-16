@@ -7,6 +7,8 @@ class AppIcons {
   static const lock = '$_path/lock.svg';
   static const envelope = '$_path/envelope.svg';
   static const user = '$_path/user.svg';
+  static const plus = '$_path/plus.svg';
+  static const minus = '$_path/minus.svg';
 }
 
 class AppAnimatedIcons {

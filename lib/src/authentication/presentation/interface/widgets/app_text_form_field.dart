@@ -10,6 +10,7 @@ class AppTextFormField extends StatelessWidget {
     this.controller,
     this.validator,
     this.onChanged,
+    this.focusNode,
   });
 
   final bool obscureText;
@@ -19,6 +20,7 @@ class AppTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String? value)? validator;
   final void Function(String? value)? onChanged;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class AppTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
       ),
+      focusNode: focusNode,
     );
   }
 }

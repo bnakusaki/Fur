@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_images.dart';
 import 'package:fur/src/dog/entities/dog_breeds.dart';
-import 'package:fur/src/dog/presentation/interface/screens/select_dog_age_screen.dart';
+import 'package:fur/src/pets/domain/entities/pet.dart';
+import 'package:fur/src/pets/presentation/interface/screens/input_pet_age_screen.dart';
 
 class DogBreedCard extends StatelessWidget {
   const DogBreedCard({
     super.key,
     required this.breed,
+    required this.pet,
   });
 
   final DogBreed breed;
+  final Pet pet;
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +153,7 @@ class DogBreedCard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const SelectDogAgeScreen(),
+                      builder: (context) => InputPetAgeScreen(pet: pet),
                     ),
                   );
                 },

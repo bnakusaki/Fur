@@ -1,3 +1,19 @@
+class AppImages {
+  static const _path = 'assets/images';
+
+  static const dog = '$_path/dog.jpeg';
+  static const cat = '$_path/cat.jpeg';
+  static const guineaPig = '$_path/guinea-pig.jpeg';
+  static const hamster = '$_path/hamster.jpeg';
+  static const horse = '$_path/horse.jpeg';
+  static const rabbit = '$_path/rabbit.jpeg';
+  static const sadDog = '$_path/sad-dog.jpeg';
+  static const sadCat = '$_path/sad-cat.jpeg';
+  static const sadHamster = '$_path/sad-hamster.jpeg';
+  static const sadHorse = '$_path/sad-horse.jpeg';
+  static const sadRabbit = '$_path/sad-rabbit.jpeg';
+}
+
 class DogBreedsImages {
   static const _path = 'assets/images/dog_breeds';
 

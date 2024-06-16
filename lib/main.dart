@@ -5,8 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fur/firebase_options.dart';
 import 'package:fur/injection_container.dart';
 import 'package:fur/shared/styles/app_theme.dart';
-import 'package:fur/src/dog/presentation/interface/screens/select_dog_age_screen.dart';
 import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:fur/src/onboarding/presentation/interface/screens/onboarding_screen.dart';
+import 'package:fur/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,8 +44,8 @@ class FurApp extends StatelessWidget {
       theme: AppTheme().theme(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const SelectDogAgeScreen(),
-      // home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
+      // home: const SelectDogAgeScreen(),
+      home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
     );
   }
 }

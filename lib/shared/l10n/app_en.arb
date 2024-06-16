@@ -76,5 +76,18 @@
     "somayed": "Somayed",
     "americanBully": "American Bully",
     "maltipoo": "Maltipoo",
-    "borzoi": "Borzoi"
+    "borzoi": "Borzoi",
+    "whatPetDoYouOwn": "What pet do you own?",
+    "appTextFieldHintsSearchPets": "Search pets",
+    "dog": "Dog",
+    "cat": "Cat",
+    "hamster": "Hamster",
+    "guineaPig": "Guinea Pig",
+    "rabbit": "Rabbit",
+    "horse": "Horse",
+    "noPetsFound": "No pets found.",
+    "whatBreedIsYourPet": "What breed is your {value}?",
+    "@whatBreedIsYourPet": {"placeholders": {"value": {}}},
+    "searchBreed": "Search {value} breeds",
+    "@searchBreed": {"placeholders": {"value": {}}}
 }

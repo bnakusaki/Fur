@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
 import 'package:fur/src/dog/entities/dog_breeds.dart';
 import 'package:fur/src/dog/presentation/interface/widgets/dog_breed_card.dart';
+import 'package:fur/src/pets/domain/entities/pet.dart';
+import 'package:fur/src/pets/presentation/bloc/pet_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectDogBreed extends HookWidget {
-  const SelectDogBreed({super.key});
+class SelectPetBreed extends HookWidget with PetMixin {
+  const SelectPetBreed({
+    super.key,
+    required this.pet,
+  });
+  final Pet pet;
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     final textStyles = Theme.of(context).extension<TextStyles>()!;
 
     final animationController = useAnimationController(duration: const Duration(milliseconds: 500));
@@ -36,13 +45,13 @@ class SelectDogBreed extends HookWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                'What is the breed of your dog?',
+                localizations.whatBreedIsYourPet(getPetName(context, pet)),
                 style: textStyles.h2,
               ),
               const SizedBox(height: 20),
               AppTextFormField(
                 controller: searchController,
-                hintText: 'Search breeds',
+                hintText: localizations.searchBreed(getPetName(context, pet)),
                 onChanged: (value) {
                   if (value!.trim().isEmpty) {
                     animationController.reverse();
@@ -76,7 +85,10 @@ class SelectDogBreed extends HookWidget {
                   // crossAxisSpacing: 10,
                   children: DogBreed.values
                       .map(
-                        (breed) => DogBreedCard(breed: breed),
+                        (breed) => DogBreedCard(
+                          breed: breed,
+                          pet: pet,
+                        ),
                       )
                       .toList()
                       .animate(interval: 10.milliseconds)
