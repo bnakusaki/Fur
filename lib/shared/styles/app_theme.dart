@@ -70,6 +70,12 @@ class AppTheme {
       backgroundColor: Colors.transparent,
       elevation: 0,
       surfaceTintColor: Colors.transparent,
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 
@@ -80,6 +86,20 @@ class AppTheme {
       contentTextStyle: TextStyle(color: _colorScheme().primary),
       backgroundColor: _colorScheme().primary.withOpacity(0.2),
       elevation: 0,
+    );
+  }
+
+  CardTheme _cardTheme() {
+    return CardTheme(
+      elevation: 0,
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: Colors.grey.shade300,
+          width: 4,
+        ),
+      ),
+      clipBehavior: Clip.hardEdge,
     );
   }
 
@@ -98,6 +118,7 @@ class AppTheme {
       elevatedButtonTheme: _elevatedButtonTheme(),
       appBarTheme: _appBarTheme(),
       snackBarTheme: _snackBarTheme(),
+      cardTheme: _cardTheme(),
     );
   }
 }

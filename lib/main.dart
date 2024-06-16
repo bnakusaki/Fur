@@ -9,7 +9,7 @@ import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:fur/src/onboarding/presentation/interface/screens/onboarding_screen.dart';
 import 'package:fur/wrapper.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -44,7 +44,6 @@ class FurApp extends StatelessWidget {
       theme: AppTheme().theme(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      // home: const SelectDogAgeScreen(),
       home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
     );
   }

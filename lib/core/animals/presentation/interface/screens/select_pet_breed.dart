@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
+import 'package:fur/core/animals/domain/entities/pet.dart';
+import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
 import 'package:fur/src/dog/entities/dog_breeds.dart';
 import 'package:fur/src/dog/presentation/interface/widgets/dog_breed_card.dart';
-import 'package:fur/src/pets/domain/entities/pet.dart';
-import 'package:fur/src/pets/presentation/bloc/pet_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectPetBreed extends HookWidget with PetMixin {
-  const SelectPetBreed({
+class SelectPetBreed extends HookWidget with AnimalMixin {
+  SelectPetBreed({
     super.key,
     required this.pet,
   });
-  final Pet pet;
+  final Pets pet;
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +89,7 @@ class SelectPetBreed extends HookWidget with PetMixin {
                           pet: pet,
                         ),
                       )
-                      .toList()
-                      .animate(interval: 10.milliseconds)
-                      .fadeIn()
-                      .scaleXY(begin: 0.9),
+                      .toList(),
                 ),
               ),
             ],

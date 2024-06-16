@@ -30,6 +30,8 @@
 	<string>Main</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Fur access your gallery and camera to set profile pictures</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Fur access you camera to take pictures of your pets</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

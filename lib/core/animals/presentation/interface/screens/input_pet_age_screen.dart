@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fur/core/animals/domain/entities/pet.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
-import 'package:fur/src/pets/domain/entities/pet.dart';
 
 class InputPetAgeScreen extends HookWidget {
   const InputPetAgeScreen({
@@ -14,7 +14,7 @@ class InputPetAgeScreen extends HookWidget {
     required this.pet,
   });
 
-  final Pet pet;
+  final Pets pet;
 
   @override
   Widget build(BuildContext context) {

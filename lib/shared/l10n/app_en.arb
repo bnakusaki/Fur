@@ -89,5 +89,8 @@
     "whatBreedIsYourPet": "What breed is your {value}?",
     "@whatBreedIsYourPet": {"placeholders": {"value": {}}},
     "searchBreed": "Search {value} breeds",
-    "@searchBreed": {"placeholders": {"value": {}}}
+    "@searchBreed": {"placeholders": {"value": {}}},
+    "appPageTitlesAddPetPicture": "Add pet picture",
+    "appButtonsAddPicture": "Add picture",
+    "appButtonsChangePicture": "Change  picture"
 }

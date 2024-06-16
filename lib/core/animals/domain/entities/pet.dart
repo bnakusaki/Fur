@@ -1,4 +1,4 @@
-enum Pet {
+enum Pets {
   dog,
   cat,
   hamster,

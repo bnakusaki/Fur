@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageAndLabel extends StatelessWidget {
@@ -5,11 +6,13 @@ class ImageAndLabel extends StatelessWidget {
     super.key,
     required this.image,
     required this.label,
+    this.imageUrl,
     this.onTap,
   });
 
   final String image;
   final String label;
+  final String? imageUrl;
   final void Function()? onTap;
 
   @override
@@ -18,25 +21,14 @@ class ImageAndLabel extends StatelessWidget {
       children: [
         Expanded(
           child: Card(
-            elevation: 0,
             color: Colors.transparent,
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: BorderSide(
-                color: Colors.grey.shade300,
-                width: 4,
-              ),
-            ),
-            clipBehavior: Clip.hardEdge,
             child: InkWell(
               onTap: onTap,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl ?? image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.maxFinite,
               ),
             ),
           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fur/common_libs.dart';
+import 'package:fur/core/animals/domain/entities/pet.dart';
+import 'package:fur/core/animals/presentation/interface/screens/input_pet_age_screen.dart';
 import 'package:fur/shared/assets/app_images.dart';
 import 'package:fur/src/dog/entities/dog_breeds.dart';
-import 'package:fur/src/pets/domain/entities/pet.dart';
-import 'package:fur/src/pets/presentation/interface/screens/input_pet_age_screen.dart';
 
 class DogBreedCard extends StatelessWidget {
   const DogBreedCard({
@@ -13,7 +13,7 @@ class DogBreedCard extends StatelessWidget {
   });
 
   final DogBreed breed;
-  final Pet pet;
+  final Pets pet;
 
   @override
   Widget build(BuildContext context) {

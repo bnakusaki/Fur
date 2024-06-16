@@ -9,6 +9,7 @@ class AppIcons {
   static const user = '$_path/user.svg';
   static const plus = '$_path/plus.svg';
   static const minus = '$_path/minus.svg';
+  static const pawHeart = '$_path/paw-heart.svg';
 }
 
 class AppAnimatedIcons {
