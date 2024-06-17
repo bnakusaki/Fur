@@ -4,8 +4,9 @@ import 'package:fur/shared/styles/text_styles.dart';
 class AppTheme {
   ColorScheme _colorScheme() {
     return ColorScheme.fromSeed(
-      seedColor: const Color(0xFFFF6700),
-      primary: const Color(0xFFFF6700),
+      seedColor: const Color(0xFFF85E00),
+      primary: const Color(0xFFF85E00),
+      scrim: const Color(0xFF0C0F0A),
     );
   }
 

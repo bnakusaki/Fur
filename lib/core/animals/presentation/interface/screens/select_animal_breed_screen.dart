@@ -132,33 +132,35 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
                                 ],
                               ),
                             )
-                          : ListView.separated(
-                              itemBuilder: (context, index) {
-                                late List<Breed> row;
-                                try {
-                                  row = filteredBreeds.sublist(index * 2, (index * 2) + 2);
-                                } catch (e) {
-                                  row = [filteredBreeds[index * 2], Breed.empty()];
-                                }
-                                return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: row
-                                      .map((breed) => breed == Breed.empty()
-                                          ? const SizedBox()
-                                          : Expanded(
-                                              child: ImageAndLabel(
-                                                imageUrl: breed.imageUrl,
-                                                label: breed.name,
-                                                onTap: () {},
-                                              ),
-                                            ))
-                                      .toList(),
-                                );
-                              },
-                              separatorBuilder: (context, index) {
-                                return const SizedBox(height: 10);
-                              },
-                              itemCount: (filteredBreeds.length / 2).ceil(),
+                          : Scrollbar(
+                              child: ListView.separated(
+                                itemBuilder: (context, index) {
+                                  late List<Breed> row;
+                                  try {
+                                    row = filteredBreeds.sublist(index * 2, (index * 2) + 2);
+                                  } catch (e) {
+                                    row = [filteredBreeds[index * 2], Breed.empty()];
+                                  }
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: row
+                                        .map((breed) => breed == Breed.empty()
+                                            ? const SizedBox()
+                                            : Expanded(
+                                                child: ImageAndLabel(
+                                                  imageUrl: breed.imageUrl,
+                                                  label: breed.name,
+                                                  onTap: () {},
+                                                ),
+                                              ))
+                                        .toList(),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(height: 10);
+                                },
+                                itemCount: (filteredBreeds.length / 2).ceil(),
+                              ),
                             );
                     }),
                   AsyncError(:final error) => Center(

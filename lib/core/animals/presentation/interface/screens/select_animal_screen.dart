@@ -133,40 +133,42 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
                                   ],
                                 ),
                               )
-                            : ListView.separated(
-                                itemBuilder: (context, index) {
-                                  late List<Animal> row;
-                                  try {
-                                    row = filteredAnimals.sublist(index * 2, (index * 2) + 2);
-                                  } catch (e) {
-                                    row = [filteredAnimals[index * 2], Animal.empty()];
-                                  }
-                                  return Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: row
-                                        .map((animal) => Expanded(
-                                              child: animal == Animal.empty()
-                                                  ? const SizedBox()
-                                                  : ImageAndLabel(
-                                                      imageUrl: animal.imageUrl,
-                                                      label: animal.name,
-                                                      onTap: () {
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(builder: (context) {
-                                                          return SelectAnimalBreedScreen(
-                                                            animal: animal,
-                                                          );
-                                                        }));
-                                                      },
-                                                    ),
-                                            ))
-                                        .toList(),
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return const SizedBox(height: 10);
-                                },
-                                itemCount: (filteredAnimals.length / 2).ceil(),
+                            : Scrollbar(
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    late List<Animal> row;
+                                    try {
+                                      row = filteredAnimals.sublist(index * 2, (index * 2) + 2);
+                                    } catch (e) {
+                                      row = [filteredAnimals[index * 2], Animal.empty()];
+                                    }
+                                    return Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: row
+                                          .map((animal) => Expanded(
+                                                child: animal == Animal.empty()
+                                                    ? const SizedBox()
+                                                    : ImageAndLabel(
+                                                        imageUrl: animal.imageUrl,
+                                                        label: animal.name,
+                                                        onTap: () {
+                                                          Navigator.push(context,
+                                                              MaterialPageRoute(builder: (context) {
+                                                            return SelectAnimalBreedScreen(
+                                                              animal: animal,
+                                                            );
+                                                          }));
+                                                        },
+                                                      ),
+                                              ))
+                                          .toList(),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(height: 10);
+                                  },
+                                  itemCount: (filteredAnimals.length / 2).ceil(),
+                                ),
                               );
                       },
                     ),
