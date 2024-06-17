@@ -5,7 +5,6 @@ import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/platform/network_info.dart';
 import 'package:fur/src/profile/data/databases/profile_remote_database.dart';
 import 'package:fur/src/profile/domain/repositories/profile_repository.dart';
-import 'package:logger/logger.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
   final NetworkInfo networkInfo;
@@ -36,10 +35,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
       final response = await remoteDatabase.hasProfile(uid);
       return Right(response);
     } on FirebaseException catch (e) {
-      Logger().d(e);
       return Left(Failure(e.code));
     } catch (e) {
-      Logger().d(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }

@@ -141,18 +141,19 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
                                   } catch (e) {
                                     row = [filteredBreeds[index * 2], Breed.empty()];
                                   }
+
                                   return Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: row
-                                        .map((breed) => breed == Breed.empty()
-                                            ? const SizedBox()
-                                            : Expanded(
-                                                child: ImageAndLabel(
-                                                  imageUrl: breed.imageUrl,
-                                                  label: breed.name,
-                                                  onTap: () {},
-                                                ),
-                                              ))
+                                        .map((breed) => Expanded(
+                                              child: breed == Breed.empty()
+                                                  ? const SizedBox()
+                                                  : ImageAndLabel(
+                                                      imageUrl: breed.imageUrl,
+                                                      label: breed.name,
+                                                      onTap: () {},
+                                                    ),
+                                            ))
                                         .toList(),
                                   );
                                 },
