@@ -4,8 +4,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fur/firebase_options.dart';
 import 'package:fur/injection_container.dart';
 import 'package:fur/shared/styles/app_theme.dart';
-import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:fur/src/profile/presentation/interface/screens/profile_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
@@ -42,7 +42,7 @@ class FurApp extends StatelessWidget {
       theme: AppTheme().theme(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const HomeScreen(),
+      home: const ProfileScreen(),
       // home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
     );
   }

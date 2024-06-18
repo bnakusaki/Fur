@@ -13,6 +13,8 @@ class AppIcons {
   static const imageSlash = '$_path/image-slash.svg';
   static const calendarPlus = '$_path/calendar-plus.svg';
   static const signOutAlt = '$_path/sign-out-alt.svg';
+  static const edit = '$_path/edit.svg';
+  static const trash = '$_path/trash.svg';
 }
 
 class AppAnimatedIcons {
