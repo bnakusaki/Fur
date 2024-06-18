@@ -1,192 +1,155 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fur/core/animals/domain/entities/pet.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
+import 'package:intl/intl.dart';
 
 class InputPetAgeScreen extends HookWidget {
-  const InputPetAgeScreen({
-    super.key,
-    required this.pet,
-  });
-
-  final Pets pet;
+  const InputPetAgeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    final years = useState(0);
-    final months = useState(0);
+    final localizations = AppLocalizations.of(context)!;
 
-    useEffect(() {
-      if (months.value > 12) {
-        months.value = months.value - 12;
-        years.value = years.value + 1;
+    final date = useState<DateTime?>(null);
+
+    String calculateAge(DateTime dob) {
+      final now = DateTime.now();
+
+      const Assert('dob.isBefore(now)', 'Date of birth must be in the past');
+
+      final yearsOld = now.year - dob.year;
+      final monthsOld = now.month - dob.month;
+
+      if (yearsOld > 0 || monthsOld > 0) {
+        return '$yearsOld years, $monthsOld months';
+      } else {
+        final daysOld = now.day - dob.day;
+        final weeksOld = daysOld ~/ 7;
+
+        if (weeksOld > 0) {
+          return '$weeksOld weeks, $daysOld days';
+        }
+        return '$daysOld days';
       }
-      return null;
-    }, [months.value]);
+    }
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const AppBackButton(),
-        centerTitle: false,
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SafeArea(
-          minimum: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 20),
-              Text(
-                'What is the age of your dog?',
-                style: textStyles.h2,
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton.filledTonal(
-                            onPressed: () {
-                              HapticFeedback.heavyImpact();
-                              years.value = years.value + 1;
-                            },
-                            icon: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SvgPicture.asset(
-                                AppIcons.plus,
-                                height: 20,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            '${years.value}',
-                            style: TextStyle(
-                              fontSize: 100,
-                              fontWeight: FontWeight.w600,
-                              color: theme.primaryColor,
-                            ),
-                          ),
-                          Text(
-                            'Years',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: theme.primaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-                          IconButton.filledTonal(
-                            onPressed: () async {
-                              if (years.value > 0) {
-                                years.value = years.value - 1;
-                                HapticFeedback.heavyImpact();
-                              } else {
-                                HapticFeedback.lightImpact();
-                                await Future.delayed(100.milliseconds);
-                                HapticFeedback.lightImpact();
-                              }
-                            },
-                            icon: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SvgPicture.asset(
-                                AppIcons.minus,
-                                height: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton.filledTonal(
-                            onPressed: () {
-                              HapticFeedback.heavyImpact();
-                              months.value = months.value + 1;
-                            },
-                            icon: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SvgPicture.asset(
-                                AppIcons.plus,
-                                height: 20,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            '${months.value}',
-                            style: TextStyle(
-                              fontSize: 100,
-                              fontWeight: FontWeight.w600,
-                              color: theme.primaryColor,
-                            ),
-                          ),
-                          Text(
-                            'Months',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: theme.primaryColor,
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-                          IconButton.filledTonal(
-                            onPressed: () async {
-                              if (months.value > 0) {
-                                months.value = months.value - 1;
-                                HapticFeedback.heavyImpact();
-                              } else {
-                                HapticFeedback.lightImpact();
-                                await Future.delayed(100.milliseconds);
-                                HapticFeedback.lightImpact();
-                              }
-                            },
-                            icon: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: SvgPicture.asset(
-                                AppIcons.minus,
-                                height: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const AppBackButton(),
+          centerTitle: false,
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: Text(localizations.appButtonsSkip),
+            ),
+          ],
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SafeArea(
+            minimum: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'When was your dog born?',
+                  style: textStyles.h2,
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Date of birth:   ',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      TextSpan(
+                        text: date.value == null
+                            ? 'N/A'
+                            : DateFormat('MMMM dd, yyyy').format(date.value!),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Age:   ',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      TextSpan(
+                        text: date.value == null ? 'N/A' : calculateAge(date.value!),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 40),
+                TextButton.icon(
+                  onPressed: () async {
+                    date.value = await showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    fixedSize: const Size(double.maxFinite, 48),
+                    backgroundColor: theme.primaryColor.withOpacity(0.1),
+                    alignment: Alignment.centerLeft,
+                    shape: ContinuousRectangleBorder(
+                      borderRadius: BorderRadiusDirectional.circular(16),
+                    ),
+                  ),
+                  icon: SvgPicture.asset(
+                    AppIcons.calendarPlus,
+                    color: theme.primaryColor,
+                    height: 20,
+                  ),
+                  label: const Text('Pick date'),
+                ),
+                const SizedBox(height: 10),
+                const Text(
+                  'You this button to pick the birth date of your dog.',
+                  style: TextStyle(fontSize: 10),
+                ),
+              ].animate(interval: 10.milliseconds).fadeIn(),
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          bottom: MediaQuery.paddingOf(context).bottom + 20,
-        ),
-        child: ElevatedButton(
-          onPressed: () {},
-          child: const Text('Continue'),
-        ),
+        bottomNavigationBar: date.value != null
+            ? Padding(
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: MediaQuery.paddingOf(context).bottom + 20,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text(localizations.appButtonsContinue),
+                ),
+              ).animate().fadeIn().slideY(begin: 0.1)
+            : null,
       ),
     );
   }

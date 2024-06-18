@@ -16,12 +16,11 @@ abstract class AuthenticationRemoteDatabase {
 class AuthenticationRemoteDatabaseImpl implements AuthenticationRemoteDatabase {
   @override
   Future<User> signIn(String email, String password) async {
-    final response = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    // TODO: implement
     return User.empty();
   }
 
@@ -33,12 +32,15 @@ class AuthenticationRemoteDatabaseImpl implements AuthenticationRemoteDatabase {
     String email,
     String password,
   ) async {
-    final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    // TODO: implement
+    await FirebaseAuth.instance.currentUser!.updateDisplayName(
+      '$firstName $middleName $lastName',
+    );
+
     return User.empty();
   }
 }

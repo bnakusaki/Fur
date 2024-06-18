@@ -7,6 +7,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/domain/entities/breed.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
+import 'package:fur/core/animals/presentation/interface/screens/input_pet_age_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_breeds.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
@@ -151,7 +152,15 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
                                                   : ImageAndLabel(
                                                       imageUrl: breed.imageUrl,
                                                       label: breed.name,
-                                                      onTap: () {},
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const InputPetAgeScreen(),
+                                                          ),
+                                                        );
+                                                      },
                                                     ),
                                             ))
                                         .toList(),

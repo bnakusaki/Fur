@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class ProfileRemoteDatabase {
@@ -19,6 +20,8 @@ class ProfileRemoteDatabaseImpl implements ProfileRemoteDatabase {
     final uploadTask = profilePicturesRef.putFile(file);
 
     await uploadTask;
+
+    FirebaseAuth.instance.currentUser?.updatePhotoURL(file.uri.pathSegments.last);
     return;
   }
 

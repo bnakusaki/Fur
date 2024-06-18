@@ -92,5 +92,6 @@
     "@searchBreed": {"placeholders": {"value": {}}},
     "appPageTitlesAddPetPicture": "Add pet picture",
     "appButtonsAddPicture": "Add picture",
-    "appButtonsChangePicture": "Change  picture"
+    "appButtonsChangePicture": "Change  picture",
+    "appButtonsContinue": "Continue"
 }

@@ -11,6 +11,8 @@ class AppIcons {
   static const minus = '$_path/minus.svg';
   static const pawHeart = '$_path/paw-heart.svg';
   static const imageSlash = '$_path/image-slash.svg';
+  static const calendarPlus = '$_path/calendar-plus.svg';
+  static const signOutAlt = '$_path/sign-out-alt.svg';
 }
 
 class AppAnimatedIcons {
@@ -22,6 +24,7 @@ class AppAnimatedIcons {
   static const alertTriangle = '$_path/alertTriangle.json';
   static const checkmark = '$_path/checkmark.json';
   static const error = '$_path/error.json';
+  static const menuV2 = '$_path/menuV2.json';
 }
 
 class AnimalIcons {

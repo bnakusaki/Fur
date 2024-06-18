@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTextFormField extends StatelessWidget {
   const AppTextFormField({
@@ -11,6 +12,7 @@ class AppTextFormField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.focusNode,
+    this.inputFormatters,
   });
 
   final bool obscureText;
@@ -21,6 +23,7 @@ class AppTextFormField extends StatelessWidget {
   final String? Function(String? value)? validator;
   final void Function(String? value)? onChanged;
   final FocusNode? focusNode;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,7 @@ class AppTextFormField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
       ),
       focusNode: focusNode,
+      inputFormatters: inputFormatters,
     );
   }
 }
