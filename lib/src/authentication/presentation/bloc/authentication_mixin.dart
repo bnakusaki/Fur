@@ -31,4 +31,13 @@ mixin AuthenticationMixin {
       (user) => user,
     );
   }
+
+  Future<User> createProfile({required User user}) async {
+    final response = await bloc.createProfile(user);
+
+    return response.fold(
+      (failure) => throw failure,
+      (user) => user,
+    );
+  }
 }

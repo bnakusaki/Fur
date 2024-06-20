@@ -13,6 +13,9 @@ class AppTextFormField extends StatelessWidget {
     this.onChanged,
     this.focusNode,
     this.inputFormatters,
+    this.labelText,
+    this.initialValue,
+    this.readOnly = false,
   });
 
   final bool obscureText;
@@ -24,12 +27,17 @@ class AppTextFormField extends StatelessWidget {
   final void Function(String? value)? onChanged;
   final FocusNode? focusNode;
   final List<TextInputFormatter>? inputFormatters;
+  final String? labelText;
+  final String? initialValue;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       validator: validator,
+      readOnly: readOnly,
+      initialValue: initialValue,
       obscureText: obscureText,
       style: const TextStyle(fontSize: 13),
       onChanged: onChanged,
@@ -39,6 +47,8 @@ class AppTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+        labelText: labelText,
+        labelStyle: const TextStyle(fontSize: 13),
       ),
       focusNode: focusNode,
       inputFormatters: inputFormatters,

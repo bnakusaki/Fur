@@ -12,6 +12,7 @@ import 'package:fur/shared/widgets/app_snack_bar.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_mixin.dart';
 import 'package:fur/src/authentication/presentation/interface/screens/sign_up_screen.dart';
 import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
+import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../../common_libs.dart';
@@ -129,6 +130,13 @@ class SignInScreen extends HookWidget with AuthenticationMixin {
                               email: emailController.text,
                               password: passwordController.text,
                             );
+                            if (context.mounted) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (context) => const HomeScreen()),
+                                (route) => true,
+                              );
+                            }
                           } on Failure catch (e) {
                             if (context.mounted) {
                               AppSnackBar.error(context, e.code);

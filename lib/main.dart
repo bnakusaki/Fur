@@ -5,7 +5,8 @@ import 'package:fur/firebase_options.dart';
 import 'package:fur/injection_container.dart';
 import 'package:fur/shared/styles/app_theme.dart';
 import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
-import 'package:fur/src/profile/presentation/interface/screens/profile_screen.dart';
+import 'package:fur/src/onboarding/presentation/interface/screens/onboarding_screen.dart';
+import 'package:fur/wrapper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
@@ -42,8 +43,7 @@ class FurApp extends StatelessWidget {
       theme: AppTheme().theme(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const ProfileScreen(),
-      // home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
+      home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
     );
   }
 }

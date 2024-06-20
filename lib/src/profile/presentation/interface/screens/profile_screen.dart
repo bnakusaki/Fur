@@ -1,16 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
+import 'package:fur/src/authentication/presentation/providers/user_notifier.dart';
+import 'package:fur/src/home/presentation/interface/widgets/log_out_dialog.dart';
+import 'package:fur/src/profile/presentation/interface/screens/edit_profile_screen.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+
     final theme = Theme.of(context);
-    final currentUser = FirebaseAuth.instance.currentUser!;
+    final userProfile = ref.watch(userNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -19,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
             AppBackButton(),
           ],
         ),
-        title: const Text('Profile'),
+        title: Text(localizations.appPageTitlesProfile),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: 20),
@@ -36,51 +44,69 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      currentUser.displayName ?? 'User name',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                      ),
-                    ),
-                    Text(
-                      currentUser.email!,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton.icon(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        backgroundColor: theme.primaryColor.withOpacity(0.1),
-                        fixedSize: const Size(double.infinity, 30),
-                        shape: ContinuousRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.circular(10),
+                Expanded(
+                  flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${userProfile.firstName} ${userProfile.middleName ?? userProfile.lastName}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20,
                         ),
-                        alignment: Alignment.centerLeft,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      icon: SvgPicture.asset(
-                        AppIcons.edit,
-                        height: 16,
-                        color: theme.primaryColor,
+                      Text(
+                        userProfile.email,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                       ),
-                      label: const Text('Edit profile'),
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      TextButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(),
+                            ),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: theme.primaryColor.withOpacity(0.1),
+                          fixedSize: const Size(double.infinity, 30),
+                          shape: ContinuousRectangleBorder(
+                            borderRadius: BorderRadiusDirectional.circular(10),
+                          ),
+                          alignment: Alignment.centerLeft,
+                        ),
+                        icon: SvgPicture.asset(
+                          AppIcons.edit,
+                          height: 16,
+                          color: theme.primaryColor,
+                        ),
+                        label: Text(localizations.appButtonsEditProfile),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
             const Spacer(),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return LogoutDialog();
+                    });
+              },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red.shade50,
                 overlayColor: Colors.red.shade200,
@@ -95,31 +121,9 @@ class ProfileScreen extends StatelessWidget {
                 height: 16,
                 color: Colors.red,
               ),
-              label: const Text(
-                'Log out',
-                style: TextStyle(color: Colors.red),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextButton.icon(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.red.shade50,
-                overlayColor: Colors.red.shade200,
-                fixedSize: const Size(double.maxFinite, 48),
-                shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadiusDirectional.circular(10),
-                ),
-                alignment: Alignment.centerLeft,
-              ),
-              icon: SvgPicture.asset(
-                AppIcons.trash,
-                height: 16,
-                color: Colors.red,
-              ),
-              label: const Text(
-                'Delete account',
-                style: TextStyle(color: Colors.red),
+              label: Text(
+                localizations.appButtonsSignOut,
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ],

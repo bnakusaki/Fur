@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,6 +12,7 @@ import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
+import 'package:fur/src/authentication/domain/entities/user.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_mixin.dart';
 import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
 import 'package:fur/src/profile/presentation/interface/screens/add_profile_picture_screen.dart';
@@ -171,6 +173,17 @@ class SignUpScreen extends HookWidget with AuthenticationMixin {
                               email: emailController.text,
                               password: passwordController.text,
                             );
+
+                            await createProfile(
+                              user: User.empty().copyWith(
+                                id: FirebaseAuth.instance.currentUser!.uid,
+                                firstName: firstNameController.text.trim(),
+                                middleName: middleNameController.text.trim(),
+                                lastName: lastNameController.text.trim(),
+                                email: emailController.text.trim(),
+                              ),
+                            );
+
                             if (context.mounted) {
                               Navigator.pushAndRemoveUntil(
                                 context,

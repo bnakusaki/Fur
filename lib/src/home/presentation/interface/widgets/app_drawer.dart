@@ -3,7 +3,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fur/common_libs.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_name_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/src/home/presentation/interface/widgets/log_out_dialog.dart';
+import 'package:fur/src/profile/presentation/interface/screens/profile_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -12,6 +16,8 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     final theme = Theme.of(context);
 
     final currentUser = FirebaseAuth.instance.currentUser!;
@@ -29,7 +35,15 @@ class AppDrawer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              onTap: () {},
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
+              },
               splashColor: theme.primaryColor.withOpacity(0.1),
               tileColor: theme.primaryColor.withOpacity(0.1),
               shape: ContinuousRectangleBorder(
@@ -37,8 +51,10 @@ class AppDrawer extends StatelessWidget {
               ),
               leading: const CircleAvatar(),
               title: Text(
-                currentUser.displayName ?? 'User name',
+                currentUser.displayName!,
                 style: const TextStyle(fontWeight: FontWeight.w500),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               subtitle: Text(
                 currentUser.email!,
@@ -54,7 +70,15 @@ class AppDrawer extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InputPetNameScreen(),
+                  ),
+                );
+              },
               style: TextButton.styleFrom(
                 backgroundColor: theme.primaryColor.withOpacity(0.1),
                 fixedSize: const Size(double.maxFinite, 48),
@@ -68,11 +92,13 @@ class AppDrawer extends StatelessWidget {
                 height: 16,
                 color: theme.primaryColor,
               ),
-              label: const Text('Add pet'),
+              label: Text(localizations.appButtonsAddPet),
             ),
             const Spacer(),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(context: context, builder: (context) => LogoutDialog());
+              },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red.shade50,
                 overlayColor: Colors.red.shade200,
@@ -87,9 +113,9 @@ class AppDrawer extends StatelessWidget {
                 height: 16,
                 color: Colors.red,
               ),
-              label: const Text(
-                'Log out',
-                style: TextStyle(color: Colors.red),
+              label: Text(
+                localizations.appButtonsSignOut,
+                style: const TextStyle(color: Colors.red),
               ),
             ),
           ],

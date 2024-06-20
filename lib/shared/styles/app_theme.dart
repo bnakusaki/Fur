@@ -32,20 +32,25 @@ class AppTheme {
         fontWeight: FontWeight.w600,
         color: Colors.grey.shade600,
       ),
+      caption: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        color: Colors.grey.shade600,
+      ),
     );
   }
 
   InputDecorationTheme _inputDecorationTheme() {
     return InputDecorationTheme(
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey.shade300,
         ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey.shade300,
@@ -59,6 +64,9 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: _colorScheme().primary,
         elevation: 0,
+        shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         fixedSize: const Size(double.maxFinite, 45),
         foregroundColor: Colors.white,
         overlayColor: _colorScheme().surface,
@@ -75,7 +83,7 @@ class AppTheme {
         color: Colors.black,
         fontSize: 20,
         fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
       ),
     );
   }
@@ -104,6 +112,15 @@ class AppTheme {
     );
   }
 
+  TextButtonThemeData _textButtonTheme() {
+    return TextButtonThemeData(
+        style: TextButton.styleFrom(
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ));
+  }
+
   ThemeData theme() {
     return ThemeData(
       useMaterial3: true,
@@ -120,6 +137,7 @@ class AppTheme {
       appBarTheme: _appBarTheme(),
       snackBarTheme: _snackBarTheme(),
       cardTheme: _cardTheme(),
+      textButtonTheme: _textButtonTheme(),
     );
   }
 }

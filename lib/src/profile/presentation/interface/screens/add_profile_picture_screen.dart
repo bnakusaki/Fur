@@ -97,8 +97,8 @@ class AddProfilePictureScreen extends HookWidget with ProfileMixin {
               ).withLoadingState(onPressed: () async {
                 try {
                   await addProfilePicture(
-                    profilePicture.value!.path,
-                    FirebaseAuth.instance.currentUser!.uid,
+                    path: profilePicture.value!.path,
+                    uid: FirebaseAuth.instance.currentUser!.uid,
                   );
 
                   if (context.mounted) {

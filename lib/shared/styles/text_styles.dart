@@ -6,12 +6,14 @@ class TextStyles extends ThemeExtension<TextStyles> {
     required this.h2,
     required this.link,
     required this.emptyState,
+    required this.caption,
   });
 
   final TextStyle? h1;
   final TextStyle? h2;
   final TextStyle? link;
   final TextStyle? emptyState;
+  final TextStyle? caption;
 
   @override
   ThemeExtension<TextStyles> copyWith({
@@ -19,12 +21,14 @@ class TextStyles extends ThemeExtension<TextStyles> {
     TextStyle? h2,
     TextStyle? link,
     TextStyle? emptyState,
+    TextStyle? caption,
   }) {
     return TextStyles(
       h1: h1 ?? this.h1,
       h2: h2 ?? this.h2,
       link: link ?? this.link,
       emptyState: emptyState ?? this.emptyState,
+      caption: caption ?? this.caption,
     );
   }
 
@@ -36,6 +40,7 @@ class TextStyles extends ThemeExtension<TextStyles> {
       h2: TextStyle.lerp(h2, other.h2, t),
       link: TextStyle.lerp(link, other.link, t),
       emptyState: TextStyle.lerp(emptyState, other.emptyState, t),
+      caption: TextStyle.lerp(caption, other.caption, t),
     );
   }
 }

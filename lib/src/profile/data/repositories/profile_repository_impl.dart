@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/platform/network_info.dart';
+import 'package:fur/src/authentication/domain/entities/user.dart';
 import 'package:fur/src/profile/data/databases/profile_remote_database.dart';
 import 'package:fur/src/profile/domain/repositories/profile_repository.dart';
 
@@ -33,6 +34,45 @@ class ProfileRepositoryImpl implements ProfileRepository {
     try {
       await networkInfo.hasInternet();
       final response = await remoteDatabase.hasProfile(uid);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> create(User user) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.create(user);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> retrieve(String uid) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.retrieve(uid);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> update(User user) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.update(user);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));

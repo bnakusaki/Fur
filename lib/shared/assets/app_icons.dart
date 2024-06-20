@@ -15,6 +15,9 @@ class AppIcons {
   static const signOutAlt = '$_path/sign-out-alt.svg';
   static const edit = '$_path/edit.svg';
   static const trash = '$_path/trash.svg';
+  static const camera = '$_path/camera.svg';
+  static const male = '$_path/male.svg';
+  static const female = '$_path/female.svg';
 }
 
 class AppAnimatedIcons {

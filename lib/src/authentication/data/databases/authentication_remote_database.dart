@@ -11,6 +11,7 @@ abstract class AuthenticationRemoteDatabase {
   );
 
   Future<User> signIn(String email, String password);
+  Future<void> signOut();
 }
 
 class AuthenticationRemoteDatabaseImpl implements AuthenticationRemoteDatabase {
@@ -42,5 +43,11 @@ class AuthenticationRemoteDatabaseImpl implements AuthenticationRemoteDatabase {
     );
 
     return User.empty();
+  }
+
+  @override
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    return;
   }
 }
