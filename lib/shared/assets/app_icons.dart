@@ -18,6 +18,9 @@ class AppIcons {
   static const camera = '$_path/camera.svg';
   static const male = '$_path/male.svg';
   static const female = '$_path/female.svg';
+  static const cameraRotate = '$_path/camera-rotate.svg';
+  static const bolt = '$_path/bolt.svg';
+  static const boltSlash = '$_path/bolt-slash.svg';
 }
 
 class AppAnimatedIcons {
