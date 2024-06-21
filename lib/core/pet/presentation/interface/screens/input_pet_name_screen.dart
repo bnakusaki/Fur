@@ -3,19 +3,34 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_picture_scree.dart';
+import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class InputPetNameScreen extends HookWidget {
+class InputPetNameScreen extends HookConsumerWidget {
   const InputPetNameScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final textStyles = Theme.of(context).extension<TextStyles>()!;
 
     final nameController = useTextEditingController();
+
+    void handleContinue() {
+      ref
+          .watch(addPetFormNotifierProvider.notifier)
+          .update((pet) => pet.copyWith(name: nameController.text));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const InputPetPictureScreen(),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -57,14 +72,7 @@ class InputPetNameScreen extends HookWidget {
                     right: 20,
                   ),
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const InputPetPictureScreen(),
-                        ),
-                      );
-                    },
+                    onPressed: handleContinue,
                     child: Text(localizations.appButtonsContinue),
                   ).animate().fadeIn().slideY(begin: 0.1),
                 )

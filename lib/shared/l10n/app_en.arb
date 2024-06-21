@@ -26,7 +26,6 @@
     "appTextFieldErrorsEmptyMiddleName": "Middle name cannot be empty.",
     "appButtonsNext": "Next",
     "justAMoment": "Just a moment...",
-    "whatPetDoYouOwn": "What pet do you own?",
     "appTextFieldHintsSearchPets": "Search pets",
     "noPetsFound": "No pets found.",
     "whatBreedIsYourPet": "What breed is your {value}?",
@@ -49,5 +48,7 @@
     "appButtonsAddPet": "Add pet",
     "petNameQuestion": "What is your pet's name?",
     "appTextFieldHintsPetName": "Pet name",
-    "petNameCaption": "Enter your pet's name to continue."
+    "petNameCaption": "Enter your pet's name to continue.",
+    "selectAnimalQuestion": "{value} is a ... ?",
+    "@selectAnimalQuestion": {"placeholders": {"value": {}}}
 }

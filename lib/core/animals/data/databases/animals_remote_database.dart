@@ -52,18 +52,18 @@ class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
 
     for (final data in response.data()?['breeds']) {
       data['name'] = data['name'][languageCode];
-      // String imageDownloadUrl = '';
-      // try {
-      //   imageDownloadUrl = await FirebaseStorage.instance
-      //       .ref()
-      //       .child('animals')
-      //       .child(json['imageUrl'])
-      //       .getDownloadURL();
-      // } catch (e) {
-      //   ///
-      // }
+      String imageDownloadUrl = '';
+      try {
+        imageDownloadUrl = await FirebaseStorage.instance
+            .ref()
+            .child('animal_breeds')
+            .child(data['imageUrl'])
+            .getDownloadURL();
+      } catch (e) {
+        ///
+      }
 
-      // json['imageUrl'] = imageDownloadUrl;
+      data['imageUrl'] = imageDownloadUrl;
 
       breeds.add(Breed.fromJson(data));
     }

@@ -8,7 +8,9 @@ import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
 import 'package:fur/core/animals/presentation/interface/screens/select_animal_breed_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_animals.dart';
+import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/image_and_label.dart';
@@ -36,6 +38,8 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
+    final addPetForm = ref.watch(addPetFormNotifierProvider);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -53,7 +57,7 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
             children: [
               const SizedBox(height: 20),
               Text(
-                localizations.whatPetDoYouOwn,
+                localizations.selectAnimalQuestion(addPetForm.name.capitalize()),
                 style: textStyles.h2,
               ),
               const SizedBox(height: 20),

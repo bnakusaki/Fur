@@ -8,7 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/presentation/interface/screens/view_pet_image_scree.dart';
+import 'package:fur/core/animals/presentation/interface/screens/select_animal_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 
 class InputPetPictureScreen extends HookWidget {
@@ -39,7 +39,7 @@ class InputPetPictureScreen extends HookWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ViewPetImageScreen(),
+          builder: (context) => SelectAnimalScreen(),
         ),
       );
     }

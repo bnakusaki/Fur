@@ -152,6 +152,7 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
                                                   : ImageAndLabel(
                                                       imageUrl: breed.imageUrl,
                                                       label: breed.name,
+                                                      fillCard: false,
                                                       onTap: () {
                                                         Navigator.push(
                                                           context,
