@@ -6,10 +6,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'list_breeds.g.dart';
 
 @riverpod
-Future<List<Breed>> listBreeds(ListBreedsRef ref, String languageCode, String animalId) async {
+Future<List<Breed>> listBreeds(
+    ListBreedsRef ref, String languageCode, String animalId, Breed? last) async {
   final bloc = sl<AnimalsBloc>();
 
-  final response = await bloc.listBreeds(languageCode, animalId);
+  final response = await bloc.listBreeds(languageCode, animalId, last);
 
   return response.fold(
     (failure) => throw failure,

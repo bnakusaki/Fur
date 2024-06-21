@@ -11,16 +11,19 @@ class ListBreeds extends UseCase<List<Breed>, ObjectParams<ListBreedsParams>> {
 
   @override
   Future<Either<Failure, List<Breed>>> call(ObjectParams<ListBreedsParams> params) async {
-    return await repository.listBreeds(params.value.languageCode, params.value.animalId);
+    return await repository.listBreeds(
+        params.value.languageCode, params.value.animalId, params.value.last);
   }
 }
 
 class ListBreedsParams {
   final String languageCode;
   final String animalId;
+  final Breed? last;
 
   ListBreedsParams({
     required this.languageCode,
     required this.animalId,
+    this.last,
   });
 }

@@ -7,6 +7,7 @@ import 'package:fur/core/animals/domain/repositories/animals_repository.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/platform/network_info.dart';
+import 'package:logger/logger.dart';
 
 class AnimalsRepositoryImpl implements AnimalsRepository {
   final NetworkInfo networkInfo;
@@ -28,14 +29,17 @@ class AnimalsRepositoryImpl implements AnimalsRepository {
   }
 
   @override
-  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId) async {
+  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId,
+      [Breed? last]) async {
     try {
       await networkInfo.hasInternet();
-      final response = await remoteDatabase.listBreeds(languageCode, animalId);
+      final response = await remoteDatabase.listBreeds(languageCode, animalId, last);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));
     } catch (e) {
+      Logger().e(e);
+
       return Left(Failure(ErrorCodes.unknownError));
     }
   }

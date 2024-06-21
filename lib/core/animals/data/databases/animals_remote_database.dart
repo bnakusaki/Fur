@@ -6,7 +6,7 @@ import 'package:fur/shared/firebase_collection_references.dart';
 
 abstract class AnimalsRemoteDatabase {
   Future<List<Animal>> listAnimals(String languageCode);
-  Future<List<Breed>> listBreeds(String languageCode, String animalId);
+  Future<List<Breed>> listBreeds(String languageCode, String animalId, Breed? last);
 }
 
 class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
@@ -42,30 +42,46 @@ class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
   }
 
   @override
-  Future<List<Breed>> listBreeds(String languageCode, String animalId) async {
-    final response = await FirebaseFirestore.instance
-        .collection(FirebaseCollectionReferences.breeds)
-        .doc(animalId)
-        .get();
+  Future<List<Breed>> listBreeds(String languageCode, String animalId, Breed? last) async {
+    QuerySnapshot<Map<String, dynamic>> response;
+    if (last == null) {
+      response = await FirebaseFirestore.instance
+          .collection(FirebaseCollectionReferences.animalData)
+          .doc(animalId)
+          .collection(FirebaseCollectionReferences.breeds)
+          .orderBy('id')
+          .limit(20)
+          .get();
+    } else {
+      response = await FirebaseFirestore.instance
+          .collection(FirebaseCollectionReferences.animalData)
+          .doc(animalId)
+          .collection(FirebaseCollectionReferences.breeds)
+          .orderBy('id')
+          .startAfter([last.id])
+          .limit(20)
+          .get();
+    }
 
     final breeds = <Breed>[];
 
-    for (final data in response.data()?['breeds']) {
-      data['name'] = data['name'][languageCode];
+    for (final doc in response.docs) {
+      final json = doc.data();
+      json['name'] = doc['name'][languageCode];
       String imageDownloadUrl = '';
       try {
         imageDownloadUrl = await FirebaseStorage.instance
             .ref()
             .child('animal_breeds')
-            .child(data['imageUrl'])
+            .child(json['imageUrl'])
             .getDownloadURL();
       } catch (e) {
         ///
       }
 
-      data['imageUrl'] = imageDownloadUrl;
+      json['imageUrl'] = imageDownloadUrl;
 
-      breeds.add(Breed.fromJson(data));
+      breeds.add(Breed.fromJson(json));
     }
 
     return breeds;

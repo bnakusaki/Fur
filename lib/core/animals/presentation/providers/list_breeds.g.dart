@@ -6,7 +6,7 @@ part of 'list_breeds.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listBreedsHash() => r'db4da316a0d3b174631708b508dc4f63b7dabdc6';
+String _$listBreedsHash() => r'e2d6f180f574fcb81f4ea4bac07b643d14006a6a';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,10 +42,12 @@ class ListBreedsFamily extends Family<AsyncValue<List<Breed>>> {
   ListBreedsProvider call(
     String languageCode,
     String animalId,
+    Breed? last,
   ) {
     return ListBreedsProvider(
       languageCode,
       animalId,
+      last,
     );
   }
 
@@ -56,6 +58,7 @@ class ListBreedsFamily extends Family<AsyncValue<List<Breed>>> {
     return call(
       provider.languageCode,
       provider.animalId,
+      provider.last,
     );
   }
 
@@ -80,11 +83,13 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
   ListBreedsProvider(
     String languageCode,
     String animalId,
+    Breed? last,
   ) : this._internal(
           (ref) => listBreeds(
             ref as ListBreedsRef,
             languageCode,
             animalId,
+            last,
           ),
           from: listBreedsProvider,
           name: r'listBreedsProvider',
@@ -97,6 +102,7 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
               ListBreedsFamily._allTransitiveDependencies,
           languageCode: languageCode,
           animalId: animalId,
+          last: last,
         );
 
   ListBreedsProvider._internal(
@@ -108,10 +114,12 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
     required super.from,
     required this.languageCode,
     required this.animalId,
+    required this.last,
   }) : super.internal();
 
   final String languageCode;
   final String animalId;
+  final Breed? last;
 
   @override
   Override overrideWith(
@@ -128,6 +136,7 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
         debugGetCreateSourceHash: null,
         languageCode: languageCode,
         animalId: animalId,
+        last: last,
       ),
     );
   }
@@ -141,7 +150,8 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
   bool operator ==(Object other) {
     return other is ListBreedsProvider &&
         other.languageCode == languageCode &&
-        other.animalId == animalId;
+        other.animalId == animalId &&
+        other.last == last;
   }
 
   @override
@@ -149,6 +159,7 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, languageCode.hashCode);
     hash = _SystemHash.combine(hash, animalId.hashCode);
+    hash = _SystemHash.combine(hash, last.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -160,6 +171,9 @@ mixin ListBreedsRef on AutoDisposeFutureProviderRef<List<Breed>> {
 
   /// The parameter `animalId` of this provider.
   String get animalId;
+
+  /// The parameter `last` of this provider.
+  Breed? get last;
 }
 
 class _ListBreedsProviderElement
@@ -170,6 +184,8 @@ class _ListBreedsProviderElement
   String get languageCode => (origin as ListBreedsProvider).languageCode;
   @override
   String get animalId => (origin as ListBreedsProvider).animalId;
+  @override
+  Breed? get last => (origin as ListBreedsProvider).last;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
