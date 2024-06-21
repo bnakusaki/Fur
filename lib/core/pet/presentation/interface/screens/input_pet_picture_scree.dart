@@ -9,7 +9,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/presentation/interface/screens/select_animal_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/view_pet_image_scree.dart';
 import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/shared/widgets/app_snack_bar.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InputPetPictureScreen extends HookWidget {
   const InputPetPictureScreen({super.key});
@@ -20,6 +23,28 @@ class InputPetPictureScreen extends HookWidget {
 
     final cameras = useState<List<CameraDescription>>([]);
     final cameraController = useState<CameraController?>(null);
+
+    final picker = ImagePicker();
+
+    Future<void> getImage() async {
+      try {
+        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          if (context.mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ViewPetImageScreen(image: pickedFile),
+              ),
+            );
+          }
+        }
+      } catch (e) {
+        if (context.mounted) {
+          AppSnackBar.error(context, e.toString());
+        }
+      }
+    }
 
     useMemoized(() async {
       cameras.value = await availableCameras();
@@ -133,85 +158,139 @@ class InputPetPictureScreen extends HookWidget {
             alignment: Alignment.bottomCenter,
             child: SafeArea(
               minimum: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: SizedBox(
-                width: double.maxFinite,
-                height: 100,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: Colors.white.withOpacity(0.1)),
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(100),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _PickFromGalleryButton(
+                    localizations: localizations,
+                    getImage: getImage,
                   ),
-                  child: Stack(
-                    children: [
-                      // z -
-                      BackdropFilter(filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10)),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const CircleAvatar(
-                                radius: 30,
-                              ),
-                              // Shutter button
-                              GestureDetector(
-                                onTap: handleOnShutter,
-                                child: Container(
-                                  padding: const EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(width: 4, color: Colors.white),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.maxFinite,
+                    height: 100,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Colors.white.withOpacity(0.1)),
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Stack(
+                        children: [
+                          // z -
+                          BackdropFilter(filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10)),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const CircleAvatar(
+                                    radius: 30,
                                   ),
-                                  child: Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // Camera rotate
-                              Container(
-                                padding: const EdgeInsets.all(3),
-                                height: 55,
-                                width: 55,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white.withOpacity(0.1),
-                                  // color: Colors.white,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    BackdropFilter(
-                                      filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: SvgPicture.asset(
-                                        AppIcons.cameraRotate,
-                                        color: Colors.white,
+                                  // Shutter button
+                                  GestureDetector(
+                                    onTap: handleOnShutter,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(3),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(width: 4, color: Colors.white),
+                                      ),
+                                      child: Container(
+                                        height: 60,
+                                        width: 60,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              )
-                            ],
+                                  ),
+                                  // Camera rotate
+                                  Container(
+                                    padding: const EdgeInsets.all(3),
+                                    height: 55,
+                                    width: 55,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white.withOpacity(0.1),
+                                      // color: Colors.white,
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        BackdropFilter(
+                                          filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: SvgPicture.asset(
+                                            AppIcons.cameraRotate,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             // child: ElevatedButton(
           )
         ],
       ).animate().fadeIn(),
+    );
+  }
+}
+
+class _PickFromGalleryButton extends StatelessWidget {
+  const _PickFromGalleryButton({
+    required this.localizations,
+    required this.getImage,
+  });
+
+  final AppLocalizations localizations;
+  final Future<void> Function() getImage;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 200,
+      height: 30,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(100),
+        onTap: getImage,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 2, color: Colors.white.withOpacity(0.1)),
+            color: Colors.white.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: Stack(
+            children: [
+              // z -
+              BackdropFilter(filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10)),
+              Center(
+                child: Text(
+                  localizations.appButtonsPickFromGallery,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

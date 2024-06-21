@@ -50,5 +50,7 @@
     "appTextFieldHintsPetName": "Pet name",
     "petNameCaption": "Enter your pet's name to continue.",
     "selectAnimalQuestion": "{value} is a ... ?",
-    "@selectAnimalQuestion": {"placeholders": {"value": {}}}
+    "@selectAnimalQuestion": {"placeholders": {"value": {}}},
+    "appButtonsPickFromGallery": "Pick from gallery",
+    "appButtonsSave": "Save"
 }

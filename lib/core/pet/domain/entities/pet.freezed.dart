@@ -25,6 +25,8 @@ mixin _$Pet {
   String get owner => throw _privateConstructorUsedError;
   DateTime get dob => throw _privateConstructorUsedError;
   Sex get sex => throw _privateConstructorUsedError;
+  String get breed => throw _privateConstructorUsedError;
+  String get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +38,14 @@ abstract class $PetCopyWith<$Res> {
   factory $PetCopyWith(Pet value, $Res Function(Pet) then) =
       _$PetCopyWithImpl<$Res, Pet>;
   @useResult
-  $Res call({String id, String name, String owner, DateTime dob, Sex sex});
+  $Res call(
+      {String id,
+      String name,
+      String owner,
+      DateTime dob,
+      Sex sex,
+      String breed,
+      String image});
 }
 
 /// @nodoc
@@ -56,6 +65,8 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
     Object? owner = null,
     Object? dob = null,
     Object? sex = null,
+    Object? breed = null,
+    Object? image = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -78,6 +89,14 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
               as Sex,
+      breed: null == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -88,7 +107,14 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       __$$PetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String owner, DateTime dob, Sex sex});
+  $Res call(
+      {String id,
+      String name,
+      String owner,
+      DateTime dob,
+      Sex sex,
+      String breed,
+      String image});
 }
 
 /// @nodoc
@@ -105,6 +131,8 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     Object? owner = null,
     Object? dob = null,
     Object? sex = null,
+    Object? breed = null,
+    Object? image = null,
   }) {
     return _then(_$PetImpl(
       id: null == id
@@ -127,6 +155,14 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
               as Sex,
+      breed: null == breed
+          ? _value.breed
+          : breed // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: null == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -139,7 +175,9 @@ class _$PetImpl implements _Pet {
       required this.name,
       required this.owner,
       required this.dob,
-      required this.sex});
+      required this.sex,
+      required this.breed,
+      required this.image});
 
   factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetImplFromJson(json);
@@ -154,10 +192,14 @@ class _$PetImpl implements _Pet {
   final DateTime dob;
   @override
   final Sex sex;
+  @override
+  final String breed;
+  @override
+  final String image;
 
   @override
   String toString() {
-    return 'Pet(id: $id, name: $name, owner: $owner, dob: $dob, sex: $sex)';
+    return 'Pet(id: $id, name: $name, owner: $owner, dob: $dob, sex: $sex, breed: $breed, image: $image)';
   }
 
   @override
@@ -169,12 +211,15 @@ class _$PetImpl implements _Pet {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.owner, owner) || other.owner == owner) &&
             (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.sex, sex) || other.sex == sex));
+            (identical(other.sex, sex) || other.sex == sex) &&
+            (identical(other.breed, breed) || other.breed == breed) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, owner, dob, sex);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, owner, dob, sex, breed, image);
 
   @JsonKey(ignore: true)
   @override
@@ -196,7 +241,9 @@ abstract class _Pet implements Pet {
       required final String name,
       required final String owner,
       required final DateTime dob,
-      required final Sex sex}) = _$PetImpl;
+      required final Sex sex,
+      required final String breed,
+      required final String image}) = _$PetImpl;
 
   factory _Pet.fromJson(Map<String, dynamic> json) = _$PetImpl.fromJson;
 
@@ -210,6 +257,10 @@ abstract class _Pet implements Pet {
   DateTime get dob;
   @override
   Sex get sex;
+  @override
+  String get breed;
+  @override
+  String get image;
   @override
   @JsonKey(ignore: true)
   _$$PetImplCopyWith<_$PetImpl> get copyWith =>
