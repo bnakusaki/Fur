@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/shared/assets/app_icons.dart';
-import 'package:palette_generator/palette_generator.dart';
 
 class ImageAndLabel extends HookWidget {
   const ImageAndLabel({
@@ -23,15 +22,15 @@ class ImageAndLabel extends HookWidget {
   Widget build(BuildContext context) {
     final color = useState<Color?>(null);
 
-    Future<Color> updatePalette(ImageProvider provider) async {
-      final paletteGenerator = await PaletteGenerator.fromImageProvider(provider);
-      return paletteGenerator.dominantColor?.color ?? Colors.blue;
-    }
+    // Future<Color> updatePalette(ImageProvider provider) async {
+    //   final paletteGenerator = await PaletteGenerator.fromImageProvider(provider);
+    //   return paletteGenerator.dominantColor?.color ?? Colors.blue;
+    // }
 
     useMemoized(() async {
-      final imageProvider = CachedNetworkImageProvider(imageUrl);
+      // final imageProvider = CachedNetworkImageProvider(imageUrl);
 
-      color.value = await updatePalette(imageProvider);
+      // color.value = await updatePalette(imageProvider);
     });
 
     return Column(

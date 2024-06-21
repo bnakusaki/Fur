@@ -36,8 +36,10 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
     final breedsCache = useState<List<Breed>>([]);
     final fetchingMore = useState(false);
     final searchTerm = useState('');
+    final allDataFetched = useState(false);
 
     useEffect(() {
+      if (allDataFetched.value) return null;
       listener() async {
         if (scrollController.position.extentAfter < 200 && !fetchingMore.value) {
           try {
@@ -50,6 +52,8 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
 
             if (chunk.isNotEmpty) {
               breedsCache.value = [...breedsCache.value, ...chunk];
+            } else {
+              allDataFetched.value = true;
             }
           } catch (e) {
             Logger().e(e);
