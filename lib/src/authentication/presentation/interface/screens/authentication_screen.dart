@@ -7,6 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
+import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_mixin.dart';
 
@@ -31,7 +32,9 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
       _AutneticationOptionData(
         label: localizations.appButtonsContinueWithGoogle,
         icon: AppIcons.google,
-        onPressed: () async {},
+        onPressed: () async {
+          await authenticateWithGoogle();
+        },
       ),
       _AutneticationOptionData(
         label: localizations.appButtonsContinueWithFacebook,
@@ -94,7 +97,7 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
                     final authenticationOption = authenticationOptions[index];
 
                     return ElevatedButton.icon(
-                      onPressed: authenticationOption.onPressed,
+                      onPressed: null,
                       label: Text(authenticationOption.label),
                       icon: SvgPicture.asset(
                         authenticationOption.icon,
@@ -102,7 +105,7 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
                         height: 20,
                         color: Colors.white,
                       ),
-                    );
+                    ).withLoadingState(onPressed: authenticationOption.onPressed);
                   },
                   separatorBuilder: (context, index) {
                     return const SizedBox(height: 10);
