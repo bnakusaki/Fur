@@ -11,12 +11,14 @@ class ImageAndLabel extends HookWidget {
     required this.imageUrl,
     this.onTap,
     this.fillCard = true,
+    this.selected = false,
   });
 
   final String label;
   final String imageUrl;
   final void Function()? onTap;
   final bool fillCard;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,13 @@ class ImageAndLabel extends HookWidget {
           aspectRatio: 1,
           child: Card(
             color: color.value ?? Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+              side: BorderSide(
+                color: selected ? Colors.green.shade400 : Colors.grey.shade300,
+                width: 4,
+              ),
+            ),
             child: InkWell(
               onTap: onTap,
               child: CachedNetworkImage(
@@ -62,8 +71,9 @@ class ImageAndLabel extends HookWidget {
         ),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w600,
+            color: selected ? Colors.green.shade500 : null,
           ),
           textAlign: TextAlign.center,
         ),

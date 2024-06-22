@@ -33,12 +33,25 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
     final searchFieldFocusNode = useFocusNode();
 
     final searchTerm = useState('');
+    final selectedAnimal = useState<Animal?>(null);
 
     final animals = ref.watch(listAnimalsProvider(Localizations.localeOf(context).languageCode));
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
     final addPetForm = ref.watch(addPetFormNotifierProvider);
+
+    void handleContinue() {
+      ref.watch(addPetFormNotifierProvider.notifier).update(
+            (pet) => pet.copyWith(animal: selectedAnimal.value!.id),
+          );
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return SelectAnimalBreedScreen(
+          animal: selectedAnimal.value!,
+        );
+      }));
+    }
 
     return GestureDetector(
       onTap: () {
@@ -155,13 +168,9 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
                                                     : ImageAndLabel(
                                                         imageUrl: animal.imageUrl,
                                                         label: animal.name,
+                                                        selected: selectedAnimal.value == animal,
                                                         onTap: () {
-                                                          Navigator.push(context,
-                                                              MaterialPageRoute(builder: (context) {
-                                                            return SelectAnimalBreedScreen(
-                                                              animal: animal,
-                                                            );
-                                                          }));
+                                                          selectedAnimal.value = animal;
                                                         },
                                                       ),
                                               ))
@@ -219,6 +228,19 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
             ],
           ),
         ),
+        bottomNavigationBar: selectedAnimal.value != null
+            ? Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.paddingOf(context).bottom + 20,
+                  left: 20,
+                  right: 20,
+                ),
+                child: ElevatedButton(
+                  onPressed: handleContinue,
+                  child: Text(localizations.appButtonsContinue),
+                ).animate().fadeIn().slideY(begin: 0.1),
+              )
+            : null,
       ),
     );
   }

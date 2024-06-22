@@ -14,6 +14,7 @@ class Pet with _$Pet {
     required Sex sex,
     required String breed,
     required String image,
+    required String animal,
   }) = _Pet;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
@@ -27,6 +28,7 @@ class Pet with _$Pet {
       sex: Sex.male,
       breed: '',
       image: '',
+      animal: '',
     );
   }
 }

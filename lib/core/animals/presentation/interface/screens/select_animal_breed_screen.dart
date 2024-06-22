@@ -7,7 +7,9 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/domain/entities/breed.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
+import 'package:fur/core/animals/presentation/interface/screens/save_pet_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_breeds.dart';
+import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
@@ -37,6 +39,7 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
     final fetchingMore = useState(false);
     final searchTerm = useState('');
     final allDataFetched = useState(false);
+    final selectedBreed = useState<Breed?>(null);
 
     useEffect(() {
       if (allDataFetched.value) return null;
@@ -77,6 +80,20 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
     });
 
     final randInt = useState(Random().nextInt(sadPets.length));
+
+    void handleContinue() {
+      ref
+          .watch(addPetFormNotifierProvider.notifier)
+          .update((pet) => pet.copyWith(breed: selectedBreed.value!.id));
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SavePetScreen(),
+        ),
+        (route) => true,
+      );
+    }
 
     return GestureDetector(
       onTap: () {
@@ -153,6 +170,7 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
                             breeds: filteredBreeds,
                             fetchingMore: fetchingMore,
                             scrollController: scrollController,
+                            selectedBreed: selectedBreed,
                           );
                         }
                       },
@@ -200,6 +218,19 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
             ],
           ),
         ),
+        bottomNavigationBar: selectedBreed.value != null
+            ? Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.paddingOf(context).bottom + 20,
+                  left: 20,
+                  right: 20,
+                ),
+                child: ElevatedButton(
+                  onPressed: handleContinue,
+                  child: Text(localizations.appButtonsContinue),
+                ).animate().fadeIn().slideY(begin: 0.1),
+              )
+            : null,
       ),
     );
   }
@@ -210,11 +241,13 @@ class _BreedsList extends StatelessWidget {
     required this.breeds,
     required this.fetchingMore,
     required this.scrollController,
+    required this.selectedBreed,
   });
 
   final List<Breed> breeds;
   final ValueNotifier<bool> fetchingMore;
   final ScrollController scrollController;
+  final ValueNotifier<Breed?> selectedBreed;
 
   @override
   Widget build(BuildContext context) {
@@ -234,14 +267,17 @@ class _BreedsList extends StatelessWidget {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: row
-                  .map((animal) => Expanded(
-                        child: animal == Breed.empty()
+                  .map((breed) => Expanded(
+                        child: breed == Breed.empty()
                             ? const SizedBox()
                             : ImageAndLabel(
+                                selected: selectedBreed.value == breed,
                                 fillCard: false,
-                                imageUrl: animal.imageUrl,
-                                label: animal.name,
-                                onTap: () {},
+                                imageUrl: breed.imageUrl,
+                                label: breed.name,
+                                onTap: () {
+                                  selectedBreed.value = breed;
+                                },
                               ),
                       ))
                   .toList(),

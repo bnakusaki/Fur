@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fur/core/pet/data/databases/pets_remote_database.dart';
+import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/repositories/pet_repository.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
@@ -23,5 +24,11 @@ class PetsRepositoryImpl implements PetsRepository {
     } catch (e) {
       return Left(Failure(ErrorCodes.unknownError));
     }
+  }
+
+  @override
+  Future<Either<Failure, Pet>> create(Pet pet) {
+    // TODO: implement create
+    throw UnimplementedError();
   }
 }
