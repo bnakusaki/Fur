@@ -1,6 +1,8 @@
 import 'package:fur/src/authentication/data/databases/authentication_remote_database.dart';
 import 'package:fur/src/authentication/data/repositories/authentication_repository_impl.dart';
 import 'package:fur/src/authentication/domain/repositories/authentication_repository.dart';
+import 'package:fur/src/authentication/domain/usecases/authenticate_with_apple.dart';
+import 'package:fur/src/authentication/domain/usecases/authenticate_with_facebook.dart';
 import 'package:fur/src/authentication/domain/usecases/authenticate_with_google.dart';
 import 'package:fur/src/authentication/domain/usecases/sign_out.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_bloc.dart';
@@ -13,8 +15,8 @@ void initAuthentication() {
     ..registerFactory(() => AuthenticationBloc(
           sl(),
           sl(),
-
-          // sl(),
+          sl(),
+          sl(),
         ))
     ..registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(sl(), sl()),
@@ -23,5 +25,7 @@ void initAuthentication() {
       () => AuthenticationRemoteDatabaseImpl(),
     )
     ..registerLazySingleton(() => AuthenticateWithGoogle(sl()))
+    ..registerLazySingleton(() => AuthenticateWithApple(sl()))
+    ..registerLazySingleton(() => AuthenticateWithFacebook(sl()))
     ..registerLazySingleton(() => SignOut(sl()));
 }

@@ -7,8 +7,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
+import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/styles/text_styles.dart';
+import 'package:fur/shared/widgets/app_snack_bar.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_mixin.dart';
 
 import '../../../../../common_libs.dart';
@@ -27,19 +29,41 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
         _AutneticationOptionData(
           label: localizations.appButtonsContinueWithApple,
           icon: AppIcons.apple,
-          onPressed: () async {},
+          onPressed: () async {
+            try {
+              await authenticateWithApple(context);
+            } on Failure catch (e) {
+              if (context.mounted) {
+                AppSnackBar.error(context, e.code);
+              }
+            }
+          },
         ),
       _AutneticationOptionData(
         label: localizations.appButtonsContinueWithGoogle,
         icon: AppIcons.google,
         onPressed: () async {
-          await authenticateWithGoogle();
+          try {
+            await authenticateWithGoogle(context);
+          } on Failure catch (e) {
+            if (context.mounted) {
+              AppSnackBar.error(context, e.code);
+            }
+          }
         },
       ),
       _AutneticationOptionData(
         label: localizations.appButtonsContinueWithFacebook,
         icon: AppIcons.facebook,
-        onPressed: () async {},
+        onPressed: () async {
+          try {
+            await authenticateWithFacebook(context);
+          } on Failure catch (e) {
+            if (context.mounted) {
+              AppSnackBar.error(context, e.code);
+            }
+          }
+        },
       ),
     ];
 

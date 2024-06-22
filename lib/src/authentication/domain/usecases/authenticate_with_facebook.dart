@@ -4,13 +4,13 @@ import 'package:fur/shared/usecase/usecase.dart';
 import 'package:fur/src/authentication/domain/entities/user.dart';
 import 'package:fur/src/authentication/domain/repositories/authentication_repository.dart';
 
-class AuthenticateWithGoogle extends UseCase<User, NoParams> {
-  AuthenticateWithGoogle(this.repository);
+class AuthenticateWithFacebook extends UseCase<User, NoParams> {
+  AuthenticateWithFacebook(this.repository);
 
   final AuthenticationRepository repository;
 
   @override
   Future<Either<Failure, User>> call(NoParams params) async {
-    return await repository.authenticateWithGoogle();
+    return await repository.authenticateWithFacebook();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/platform/network_info.dart';
@@ -22,10 +22,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       final response = await remoteDatabase.signOut();
       return Right(response);
     } on FirebaseAuthException catch (e) {
-      debugPrint(e.toString());
+      if (kDebugMode) Logger().e(e);
       return Left(Failure(e.code));
+    } on Failure catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(e);
     } catch (e) {
-      debugPrint(e.toString());
+      if (kDebugMode) Logger().e(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
@@ -38,22 +41,52 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
       return Right(response);
     } on FirebaseAuthException catch (e) {
+      if (kDebugMode) Logger().e(e);
       return Left(Failure(e.code));
+    } on Failure catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(e);
     } catch (e) {
-      Logger().e(e);
+      if (kDebugMode) Logger().e(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
 
   @override
-  Future<Either<Failure, User>> authenticateWithApple() {
-    // TODO: implement authenticateWithApple
-    throw UnimplementedError();
+  Future<Either<Failure, User>> authenticateWithApple() async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.authenticateWithApple();
+
+      return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(e);
+    } catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(Failure(ErrorCodes.unknownError));
+    }
   }
 
   @override
-  Future<Either<Failure, User>> authenticateWithFacebook() {
-    // TODO: implement authenticateWithFacebook
-    throw UnimplementedError();
+  Future<Either<Failure, User>> authenticateWithFacebook() async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.authenticateWithFacebook();
+
+      return Right(response);
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(e);
+    } catch (e) {
+      if (kDebugMode) Logger().e(e);
+      return Left(Failure(ErrorCodes.unknownError));
+    }
   }
 }
