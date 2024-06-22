@@ -10,7 +10,7 @@ import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
-import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
+import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:intl/intl.dart';
 
 class InputPetName extends HookWidget {

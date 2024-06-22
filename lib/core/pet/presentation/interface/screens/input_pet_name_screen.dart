@@ -6,7 +6,7 @@ import 'package:fur/core/pet/presentation/interface/screens/input_pet_picture_sc
 import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
-import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
+import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class InputPetNameScreen extends HookConsumerWidget {

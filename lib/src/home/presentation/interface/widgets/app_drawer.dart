@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,7 +21,7 @@ class AppDrawer extends StatelessWidget {
 
     final theme = Theme.of(context);
 
-    final currentUser = FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser!;
 
     return Drawer(
       elevation: 0.0,
@@ -49,15 +50,24 @@ class AppDrawer extends StatelessWidget {
               shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadiusDirectional.circular(10),
               ),
-              leading: const CircleAvatar(),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+              leading: Container(
+                width: 50,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: CachedNetworkImage(
+                  imageUrl: user.photoURL!,
+                  fit: BoxFit.cover,
+                ),
+              ),
               title: Text(
-                currentUser.displayName!,
+                user.displayName!,
                 style: const TextStyle(fontWeight: FontWeight.w500),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               subtitle: Text(
-                currentUser.email!,
+                user.email!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 10),

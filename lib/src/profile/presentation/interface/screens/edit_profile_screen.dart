@@ -1,15 +1,15 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
-import 'package:fur/src/authentication/presentation/interface/widgets/app_text_form_field.dart';
-import 'package:fur/src/authentication/presentation/providers/user_notifier.dart';
+import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:fur/src/profile/presentation/bloc/profile_mixin.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,12 +20,10 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
 
-    final userProfile = ref.watch(userNotifierProvider);
+    final user = FirebaseAuth.instance.currentUser!;
 
-    final email = useState(userProfile.email);
-    final firstName = useState(userProfile.firstName);
-    final middleName = useState(userProfile.middleName ?? '');
-    final lastName = useState(userProfile.lastName);
+    final email = useState(user.email!);
+    final name = useState(user.displayName!);
 
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
@@ -44,31 +42,12 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
             return null;
           }),
       EditableProfileFieldData(
-        label: localizations.appTextFieldHintsFirstName,
-        value: firstName,
+        label: localizations.appTextFieldHintsName,
+        value: name,
+        readOnly: true,
         validator: (value) {
           if (value!.isEmpty) {
             return localizations.appTextFieldErrorsEmptyFirstName;
-          }
-          return null;
-        },
-      ),
-      EditableProfileFieldData(
-        label: localizations.appTextFieldHintsMiddleName,
-        value: middleName,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return localizations.appTextFieldErrorsEmptyMiddleName;
-          }
-          return null;
-        },
-      ),
-      EditableProfileFieldData(
-        label: localizations.appTextFieldHintsLastName,
-        value: lastName,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return localizations.appTextFieldErrorsEmptyLastName;
           }
           return null;
         },
@@ -86,7 +65,7 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
               AppBackButton(),
             ],
           ),
-          title: Text(localizations.appPageTitlesEditProfile),
+          title: Text(localizations.appPageTitlesEditProfile).animate().fadeIn(),
         ),
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 20),
@@ -96,60 +75,70 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: Card(),
+                      child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
+                        child: CachedNetworkImage(
+                          imageUrl: user.photoURL!,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 20),
                   Expanded(
                     flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${userProfile.firstName} ${userProfile.middleName ?? userProfile.lastName}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          userProfile.email,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        TextButton.icon(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.red.shade50,
-                            overlayColor: Colors.red.shade200,
-                            fixedSize: const Size(double.infinity, 30),
-                            shape: ContinuousRectangleBorder(
-                              borderRadius: BorderRadiusDirectional.circular(10),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            user.displayName!,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 20,
                             ),
-                            alignment: Alignment.centerLeft,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          icon: SvgPicture.asset(
-                            AppIcons.trash,
-                            height: 16,
-                            color: Colors.red,
+                          Text(
+                            user.email!,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
                           ),
-                          label: Text(
-                            localizations.appButtonsDelete,
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          TextButton.icon(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.red.shade50,
+                              overlayColor: Colors.red.shade200,
+                              fixedSize: const Size(double.infinity, 30),
+                              shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadiusDirectional.circular(10),
+                              ),
+                              alignment: Alignment.centerLeft,
+                            ),
+                            icon: SvgPicture.asset(
+                              AppIcons.trash,
+                              height: 16,
+                              color: Colors.red,
+                            ),
+                            label: Text(
+                              localizations.appButtonsDelete,
+                              style: const TextStyle(color: Colors.red),
+                            ),
+                          ).animate().fadeIn(),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -179,7 +168,7 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
                             : null,
                         onChanged: (value) {
                           field.value.value = value!.trim();
-                        });
+                        }).animate().fadeIn();
                   },
                   separatorBuilder: (context, index) => const SizedBox(height: 20),
                   itemCount: editableProfileFields.length,
@@ -188,40 +177,37 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
             ],
           ),
         ),
-        bottomNavigationBar: email.value != userProfile.email ||
-                firstName.value != userProfile.firstName ||
-                middleName.value != userProfile.middleName ||
-                lastName.value != userProfile.lastName
-            ? Padding(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.paddingOf(context).bottom + 20,
-                  left: 20,
-                  right: 20,
-                ),
-                child: ElevatedButton(
-                  onPressed: null,
-                  child: Text(localizations.appButtonsSaveChanges),
-                )
-                    .withLoadingState(
-                      onPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          await updateProfile(
-                            user: userProfile.copyWith(
-                              email: email.value,
-                              firstName: firstName.value,
-                              middleName: middleName.value,
-                              lastName: lastName.value,
-                            ),
-                            ref: ref,
-                          );
-                        }
-                      },
-                    )
-                    .animate()
-                    .fadeIn()
-                    .slideY(begin: 0.1),
-              )
-            : null,
+        // bottomNavigationBar: email.value != userProfile.email ||
+        //         name.value != userProfile.firstName
+        //     ? Padding(
+        //         padding: EdgeInsets.only(
+        //           bottom: MediaQuery.paddingOf(context).bottom + 20,
+        //           left: 20,
+        //           right: 20,
+        //         ),
+        //         child: ElevatedButton(
+        //           onPressed: null,
+        //           child: Text(localizations.appButtonsSaveChanges),
+        //         )
+        //             .withLoadingState(
+        //               onPressed: () async {
+        //                 if (formKey.currentState!.validate()) {
+        //                   await updateProfile(
+        //                     user: userProfile.copyWith(
+        //                       email: email.value,
+        //                       firstName: name.value,
+
+        //                     ),
+        //                     ref: ref,
+        //                   );
+        //                 }
+        //               },
+        //             )
+        //             .animate()
+        //             .fadeIn()
+        //             .slideY(begin: 0.1),
+        //       )
+        //     : null,
       ),
     );
   }
