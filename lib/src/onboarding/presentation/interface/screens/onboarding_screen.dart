@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,6 +11,7 @@ import 'package:fur/src/onboarding/presentation/bloc/onboarding_mixin.dart';
 import 'package:fur/src/onboarding/presentation/interface/widgets/done_button.dart';
 import 'package:fur/src/onboarding/presentation/interface/widgets/next_button.dart';
 import 'package:fur/src/onboarding/presentation/interface/widgets/smooth_page_indicator.dart';
+import 'package:logger/logger.dart';
 
 class OnboardingScreen extends HookWidget with OnboardingMixin {
   OnboardingScreen({super.key});
@@ -61,7 +63,7 @@ class OnboardingScreen extends HookWidget with OnboardingMixin {
                     );
                   }
                 } on Failure catch (e) {
-                  ///TODO: implement
+                  if (kDebugMode) Logger().e(e);
                 }
               },
               child: Text(localizations.appButtonsSkip),
@@ -111,7 +113,7 @@ class OnboardingScreen extends HookWidget with OnboardingMixin {
                           );
                         }
                       } on Failure catch (e) {
-                        ///TODO: implement
+                        if (kDebugMode) Logger().e(e);
                       }
                     },
                   ).animate().fadeIn()
