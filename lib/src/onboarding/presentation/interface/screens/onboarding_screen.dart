@@ -6,7 +6,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
-import 'package:fur/src/authentication/presentation/interface/screens/sign_in_screen.dart';
+import 'package:fur/src/authentication/presentation/interface/screens/authentication_screen.dart';
 import 'package:fur/src/onboarding/presentation/bloc/onboarding_mixin.dart';
 import 'package:fur/src/onboarding/presentation/interface/widgets/done_button.dart';
 import 'package:fur/src/onboarding/presentation/interface/widgets/next_button.dart';
@@ -57,7 +57,7 @@ class OnboardingScreen extends HookWidget with OnboardingMixin {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignInScreen(),
+                        builder: (context) => AuthenticationScreen(),
                       ),
                       (_) => true,
                     );
@@ -107,7 +107,7 @@ class OnboardingScreen extends HookWidget with OnboardingMixin {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignInScreen(),
+                              builder: (context) => AuthenticationScreen(),
                             ),
                             (_) => true,
                           );

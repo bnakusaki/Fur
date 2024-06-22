@@ -52,5 +52,8 @@
     "selectAnimalQuestion": "{value} is a ... ?",
     "@selectAnimalQuestion": {"placeholders": {"value": {}}},
     "appButtonsPickFromGallery": "Pick from gallery",
-    "appButtonsSave": "Save"
+    "appButtonsSave": "Save",
+    "appButtonsContinueWithGoogle": "Continue with Google",
+    "appButtonsContinueWithApple": "Continue with Apple",
+    "appButtonsContinueWithFacebook": "Continue with Facebook"
 }

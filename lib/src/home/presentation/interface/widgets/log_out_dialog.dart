@@ -6,7 +6,7 @@ import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/text_button.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
-import 'package:fur/src/authentication/presentation/interface/screens/sign_in_screen.dart';
+import 'package:fur/src/authentication/presentation/interface/screens/authentication_screen.dart';
 import 'package:fur/src/home/presentation/bloc/home_mixin.dart';
 import 'package:lottie/lottie.dart';
 
@@ -23,7 +23,7 @@ class LogoutDialog extends StatelessWidget with HomeMixin {
         if (context.mounted) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => SignInScreen()),
+            MaterialPageRoute(builder: (context) => AuthenticationScreen()),
             (route) => true,
           );
         }

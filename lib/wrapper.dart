@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fur/src/authentication/presentation/interface/screens/sign_in_screen.dart';
+import 'package:fur/src/authentication/presentation/interface/screens/authentication_screen.dart';
 import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 
 class Wrapper extends ConsumerWidget {
@@ -14,6 +14,6 @@ class Wrapper extends ConsumerWidget {
     final currentUser = FirebaseAuth.instance.currentUser;
     // final hasProfile = ref.watch(retrieveHasProfileProvider(currentUser?.uid ?? ''));
 
-    return currentUser == null ? SignInScreen() : const HomeScreen();
+    return currentUser == null ? AuthenticationScreen() : const HomeScreen();
   }
 }

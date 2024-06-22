@@ -21,6 +21,9 @@ class AppIcons {
   static const cameraRotate = '$_path/camera-rotate.svg';
   static const bolt = '$_path/bolt.svg';
   static const boltSlash = '$_path/bolt-slash.svg';
+  static const google = '$_path/google.svg';
+  static const apple = '$_path/apple.svg';
+  static const facebook = '$_path/facebook.svg';
 }
 
 class AppAnimatedIcons {
