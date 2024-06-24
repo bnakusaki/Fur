@@ -89,7 +89,7 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const SavePetScreen(),
+          builder: (context) => SavePetScreen(),
         ),
         (route) => true,
       );

@@ -56,5 +56,6 @@
     "appButtonsContinueWithGoogle": "Continue with Google",
     "appButtonsContinueWithApple": "Continue with Apple",
     "appButtonsContinueWithFacebook": "Continue with Facebook",
-    "appTextFieldHintsName": "Name"
+    "appTextFieldHintsName": "Name",
+    "myPets": "My pets"
 }

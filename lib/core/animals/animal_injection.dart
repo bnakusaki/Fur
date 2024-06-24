@@ -10,7 +10,7 @@ void initAnimals() {
   final sl = GetIt.instance;
 
   sl
-    ..registerFactory(() => AnimalsBloc(sl(), sl()))
+    ..registerFactory(() => AnimalsBloc(sl(), sl(), sl()))
     ..registerLazySingleton<AnimalsRepository>(() => AnimalsRepositoryImpl(sl(), sl()))
     ..registerLazySingleton<AnimalsRemoteDatabase>(() => AnimalsRemoteDatabaseImpl())
     ..registerLazySingleton(() => ListAnimals(sl()))

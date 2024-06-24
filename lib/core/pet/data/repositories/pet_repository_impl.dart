@@ -21,14 +21,25 @@ class PetsRepositoryImpl implements PetsRepository {
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
 
   @override
-  Future<Either<Failure, Pet>> create(Pet pet) {
-    // TODO: implement create
-    throw UnimplementedError();
+  Future<Either<Failure, Pet>> create(Pet pet) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.create(pet);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
   }
 }

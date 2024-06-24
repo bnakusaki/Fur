@@ -9,7 +9,7 @@ class CreatePet extends UseCase<void, ObjectParams<Pet>> {
   CreatePet(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(ObjectParams<Pet> params) async {
+  Future<Either<Failure, Pet>> call(ObjectParams<Pet> params) async {
     return await repository.create(params.value);
   }
 }

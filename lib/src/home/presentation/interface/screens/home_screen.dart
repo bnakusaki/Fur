@@ -1,35 +1,24 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fur/common_libs.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_name_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/src/authentication/presentation/providers/user_notifier.dart';
+import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
-import 'package:fur/src/profile/providers/retrieve_profile.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:fur/src/home/presentation/interface/widgets/pets_carousel.dart';
 import 'package:lottie/lottie.dart';
 
-class HomeScreen extends HookConsumerWidget {
+class HomeScreen extends HookWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final textStyles = Theme.of(context).extension<TextStyles>()!;
+
     final menuAnimationController =
         useAnimationController(duration: const Duration(milliseconds: 1000));
-
-    useMemoized(() async {
-      try {
-        final uid = FirebaseAuth.instance.currentUser!.uid;
-        final response = await ref.watch(retrieveProfileProvider(uid).future);
-
-        debugPrint(response.toString());
-        ref.watch(userNotifierProvider.notifier).set(response);
-      } catch (e) {
-        debugPrint('=============');
-        debugPrint(e.toString());
-
-        ///
-      }
-    });
 
     return Scaffold(
       onDrawerChanged: (isOpened) {
@@ -57,6 +46,42 @@ class HomeScreen extends HookConsumerWidget {
         child: Padding(
           padding: EdgeInsets.all(19.0),
           child: AppDrawer(),
+        ),
+      ),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    localizations.myPets,
+                    style: textStyles.h2,
+                  ),
+                  IconButton.filledTonal(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const InputPetNameScreen(),
+                        ),
+                      );
+                    },
+                    icon: SvgPicture.asset(
+                      AppIcons.plus,
+                      height: 16,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 5),
+            const PetsCarousel(),
+          ],
         ),
       ),
     );
