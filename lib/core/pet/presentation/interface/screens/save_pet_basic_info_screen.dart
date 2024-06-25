@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
-import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
+import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
@@ -11,20 +11,20 @@ import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-class SavePetScreen extends HookConsumerWidget with AnimalMixin {
-  SavePetScreen({super.key});
+class SavePetBasicInfoScreen extends HookConsumerWidget with AnimalMixin {
+  SavePetBasicInfoScreen({super.key, required this.pet});
+
+  final Pet pet;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
     final textStyles = Theme.of(context).extension<TextStyles>()!;
 
     useMemoized(() async {
       try {
-        final pet = ref.watch(addPetFormNotifierProvider).copyWith(
-              owner: FirebaseAuth.instance.currentUser!.uid,
-            );
         await createPet(pet);
-        ref.watch(addPetFormNotifierProvider.notifier).clear();
+
         if (context.mounted) {
           Navigator.push(
             context,
@@ -53,7 +53,7 @@ class SavePetScreen extends HookConsumerWidget with AnimalMixin {
               ),
               const SizedBox(height: 20),
               Text(
-                'Saving pet profile ...',
+                localizations.savingPetInfo,
                 style: textStyles.emptyState,
               ).animate(delay: 1.seconds).fade(),
             ],

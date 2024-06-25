@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fur/core/pet/domain/entities/pet_age.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 
 part 'pet.freezed.dart';
@@ -10,11 +11,12 @@ class Pet with _$Pet {
     required String id,
     required String name,
     required String owner,
-    required DateTime dob,
     required Sex sex,
     required String breed,
     required String image,
     required String animal,
+    required double weight,
+    required PetAge age,
   }) = _Pet;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
@@ -24,11 +26,12 @@ class Pet with _$Pet {
       id: '',
       name: '',
       owner: '',
-      dob: DateTime.now(),
       sex: Sex.male,
       breed: '',
       image: '',
       animal: '',
+      weight: 0.0,
+      age: PetAge.empty(),
     );
   }
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/presentation/interface/screens/select_pet_species_screen.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
+import 'package:fur/core/pet/presentation/interface/screens/select_pet_species_screen.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
@@ -74,7 +74,7 @@ class InputPetNameScreen extends HookConsumerWidget {
         bottomNavigationBar: ValueListenableBuilder(
           valueListenable: controller,
           builder: (context, value, child) {
-            return value.text.isNotEmpty
+            return value.text.trim().isNotEmpty
                 ? Padding(
                     padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).padding.bottom + 20,

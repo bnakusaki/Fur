@@ -6,9 +6,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
-import 'package:fur/core/pet/presentation/interface/screens/select_pet_breed_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_animals.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
+import 'package:fur/core/pet/presentation/interface/screens/select_pet_breed_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/text_styles.dart';
@@ -48,7 +48,6 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
         MaterialPageRoute(
           builder: (context) {
             return SelectPetBreedScreen(
-              animal: selectedAnimal.value!,
               pet: pet.copyWith(animal: selectedAnimal.value!.id),
             );
           },

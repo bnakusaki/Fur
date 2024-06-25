@@ -8,7 +8,6 @@ class Breed with _$Breed {
   const factory Breed({
     required String id,
     required String name,
-    required String imageUrl,
     required String animal,
   }) = _Breed;
 
@@ -17,7 +16,6 @@ class Breed with _$Breed {
   factory Breed.empty() => const Breed(
         id: '',
         name: '',
-        imageUrl: '',
         animal: '',
       );
 }

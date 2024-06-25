@@ -22,7 +22,6 @@ Breed _$BreedFromJson(Map<String, dynamic> json) {
 mixin _$Breed {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get imageUrl => throw _privateConstructorUsedError;
   String get animal => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +34,7 @@ abstract class $BreedCopyWith<$Res> {
   factory $BreedCopyWith(Breed value, $Res Function(Breed) then) =
       _$BreedCopyWithImpl<$Res, Breed>;
   @useResult
-  $Res call({String id, String name, String imageUrl, String animal});
+  $Res call({String id, String name, String animal});
 }
 
 /// @nodoc
@@ -53,7 +52,6 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
     Object? animal = null,
   }) {
     return _then(_value.copyWith(
@@ -64,10 +62,6 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
       animal: null == animal
           ? _value.animal
@@ -84,7 +78,7 @@ abstract class _$$BreedImplCopyWith<$Res> implements $BreedCopyWith<$Res> {
       __$$BreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String imageUrl, String animal});
+  $Res call({String id, String name, String animal});
 }
 
 /// @nodoc
@@ -100,7 +94,6 @@ class __$$BreedImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? imageUrl = null,
     Object? animal = null,
   }) {
     return _then(_$BreedImpl(
@@ -111,10 +104,6 @@ class __$$BreedImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      imageUrl: null == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
       animal: null == animal
           ? _value.animal
@@ -128,10 +117,7 @@ class __$$BreedImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BreedImpl implements _Breed {
   const _$BreedImpl(
-      {required this.id,
-      required this.name,
-      required this.imageUrl,
-      required this.animal});
+      {required this.id, required this.name, required this.animal});
 
   factory _$BreedImpl.fromJson(Map<String, dynamic> json) =>
       _$$BreedImplFromJson(json);
@@ -141,13 +127,11 @@ class _$BreedImpl implements _Breed {
   @override
   final String name;
   @override
-  final String imageUrl;
-  @override
   final String animal;
 
   @override
   String toString() {
-    return 'Breed(id: $id, name: $name, imageUrl: $imageUrl, animal: $animal)';
+    return 'Breed(id: $id, name: $name, animal: $animal)';
   }
 
   @override
@@ -157,14 +141,12 @@ class _$BreedImpl implements _Breed {
             other is _$BreedImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
             (identical(other.animal, animal) || other.animal == animal));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, imageUrl, animal);
+  int get hashCode => Object.hash(runtimeType, id, name, animal);
 
   @JsonKey(ignore: true)
   @override
@@ -184,7 +166,6 @@ abstract class _Breed implements Breed {
   const factory _Breed(
       {required final String id,
       required final String name,
-      required final String imageUrl,
       required final String animal}) = _$BreedImpl;
 
   factory _Breed.fromJson(Map<String, dynamic> json) = _$BreedImpl.fromJson;
@@ -193,8 +174,6 @@ abstract class _Breed implements Breed {
   String get id;
   @override
   String get name;
-  @override
-  String get imageUrl;
   @override
   String get animal;
   @override

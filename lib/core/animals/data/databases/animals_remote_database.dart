@@ -57,18 +57,6 @@ class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
     for (final doc in response.docs) {
       final json = doc.data();
       json['name'] = doc['name'][languageCode];
-      String imageDownloadUrl = '';
-      try {
-        imageDownloadUrl = await FirebaseStorage.instance
-            .ref()
-            .child('animal_breeds')
-            .child(json['imageUrl'])
-            .getDownloadURL();
-      } catch (e) {
-        ///
-      }
-
-      json['imageUrl'] = imageDownloadUrl;
 
       breeds.add(Breed.fromJson(json));
     }

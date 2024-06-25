@@ -23,11 +23,12 @@ mixin _$Pet {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
-  DateTime get dob => throw _privateConstructorUsedError;
   Sex get sex => throw _privateConstructorUsedError;
   String get breed => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   String get animal => throw _privateConstructorUsedError;
+  double get weight => throw _privateConstructorUsedError;
+  PetAge get age => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,11 +44,14 @@ abstract class $PetCopyWith<$Res> {
       {String id,
       String name,
       String owner,
-      DateTime dob,
       Sex sex,
       String breed,
       String image,
-      String animal});
+      String animal,
+      double weight,
+      PetAge age});
+
+  $PetAgeCopyWith<$Res> get age;
 }
 
 /// @nodoc
@@ -65,11 +69,12 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
     Object? id = null,
     Object? name = null,
     Object? owner = null,
-    Object? dob = null,
     Object? sex = null,
     Object? breed = null,
     Object? image = null,
     Object? animal = null,
+    Object? weight = null,
+    Object? age = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -84,10 +89,6 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as String,
-      dob: null == dob
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -104,7 +105,23 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           ? _value.animal
           : animal // ignore: cast_nullable_to_non_nullable
               as String,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
+      age: null == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as PetAge,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PetAgeCopyWith<$Res> get age {
+    return $PetAgeCopyWith<$Res>(_value.age, (value) {
+      return _then(_value.copyWith(age: value) as $Val);
+    });
   }
 }
 
@@ -118,11 +135,15 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       {String id,
       String name,
       String owner,
-      DateTime dob,
       Sex sex,
       String breed,
       String image,
-      String animal});
+      String animal,
+      double weight,
+      PetAge age});
+
+  @override
+  $PetAgeCopyWith<$Res> get age;
 }
 
 /// @nodoc
@@ -137,11 +158,12 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     Object? id = null,
     Object? name = null,
     Object? owner = null,
-    Object? dob = null,
     Object? sex = null,
     Object? breed = null,
     Object? image = null,
     Object? animal = null,
+    Object? weight = null,
+    Object? age = null,
   }) {
     return _then(_$PetImpl(
       id: null == id
@@ -156,10 +178,6 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
               as String,
-      dob: null == dob
-          ? _value.dob
-          : dob // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       sex: null == sex
           ? _value.sex
           : sex // ignore: cast_nullable_to_non_nullable
@@ -176,6 +194,14 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           ? _value.animal
           : animal // ignore: cast_nullable_to_non_nullable
               as String,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
+      age: null == age
+          ? _value.age
+          : age // ignore: cast_nullable_to_non_nullable
+              as PetAge,
     ));
   }
 }
@@ -187,11 +213,12 @@ class _$PetImpl implements _Pet {
       {required this.id,
       required this.name,
       required this.owner,
-      required this.dob,
       required this.sex,
       required this.breed,
       required this.image,
-      required this.animal});
+      required this.animal,
+      required this.weight,
+      required this.age});
 
   factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetImplFromJson(json);
@@ -203,8 +230,6 @@ class _$PetImpl implements _Pet {
   @override
   final String owner;
   @override
-  final DateTime dob;
-  @override
   final Sex sex;
   @override
   final String breed;
@@ -212,10 +237,14 @@ class _$PetImpl implements _Pet {
   final String image;
   @override
   final String animal;
+  @override
+  final double weight;
+  @override
+  final PetAge age;
 
   @override
   String toString() {
-    return 'Pet(id: $id, name: $name, owner: $owner, dob: $dob, sex: $sex, breed: $breed, image: $image, animal: $animal)';
+    return 'Pet(id: $id, name: $name, owner: $owner, sex: $sex, breed: $breed, image: $image, animal: $animal, weight: $weight, age: $age)';
   }
 
   @override
@@ -226,17 +255,18 @@ class _$PetImpl implements _Pet {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.owner, owner) || other.owner == owner) &&
-            (identical(other.dob, dob) || other.dob == dob) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.animal, animal) || other.animal == animal));
+            (identical(other.animal, animal) || other.animal == animal) &&
+            (identical(other.weight, weight) || other.weight == weight) &&
+            (identical(other.age, age) || other.age == age));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, owner, dob, sex, breed, image, animal);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, owner, sex, breed, image, animal, weight, age);
 
   @JsonKey(ignore: true)
   @override
@@ -257,11 +287,12 @@ abstract class _Pet implements Pet {
       {required final String id,
       required final String name,
       required final String owner,
-      required final DateTime dob,
       required final Sex sex,
       required final String breed,
       required final String image,
-      required final String animal}) = _$PetImpl;
+      required final String animal,
+      required final double weight,
+      required final PetAge age}) = _$PetImpl;
 
   factory _Pet.fromJson(Map<String, dynamic> json) = _$PetImpl.fromJson;
 
@@ -272,8 +303,6 @@ abstract class _Pet implements Pet {
   @override
   String get owner;
   @override
-  DateTime get dob;
-  @override
   Sex get sex;
   @override
   String get breed;
@@ -281,6 +310,10 @@ abstract class _Pet implements Pet {
   String get image;
   @override
   String get animal;
+  @override
+  double get weight;
+  @override
+  PetAge get age;
   @override
   @JsonKey(ignore: true)
   _$$PetImplCopyWith<_$PetImpl> get copyWith =>

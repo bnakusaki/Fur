@@ -6,13 +6,19 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
+import 'package:fur/core/pet/domain/entities/pet.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_sex_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
+import 'package:intl/intl.dart';
 
 class InputPetAgeScreen extends HookWidget {
-  const InputPetAgeScreen({super.key});
+  const InputPetAgeScreen({super.key, required this.pet});
+
+  final Pet pet;
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +31,54 @@ class InputPetAgeScreen extends HookWidget {
     final weeks = useState(0);
     final days = useState(0);
 
+    final date = useState<DateTime?>(null);
+
     final dateFields = [
       _DateFieldData(
-        title: 'Years',
+        title: localizations.appTextFieldHintsYears,
         value: years,
       ),
       _DateFieldData(
-        title: 'Months',
+        title: localizations.appTextFieldHintsMonths,
         value: months,
       ),
       _DateFieldData(
-        title: 'Weeks',
+        title: localizations.appTextFieldHintsWeeks,
         value: weeks,
       ),
       _DateFieldData(
-        title: 'Days',
+        title: localizations.appTextFieldHintsDays,
         value: days,
       ),
     ];
+
+    useEffect(() {
+      final now = DateTime.now();
+
+      date.value = DateTime(
+        now.year - years.value,
+        now.month - months.value,
+        now.day - weeks.value * 7 - days.value,
+      );
+
+      return null;
+    }, [
+      years.value,
+      months.value,
+      weeks.value,
+      days.value,
+    ]);
+
+    void handleContinue() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => InputPetSexScreen(
+            pet: pet.copyWith.age(dob: date.value!),
+          ),
+        ),
+      );
+    }
 
     return GestureDetector(
       onTap: () {
@@ -51,16 +87,16 @@ class InputPetAgeScreen extends HookWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading: Row(children: [
-            const AppBackButton(),
-          ]),
-          centerTitle: false,
-          actions: [
-            TextButton(
-              onPressed: () {},
-              child: Text(localizations.appButtonsSkip),
+          leading: const Row(children: [
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: AppBackButton(),
             ),
-          ],
+          ]),
+          title: Text(
+            localizations.appPageTitlesBasicInformation,
+            style: textStyles.h2,
+          ),
         ),
         body: GestureDetector(
           onTap: () {
@@ -73,8 +109,8 @@ class InputPetAgeScreen extends HookWidget {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  'How old is Benny?',
-                  style: textStyles.h2,
+                  localizations.appQuestionsInputPetAge(pet.name.capitalize()),
+                  style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: 20),
                 ListView.separated(
@@ -86,20 +122,29 @@ class InputPetAgeScreen extends HookWidget {
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
                   itemCount: dateFields.length,
                 ),
+                const SizedBox(height: 10),
+                if (date.value != null)
+                  Text(
+                    DateFormat('MMMM dd, yyyy').format(date.value!),
+                    style: textStyles.caption,
+                  ).animate().fadeIn(),
                 const SizedBox(height: 40),
-                const Text(
-                    'You can select the date of bith of benny from a calendar by clicking the button below.'),
+                Text(
+                  localizations.appCaptionsPetAgeInputOptions,
+                  style: textStyles.caption,
+                ),
                 const SizedBox(height: 10),
                 TextButton.icon(
                   onPressed: () async {
-                    final date = await showDatePicker(
+                    final date0 = await showDatePicker(
                       context: context,
                       firstDate: DateTime(1900),
                       lastDate: DateTime.now(),
                     );
 
-                    if (date != null) {
-                      final difference = DateTime.now().difference(date);
+                    if (date0 != null) {
+                      date.value = date0;
+                      final difference = DateTime.now().difference(date0);
                       years.value = difference.inDays ~/ 365;
                       months.value = (difference.inDays % 365) ~/ 30;
                       weeks.value = ((difference.inDays % 365) % 30) ~/ 7;
@@ -114,23 +159,26 @@ class InputPetAgeScreen extends HookWidget {
                   style: TextButton.styleFrom(
                     backgroundColor: theme.primaryColor.withOpacity(0.1),
                   ),
-                  label: const Text('Select birth date'),
+                  label: Text(localizations.appButtonsSelectBirthDate),
                 )
-              ].animate(interval: 10.milliseconds).fadeIn(),
+              ],
             ),
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: MediaQuery.paddingOf(context).bottom + 20,
-          ),
-          child: ElevatedButton(
-            onPressed: () {},
-            child: Text(localizations.appButtonsContinue),
-          ),
-        ).animate().fadeIn().slideY(begin: 0.1),
+        bottomNavigationBar: date.value != null &&
+                (years.value > 0 || months.value > 0 || weeks.value > 0 || days.value > 0)
+            ? Padding(
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: MediaQuery.paddingOf(context).bottom + 20,
+                ),
+                child: ElevatedButton(
+                  onPressed: handleContinue,
+                  child: Text(localizations.appButtonsContinue),
+                ),
+              ).animate().fadeIn().slideY(begin: 0.1)
+            : null,
       ),
     );
   }
@@ -143,7 +191,9 @@ class _DateField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final controller = useTextEditingController();
+
     useEffect(() {
       controller.text = data.value.value.toString();
       return null;
@@ -173,10 +223,7 @@ class _DateField extends HookWidget {
         Expanded(
           child: Text(
             data.title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+            style: theme.textTheme.titleMedium,
           ),
         ),
       ],

@@ -5,6 +5,7 @@
 
     "buttonLabels_": "",
     "appButtonsContinue": "Continue",
+    "appButtonsSelectBirthDate": "Select birth date",
     "appButtonsSkip": "Skip",
     "appButtonsSignUp": "Sign up",
     "appButtonsNext": "Next",
@@ -26,9 +27,13 @@
     "textFieldHints_": "",
     "appTextFieldHintsPetName": "Pet name",
     "appTextFieldHintsSearch": "Search",
+    "appTextFieldHintsYears": "Years",
+    "appTextFieldHintsMonths": "Months",
+    "appTextFieldHintsWeeks": "Weeks",
+    "appTextFieldHintsDays": "Days",
+    "appTextFieldHintsEnterWeight": "EnterWeight",
     "appTextFieldHintsEmail": "Email",
     "appTextFieldHintsName": "Name",
-    "petNameCaption": "Enter your pet's name to continue.",
 
 
     "pageTitles_": "",
@@ -42,9 +47,24 @@
     "@appQuestionsSelectPetSpecies": {"placeholders": {"value": {}}},
     "appQuestionsSelectPetBreed": "What breed is {value}?",
     "@appQuestionsSelectPetBreed": {"placeholders": {"value": {}}},
+    "appQuestionsInputPetAge": "How old is {value}?",
+    "@appQuestionsInputPetAge": {"placeholders": {"value": {}}},
+    "appQuestionsSelectPetSex": "What is {value}'s sex?",
+    "@appQuestionsSelectPetSex": {"placeholders": {"value": {}}},
+    "appQuestionsInputPetWeight": "How much does {value} weigh?",
+    "@appQuestionsInputPetWeight": {"placeholders": {"value": {}}},
+
 
     "captions_": "",
     "appCaptionsInputPetName": "Enter your pet's name to continue.",
+    "appCaptionsPetAgeInputOptions": "You can select the date of bith of benny from a calendar by clicking the button below.",
+    "appCaptionsInputPetWeight": "Enter your pet's weight in kilograms.",
+
+
+    "male": "Male",
+    "female": "Female",
+    "kilogramSIUnit": "kg",
+    "savingPetInfo": "Saving pet info...",
 
 
     "welcomeToApp": "Welcome to Fur!",

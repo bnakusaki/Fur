@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/domain/entities/breed.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
-import 'package:fur/core/animals/presentation/interface/screens/save_pet_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_breeds.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
-import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_age_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
@@ -22,11 +20,9 @@ import 'package:lottie/lottie.dart';
 class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
   SelectPetBreedScreen({
     super.key,
-    required this.animal,
     required this.pet,
   });
 
-  final Animal animal;
   final Pet pet;
 
   @override
@@ -40,20 +36,17 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
     final searchTerm = useState('');
     final selectedBreed = useState<Breed?>(null);
 
-    final breeds = ref
-        .watch(listBreedsProvider(Localizations.localeOf(context).languageCode, animal.id, null));
+    final breeds =
+        ref.watch(listBreedsProvider(Localizations.localeOf(context).languageCode, pet.animal));
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
     void handleContinue() {
-      ref
-          .watch(addPetFormNotifierProvider.notifier)
-          .update((pet) => pet.copyWith(breed: selectedBreed.value!.id));
-
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => SavePetScreen(),
+          builder: (context) =>
+              InputPetAgeScreen(pet: pet.copyWith(breed: selectedBreed.value!.id)),
         ),
         (route) => true,
       );
