@@ -40,6 +40,8 @@
     "appQuestionsPetName": "What is your pet's name?",
     "appQuestionsSelectPetSpecies": "{value} is a ... ?",
     "@appQuestionsSelectPetSpecies": {"placeholders": {"value": {}}},
+    "appQuestionsSelectPetBreed": "What breed is {value}?",
+    "@appQuestionsSelectPetBreed": {"placeholders": {"value": {}}},
 
     "captions_": "",
     "appCaptionsInputPetName": "Enter your pet's name to continue.",

@@ -19,10 +19,9 @@ class AnimalsBloc {
     return await _listAnimals(ObjectParams(languageCode));
   }
 
-  Future<Either<Failure, List<Breed>>> listBreeds(
-      String languageCode, String animalId, Breed? last) async {
+  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId) async {
     return await _listBreeds(
-        ObjectParams(ListBreedsParams(languageCode: languageCode, animalId: animalId, last: last)));
+        ObjectParams(ListBreedsParams(languageCode: languageCode, animalId: animalId)));
   }
 
   Future<Either<Failure, Pet>> createPet(Pet pet) async {

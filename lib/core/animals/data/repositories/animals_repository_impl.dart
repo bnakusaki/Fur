@@ -29,11 +29,10 @@ class AnimalsRepositoryImpl implements AnimalsRepository {
   }
 
   @override
-  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId,
-      [Breed? last]) async {
+  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId) async {
     try {
       await networkInfo.hasInternet();
-      final response = await remoteDatabase.listBreeds(languageCode, animalId, last);
+      final response = await remoteDatabase.listBreeds(languageCode, animalId);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));

@@ -17,7 +17,6 @@ import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 
 class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
@@ -33,53 +32,16 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-    final textStyles = Theme.of(context).extension<TextStyles>()!;
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<TextStyles>()!;
     final animationController = useAnimationController(duration: const Duration(milliseconds: 500));
-    final searchController = useTextEditingController();
+    final searchFieldController = useTextEditingController();
     final scrollController = useScrollController();
-    final breedsCache = useState<List<Breed>>([]);
-    final fetchingMore = useState(false);
     final searchTerm = useState('');
-    final allDataFetched = useState(false);
     final selectedBreed = useState<Breed?>(null);
-
-    useEffect(() {
-      if (allDataFetched.value) return null;
-      listener() async {
-        if (scrollController.position.extentAfter < 200 && !fetchingMore.value) {
-          try {
-            fetchingMore.value = true;
-            final chunk = await ref.watch(listBreedsProvider(
-              Localizations.localeOf(context).languageCode,
-              animal.id,
-              breedsCache.value.lastOrNull,
-            ).future);
-
-            if (chunk.isNotEmpty) {
-              breedsCache.value = [...breedsCache.value, ...chunk];
-            } else {
-              allDataFetched.value = true;
-            }
-          } catch (e) {
-            Logger().e(e);
-          } finally {
-            fetchingMore.value = false;
-          }
-        }
-      }
-
-      scrollController.addListener(listener);
-      return () => scrollController.removeListener(listener);
-    }, [scrollController, fetchingMore, breedsCache]);
 
     final breeds = ref
         .watch(listBreedsProvider(Localizations.localeOf(context).languageCode, animal.id, null));
-
-    breeds.whenData((value) {
-      if (breedsCache.value.isEmpty) {
-        breedsCache.value = value;
-      }
-    });
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
@@ -105,9 +67,15 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
         appBar: AppBar(
           automaticallyImplyLeading: false,
           leading: const Row(children: [
-            AppBackButton(),
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: AppBackButton(),
+            ),
           ]),
-          centerTitle: false,
+          title: Text(
+            localizations.appPageTitlesBasicInformation,
+            style: textStyles.h2,
+          ),
         ),
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 20),
@@ -116,13 +84,13 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
             children: [
               const SizedBox(height: 20),
               Text(
-                localizations.whatBreedIsYourPet(animal.name),
-                style: textStyles.h2,
+                localizations.appQuestionsSelectPetBreed(pet.name),
+                style: theme.textTheme.titleMedium,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               AppTextFormField(
-                controller: searchController,
-                hintText: localizations.searchBreed(animal.name),
+                controller: searchFieldController,
+                hintText: localizations.appTextFieldHintsSearch,
                 onChanged: (value) {
                   if (value!.trim().isEmpty) {
                     animationController.reverse();
@@ -133,8 +101,8 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
                 },
                 suffixIcon: IconButton(
                   onPressed: () {
-                    if (searchController.text.isNotEmpty) {
-                      searchController.clear();
+                    if (searchFieldController.text.isNotEmpty) {
+                      searchFieldController.clear();
                       animationController.reverse();
                       searchTerm.value = '';
                     } else {
@@ -151,12 +119,11 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
               const SizedBox(height: 20),
               Expanded(
                 child: switch (breeds) {
-                  AsyncData() => ValueListenableBuilder<List<Breed>>(
-                      valueListenable: breedsCache,
-                      builder: (context, breeds, child) {
+                  AsyncData(:final value) => Builder(
+                      builder: (context) {
                         final filteredBreeds = searchTerm.value.isEmpty
-                            ? breeds
-                            : breeds
+                            ? value
+                            : value
                                 .where((animal) => animal.name
                                     .toLowerCase()
                                     .contains(searchTerm.value.toLowerCase()))
@@ -172,7 +139,6 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
                         } else {
                           return _BreedsList(
                             breeds: filteredBreeds,
-                            fetchingMore: fetchingMore,
                             scrollController: scrollController,
                             selectedBreed: selectedBreed,
                           );
@@ -243,13 +209,11 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
 class _BreedsList extends StatelessWidget {
   const _BreedsList({
     required this.breeds,
-    required this.fetchingMore,
     required this.scrollController,
     required this.selectedBreed,
   });
 
   final List<Breed> breeds;
-  final ValueNotifier<bool> fetchingMore;
   final ScrollController scrollController;
   final ValueNotifier<Breed?> selectedBreed;
 
@@ -258,48 +222,30 @@ class _BreedsList extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Material(
-      child: ListView(
-        controller: scrollController,
-        children: [
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              final breed = breeds[index];
-              final selected = selectedBreed.value == breed;
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          final breed = breeds[index];
+          final selected = selectedBreed.value == breed;
 
-              return ListTile(
-                tileColor: Colors.white,
-                title: Text(
-                  breed.name,
-                  style: TextStyle(fontWeight: selected ? FontWeight.w600 : null),
-                ),
-                selected: selected,
-                shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                onTap: () {
-                  selectedBreed.value = breed;
-                },
-                selectedTileColor: theme.primaryColor.withOpacity(0.2),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: 10);
-            },
-            itemCount: breeds.length,
-          ),
-          if (fetchingMore.value)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 20.0),
-              child: Center(
-                child: SizedBox(
-                  height: 20,
-                  child: LoadingIndicator(
-                    indicatorType: Indicator.circleStrokeSpin,
-                  ),
-                ),
-              ),
+          return ListTile(
+            tileColor: Colors.white,
+            title: Text(
+              breed.name,
+              style: TextStyle(fontWeight: selected ? FontWeight.w600 : null),
             ),
-        ],
+            selected: selected,
+            shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            onTap: () {
+              selectedBreed.value = breed;
+            },
+            selectedTileColor: theme.primaryColor.withOpacity(0.2),
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 10);
+        },
+        itemCount: breeds.length,
       ),
     );
   }

@@ -5,6 +5,5 @@ import 'package:fur/shared/exceptions/failure.dart';
 
 abstract class AnimalsRepository {
   Future<Either<Failure, List<Animal>>> listAnimals(String languageCode);
-  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId,
-      [Breed? last]);
+  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String animalId);
 }

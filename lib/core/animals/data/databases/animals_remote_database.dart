@@ -6,7 +6,7 @@ import 'package:fur/shared/firebase_collection_references.dart';
 
 abstract class AnimalsRemoteDatabase {
   Future<List<Animal>> listAnimals(String languageCode);
-  Future<List<Breed>> listBreeds(String languageCode, String animalId, Breed? last);
+  Future<List<Breed>> listBreeds(String languageCode, String animalId);
 }
 
 class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
@@ -42,26 +42,15 @@ class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
   }
 
   @override
-  Future<List<Breed>> listBreeds(String languageCode, String animalId, Breed? last) async {
+  Future<List<Breed>> listBreeds(String languageCode, String animalId) async {
     QuerySnapshot<Map<String, dynamic>> response;
-    if (last == null) {
-      response = await FirebaseFirestore.instance
-          .collection(FirebaseCollectionReferences.animalData)
-          .doc(animalId)
-          .collection(FirebaseCollectionReferences.breeds)
-          .orderBy('id')
-          .limit(20)
-          .get();
-    } else {
-      response = await FirebaseFirestore.instance
-          .collection(FirebaseCollectionReferences.animalData)
-          .doc(animalId)
-          .collection(FirebaseCollectionReferences.breeds)
-          .orderBy('id')
-          .startAfter([last.id])
-          .limit(20)
-          .get();
-    }
+
+    response = await FirebaseFirestore.instance
+        .collection(FirebaseCollectionReferences.animalData)
+        .doc(animalId)
+        .collection(FirebaseCollectionReferences.breeds)
+        .orderBy('id')
+        .get();
 
     final breeds = <Breed>[];
 
