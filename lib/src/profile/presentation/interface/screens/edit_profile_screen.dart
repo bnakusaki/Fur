@@ -29,25 +29,18 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
 
     final editableProfileFields = <EditableProfileFieldData>[
       EditableProfileFieldData(
-          label: localizations.appTextFieldHintsEmail,
-          value: email,
-          icon: AppIcons.envelope,
-          readOnly: true,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return localizations.appTextFieldErrorsEmptyEmail;
-            } else if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
-              return localizations.appTextFieldErrorsInvalidEmail;
-            }
-            return null;
-          }),
+        label: localizations.appTextFieldHintsEmail,
+        value: email,
+        icon: AppIcons.envelope,
+        readOnly: true,
+      ),
       EditableProfileFieldData(
         label: localizations.appTextFieldHintsName,
         value: name,
         readOnly: true,
         validator: (value) {
           if (value!.isEmpty) {
-            return localizations.appTextFieldErrorsEmptyFirstName;
+            return localizations.appTextFieldHintsName;
           }
           return null;
         },

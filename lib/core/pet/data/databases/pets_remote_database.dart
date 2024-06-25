@@ -5,6 +5,7 @@ import 'package:fur/shared/firebase_collection_references.dart';
 abstract class PetsRemoteDatabase {
   Future<void> savePetImage(String petId, String path);
   Future<Pet> create(Pet pet);
+  Future<List<Pet>> list(String uid);
 }
 
 class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
@@ -22,5 +23,15 @@ class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
     await reponse.update({'id': reponse.id});
 
     return pet.copyWith(id: reponse.id);
+  }
+
+  @override
+  Future<List<Pet>> list(String uid) async {
+    final response = await FirebaseFirestore.instance
+        .collection(FirebaseCollectionReferences.pets)
+        .where('owner', isEqualTo: uid)
+        .get();
+
+    return response.docs.map((e) => Pet.fromJson(e.data())).toList();
   }
 }

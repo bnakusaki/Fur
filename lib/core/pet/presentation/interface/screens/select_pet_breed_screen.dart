@@ -9,24 +9,26 @@ import 'package:fur/core/animals/domain/entities/breed.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
 import 'package:fur/core/animals/presentation/interface/screens/save_pet_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_breeds.dart';
+import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
-import 'package:fur/shared/widgets/image_and_label.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
-  SelectAnimalBreedScreen({
+class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
+  SelectPetBreedScreen({
     super.key,
     required this.animal,
+    required this.pet,
   });
 
   final Animal animal;
+  final Pet pet;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -102,7 +104,9 @@ class SelectAnimalBreedScreen extends HookConsumerWidget with AnimalMixin {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const AppBackButton(),
+          leading: const Row(children: [
+            AppBackButton(),
+          ]),
           centerTitle: false,
         ),
         body: SafeArea(
@@ -251,56 +255,52 @@ class _BreedsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      controller: scrollController,
-      children: [
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            late List<Breed> row;
-            try {
-              row = breeds.sublist(index * 2, (index * 2) + 2);
-            } catch (e) {
-              row = [breeds[index * 2], Breed.empty()];
-            }
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: row
-                  .map((breed) => Expanded(
-                        child: breed == Breed.empty()
-                            ? const SizedBox()
-                            : ImageAndLabel(
-                                selected: selectedBreed.value == breed,
-                                fillCard: false,
-                                imageUrl: breed.imageUrl,
-                                label: breed.name,
-                                onTap: () {
-                                  selectedBreed.value = breed;
-                                },
-                              ),
-                      ))
-                  .toList(),
-            );
-          },
-          separatorBuilder: (context, index) {
-            return const SizedBox(height: 10);
-          },
-          itemCount: (breeds.length / 2).ceil(),
-        ),
-        if (fetchingMore.value)
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20.0),
-            child: Center(
-              child: SizedBox(
-                height: 20,
-                child: LoadingIndicator(
-                  indicatorType: Indicator.circleStrokeSpin,
+    final theme = Theme.of(context);
+
+    return Material(
+      child: ListView(
+        controller: scrollController,
+        children: [
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final breed = breeds[index];
+              final selected = selectedBreed.value == breed;
+
+              return ListTile(
+                tileColor: Colors.white,
+                title: Text(
+                  breed.name,
+                  style: TextStyle(fontWeight: selected ? FontWeight.w600 : null),
+                ),
+                selected: selected,
+                shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                onTap: () {
+                  selectedBreed.value = breed;
+                },
+                selectedTileColor: theme.primaryColor.withOpacity(0.2),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 10);
+            },
+            itemCount: breeds.length,
+          ),
+          if (fetchingMore.value)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.0),
+              child: Center(
+                child: SizedBox(
+                  height: 20,
+                  child: LoadingIndicator(
+                    indicatorType: Indicator.circleStrokeSpin,
+                  ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

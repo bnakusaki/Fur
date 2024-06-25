@@ -22,29 +22,17 @@ class ImageAndLabel extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = useState<Color?>(null);
-
-    // Future<Color> updatePalette(ImageProvider provider) async {
-    //   final paletteGenerator = await PaletteGenerator.fromImageProvider(provider);
-    //   return paletteGenerator.dominantColor?.color ?? Colors.blue;
-    // }
-
-    useMemoized(() async {
-      // final imageProvider = CachedNetworkImageProvider(imageUrl);
-
-      // color.value = await updatePalette(imageProvider);
-    });
+    final theme = Theme.of(context);
 
     return Column(
       children: [
         AspectRatio(
           aspectRatio: 1,
           child: Card(
-            color: color.value ?? Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
               side: BorderSide(
-                color: selected ? Colors.green.shade400 : Colors.grey.shade300,
+                color: selected ? theme.primaryColor : Colors.grey.shade300,
                 width: 4,
               ),
             ),
@@ -73,7 +61,7 @@ class ImageAndLabel extends HookWidget {
           label,
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            color: selected ? Colors.green.shade500 : null,
+            color: selected ? theme.primaryColor : null,
           ),
           textAlign: TextAlign.center,
         ),

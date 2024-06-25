@@ -6,9 +6,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/animals/domain/entities/animal.dart';
 import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
-import 'package:fur/core/animals/presentation/interface/screens/select_animal_breed_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/select_pet_breed_screen.dart';
 import 'package:fur/core/animals/presentation/providers/list_animals.dart';
-import 'package:fur/core/pet/presentation/providers/add_pet_form_notifier.dart';
+import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/text_styles.dart';
@@ -19,17 +19,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
-  SelectAnimalScreen({super.key});
+class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
+  SelectPetSpeciesScreen({super.key, required this.pet});
+
+  final Pet pet;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<TextStyles>()!;
 
-    final textStyles = Theme.of(context).extension<TextStyles>()!;
-
-    final animationController = useAnimationController(duration: const Duration(milliseconds: 500));
-    final searchController = useTextEditingController();
+    final magnifierCancelAnimationController =
+        useAnimationController(duration: const Duration(milliseconds: 500));
+    final searchFieldController = useTextEditingController();
     final searchFieldFocusNode = useFocusNode();
 
     final searchTerm = useState('');
@@ -39,18 +42,18 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
-    final addPetForm = ref.watch(addPetFormNotifierProvider);
-
     void handleContinue() {
-      ref.watch(addPetFormNotifierProvider.notifier).update(
-            (pet) => pet.copyWith(animal: selectedAnimal.value!.id),
-          );
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return SelectAnimalBreedScreen(
-          animal: selectedAnimal.value!,
-        );
-      }));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return SelectPetBreedScreen(
+              animal: selectedAnimal.value!,
+              pet: pet.copyWith(animal: selectedAnimal.value!.id),
+            );
+          },
+        ),
+      );
     }
 
     return GestureDetector(
@@ -59,9 +62,16 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
       },
       child: Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const AppBackButton(),
-          centerTitle: false,
+          leading: const Row(children: [
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: AppBackButton(),
+            ),
+          ]),
+          title: Text(
+            localizations.appPageTitlesBasicInformation,
+            style: textStyles.h2,
+          ),
         ),
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 20),
@@ -70,35 +80,35 @@ class SelectAnimalScreen extends HookConsumerWidget with AnimalMixin {
             children: [
               const SizedBox(height: 20),
               Text(
-                localizations.selectAnimalQuestion(addPetForm.name.capitalize()),
-                style: textStyles.h2,
+                localizations.appQuestionsSelectPetSpecies(pet.name.capitalize()),
+                style: theme.textTheme.titleMedium,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               AppTextFormField(
-                controller: searchController,
+                controller: searchFieldController,
                 focusNode: searchFieldFocusNode,
-                hintText: localizations.appTextFieldHintsSearchPets,
+                hintText: localizations.appTextFieldHintsSearch,
                 onChanged: (value) {
                   if (value!.trim().isEmpty) {
-                    animationController.reverse();
+                    magnifierCancelAnimationController.reverse();
                   } else {
-                    animationController.forward();
+                    magnifierCancelAnimationController.forward();
                   }
                   searchTerm.value = value;
                 },
                 suffixIcon: IconButton(
                   onPressed: () {
                     if (searchTerm.value.isNotEmpty) {
-                      animationController.reverse();
+                      magnifierCancelAnimationController.reverse();
                       searchTerm.value = '';
-                      searchController.clear();
+                      searchFieldController.clear();
                     } else {
                       searchFieldFocusNode.requestFocus();
                     }
                   },
                   icon: LottieBuilder.asset(
                     frameRate: FrameRate.max,
-                    controller: animationController,
+                    controller: magnifierCancelAnimationController,
                     AppAnimatedIcons.searchToX,
                   ),
                 ),

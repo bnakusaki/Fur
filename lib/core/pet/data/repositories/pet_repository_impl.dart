@@ -42,4 +42,19 @@ class PetsRepositoryImpl implements PetsRepository {
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Pet>>> list(String uid) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.list(uid);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
 }
