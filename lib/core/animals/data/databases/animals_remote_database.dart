@@ -7,6 +7,7 @@ import 'package:fur/shared/firebase_collection_references.dart';
 abstract class AnimalsRemoteDatabase {
   Future<List<Animal>> listAnimals(String languageCode);
   Future<List<Breed>> listBreeds(String languageCode, String animalId);
+  Future<Breed> retrieveBreed(String languageCode, String breedId, String animalId);
 }
 
 class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
@@ -62,5 +63,21 @@ class AnimalsRemoteDatabaseImpl implements AnimalsRemoteDatabase {
     }
 
     return breeds;
+  }
+
+  @override
+  Future<Breed> retrieveBreed(String languageCode, String breedId, String animalId) async {
+    final reponse = await FirebaseFirestore.instance
+        .collection(FirebaseCollectionReferences.animalData)
+        .doc(animalId)
+        .collection(FirebaseCollectionReferences.breeds)
+        .doc(breedId)
+        .get();
+
+    final json = reponse.data()!;
+
+    json['name'] = json['name'][languageCode];
+
+    return Breed.fromJson(json);
   }
 }

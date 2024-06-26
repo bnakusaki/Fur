@@ -23,6 +23,8 @@ class AnimalsRepositoryImpl implements AnimalsRepository {
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
       return Left(Failure(ErrorCodes.unknownError));
     }
@@ -36,6 +38,29 @@ class AnimalsRepositoryImpl implements AnimalsRepository {
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      Logger().e(e);
+
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Breed>> retrieveBreed(
+    String languageCode,
+    String breedId,
+    String animalId,
+  ) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.retrieveBreed(languageCode, breedId, animalId);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
     } catch (e) {
       Logger().e(e);
 

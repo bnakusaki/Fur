@@ -25,6 +25,9 @@ class AppIcons {
   static const apple = '$_path/apple.svg';
   static const facebook = '$_path/facebook.svg';
   static const angleSmallRight = '$_path/angle-small-right.svg';
+  static const bone = '$_path/bone.svg';
+  static const clock = '$_path/clock.svg';
+  static const gym = '$_path/gym.svg';
 }
 
 class AppAnimatedIcons {

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_name_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/pet_screen.dart';
 import 'package:fur/core/pet/presentation/providers/list_pets.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
@@ -200,7 +201,14 @@ class _Carousel extends StatelessWidget {
                 Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PetScreen(pet: pet),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

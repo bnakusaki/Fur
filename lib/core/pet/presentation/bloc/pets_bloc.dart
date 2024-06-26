@@ -9,7 +9,10 @@ class PetsBloc {
   final SavePetImage _savePetImage;
   final ListPets _listPets;
 
-  PetsBloc(this._savePetImage, this._listPets);
+  PetsBloc(
+    this._savePetImage,
+    this._listPets,
+  );
 
   Future<Either<Failure, void>> savePetImage(String petId, String path) async {
     final params = ObjectParams(SavePetImageParams(petId: petId, path: path));
