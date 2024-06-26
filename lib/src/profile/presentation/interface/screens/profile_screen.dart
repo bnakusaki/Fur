@@ -8,7 +8,6 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/src/home/presentation/interface/widgets/log_out_dialog.dart';
-import 'package:fur/src/profile/presentation/interface/screens/edit_profile_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -17,10 +16,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
-
     final user = FirebaseAuth.instance.currentUser!;
-
-    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,7 +60,7 @@ class ProfileScreen extends ConsumerWidget {
                           user.displayName!,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -75,23 +71,16 @@ class ProfileScreen extends ConsumerWidget {
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 12,
+                            fontSize: 10,
                             color: Colors.grey,
                           ),
                         ),
                         const SizedBox(height: 10),
                         TextButton.icon(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                  pageBuilder: (context, animation, secondaryAnimation) {
-                                return EditProfileScreen();
-                              }),
-                            );
-                          },
+                          onPressed: () {},
                           style: TextButton.styleFrom(
-                            backgroundColor: theme.primaryColor.withOpacity(0.1),
+                            backgroundColor: Colors.red.shade50,
+                            overlayColor: Colors.red.shade200,
                             fixedSize: const Size(double.infinity, 30),
                             shape: ContinuousRectangleBorder(
                               borderRadius: BorderRadiusDirectional.circular(10),
@@ -99,11 +88,14 @@ class ProfileScreen extends ConsumerWidget {
                             alignment: Alignment.centerLeft,
                           ),
                           icon: SvgPicture.asset(
-                            AppIcons.edit,
+                            AppIcons.trash,
                             height: 16,
-                            color: theme.primaryColor,
+                            color: Colors.red,
                           ),
-                          label: Text(localizations.appButtonsEditProfile),
+                          label: Text(
+                            localizations.appButtonsDelete,
+                            style: const TextStyle(color: Colors.red),
+                          ),
                         ),
                       ],
                     ),
@@ -111,6 +103,7 @@ class ProfileScreen extends ConsumerWidget {
                 ),
               ],
             ),
+            const SizedBox(height: 40),
             const Spacer(),
             TextButton.icon(
               onPressed: () {
