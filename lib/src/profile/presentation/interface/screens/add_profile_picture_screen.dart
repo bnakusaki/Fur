@@ -6,7 +6,7 @@
 // import 'package:flutter_hooks/flutter_hooks.dart';
 // import 'package:flutter_svg/svg.dart';
 // import 'package:fur/common_libs.dart';
-// import 'package:fur/core/animals/presentation/interface/screens/select_animal_screen.dart';
+// import 'package:fur/core/species/presentation/interface/screens/select_species_screen.dart';
 // import 'package:fur/shared/assets/app_icons.dart';
 // import 'package:fur/shared/exceptions/failure.dart';
 // import 'package:fur/shared/extensions/elevated_button.dart';
@@ -105,7 +105,7 @@
 //                     Navigator.push(
 //                       context,
 //                       MaterialPageRoute(
-//                         builder: (context) => SelectAnimalScreen(),
+//                         builder: (context) => Selectspeciescreen(),
 //                       ),
 //                     );
 //                   }

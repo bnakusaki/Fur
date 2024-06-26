@@ -1,4 +1,3 @@
-import 'package:fur/core/animals/animal_injection.dart';
 import 'package:fur/core/pet/presentation/pets_injection.dart';
 import 'package:fur/shared/platform/network_info.dart';
 import 'package:fur/src/authentication/authentication_injection.dart';
@@ -12,7 +11,6 @@ void init() {
 
   // Features
   initAuthentication();
-  initAnimals();
   initHome();
   initPets();
 }

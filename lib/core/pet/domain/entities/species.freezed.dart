@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'animal.dart';
+part of 'species.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,33 +14,33 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Animal _$AnimalFromJson(Map<String, dynamic> json) {
-  return _Animal.fromJson(json);
+Species _$SpeciesFromJson(Map<String, dynamic> json) {
+  return _Species.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Animal {
+mixin _$Species {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AnimalCopyWith<Animal> get copyWith => throw _privateConstructorUsedError;
+  $SpeciesCopyWith<Species> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AnimalCopyWith<$Res> {
-  factory $AnimalCopyWith(Animal value, $Res Function(Animal) then) =
-      _$AnimalCopyWithImpl<$Res, Animal>;
+abstract class $SpeciesCopyWith<$Res> {
+  factory $SpeciesCopyWith(Species value, $Res Function(Species) then) =
+      _$SpeciesCopyWithImpl<$Res, Species>;
   @useResult
   $Res call({String id, String name, String imageUrl});
 }
 
 /// @nodoc
-class _$AnimalCopyWithImpl<$Res, $Val extends Animal>
-    implements $AnimalCopyWith<$Res> {
-  _$AnimalCopyWithImpl(this._value, this._then);
+class _$SpeciesCopyWithImpl<$Res, $Val extends Species>
+    implements $SpeciesCopyWith<$Res> {
+  _$SpeciesCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -72,21 +72,21 @@ class _$AnimalCopyWithImpl<$Res, $Val extends Animal>
 }
 
 /// @nodoc
-abstract class _$$AnimalImplCopyWith<$Res> implements $AnimalCopyWith<$Res> {
-  factory _$$AnimalImplCopyWith(
-          _$AnimalImpl value, $Res Function(_$AnimalImpl) then) =
-      __$$AnimalImplCopyWithImpl<$Res>;
+abstract class _$$SpeciesImplCopyWith<$Res> implements $SpeciesCopyWith<$Res> {
+  factory _$$SpeciesImplCopyWith(
+          _$SpeciesImpl value, $Res Function(_$SpeciesImpl) then) =
+      __$$SpeciesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, String imageUrl});
 }
 
 /// @nodoc
-class __$$AnimalImplCopyWithImpl<$Res>
-    extends _$AnimalCopyWithImpl<$Res, _$AnimalImpl>
-    implements _$$AnimalImplCopyWith<$Res> {
-  __$$AnimalImplCopyWithImpl(
-      _$AnimalImpl _value, $Res Function(_$AnimalImpl) _then)
+class __$$SpeciesImplCopyWithImpl<$Res>
+    extends _$SpeciesCopyWithImpl<$Res, _$SpeciesImpl>
+    implements _$$SpeciesImplCopyWith<$Res> {
+  __$$SpeciesImplCopyWithImpl(
+      _$SpeciesImpl _value, $Res Function(_$SpeciesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -96,7 +96,7 @@ class __$$AnimalImplCopyWithImpl<$Res>
     Object? name = null,
     Object? imageUrl = null,
   }) {
-    return _then(_$AnimalImpl(
+    return _then(_$SpeciesImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -115,12 +115,12 @@ class __$$AnimalImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AnimalImpl implements _Animal {
-  const _$AnimalImpl(
+class _$SpeciesImpl implements _Species {
+  const _$SpeciesImpl(
       {required this.id, required this.name, required this.imageUrl});
 
-  factory _$AnimalImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AnimalImplFromJson(json);
+  factory _$SpeciesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SpeciesImplFromJson(json);
 
   @override
   final String id;
@@ -131,14 +131,14 @@ class _$AnimalImpl implements _Animal {
 
   @override
   String toString() {
-    return 'Animal(id: $id, name: $name, imageUrl: $imageUrl)';
+    return 'Species(id: $id, name: $name, imageUrl: $imageUrl)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AnimalImpl &&
+            other is _$SpeciesImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.imageUrl, imageUrl) ||
@@ -152,24 +152,24 @@ class _$AnimalImpl implements _Animal {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AnimalImplCopyWith<_$AnimalImpl> get copyWith =>
-      __$$AnimalImplCopyWithImpl<_$AnimalImpl>(this, _$identity);
+  _$$SpeciesImplCopyWith<_$SpeciesImpl> get copyWith =>
+      __$$SpeciesImplCopyWithImpl<_$SpeciesImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AnimalImplToJson(
+    return _$$SpeciesImplToJson(
       this,
     );
   }
 }
 
-abstract class _Animal implements Animal {
-  const factory _Animal(
+abstract class _Species implements Species {
+  const factory _Species(
       {required final String id,
       required final String name,
-      required final String imageUrl}) = _$AnimalImpl;
+      required final String imageUrl}) = _$SpeciesImpl;
 
-  factory _Animal.fromJson(Map<String, dynamic> json) = _$AnimalImpl.fromJson;
+  factory _Species.fromJson(Map<String, dynamic> json) = _$SpeciesImpl.fromJson;
 
   @override
   String get id;
@@ -179,6 +179,6 @@ abstract class _Animal implements Animal {
   String get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$$AnimalImplCopyWith<_$AnimalImpl> get copyWith =>
+  _$$SpeciesImplCopyWith<_$SpeciesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

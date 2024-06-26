@@ -119,7 +119,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/icons/animated/
-    - assets/icons/animals/
+    - assets/icons/species/
     - assets/images/
   #   - images/a_dot_ham.jpeg
 

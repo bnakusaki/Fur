@@ -26,7 +26,7 @@ class InputPetNameScreen extends HookConsumerWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SelectPetSpeciesScreen(pet: pet),
+          builder: (context) => SelectPetspeciescreen(pet: pet),
         ),
       );
     }

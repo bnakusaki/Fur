@@ -74,7 +74,7 @@ class InputPetAgeScreen extends HookWidget {
         context,
         MaterialPageRoute(
           builder: (context) => InputPetSexScreen(
-            pet: pet.copyWith.age(dob: date.value!),
+            pet: pet.copyWith(dob: date.value!),
           ),
         ),
       );

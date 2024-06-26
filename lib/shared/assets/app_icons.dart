@@ -42,8 +42,8 @@ class AppAnimatedIcons {
   static const menuV2 = '$_path/menuV2.json';
 }
 
-class AnimalIcons {
-  static const _path = 'assets/icons/animals';
+class SpeciesIcons {
+  static const _path = 'assets/icons/species';
 
   static const dog = '$_path/dog.svg';
 }

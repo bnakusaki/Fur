@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:fur/core/pet/data/databases/pets_remote_database.dart';
+import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
+import 'package:fur/core/pet/domain/entities/species.dart';
 import 'package:fur/core/pet/domain/repositories/pet_repository.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
@@ -41,7 +42,6 @@ class PetsRepositoryImpl implements PetsRepository {
     } on Failure catch (e) {
       return Left(e);
     } catch (e) {
-      if (kDebugMode) Logger().e(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
@@ -51,6 +51,56 @@ class PetsRepositoryImpl implements PetsRepository {
     try {
       await networkInfo.hasInternet();
       final response = await remoteDatabase.list(uid);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Species>>> listSpecies(String languageCode) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.listSpecies(languageCode);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String speciesId) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.listBreeds(languageCode, speciesId);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      Logger().e(e);
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Breed>> retrieveBreed(
+    String languageCode,
+    String breedId,
+    String speciesId,
+  ) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.retrieveBreed(languageCode, breedId, speciesId);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));

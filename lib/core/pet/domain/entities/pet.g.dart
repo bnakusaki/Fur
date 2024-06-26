@@ -13,9 +13,9 @@ _$PetImpl _$$PetImplFromJson(Map<String, dynamic> json) => _$PetImpl(
       sex: $enumDecode(_$SexEnumMap, json['sex']),
       breed: json['breed'] as String,
       image: json['image'] as String,
-      animal: json['animal'] as String,
+      species: json['species'] as String,
       weight: (json['weight'] as num).toDouble(),
-      age: PetAge.fromJson(json['age'] as Map<String, dynamic>),
+      dob: DateTime.parse(json['dob'] as String),
     );
 
 Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
@@ -25,9 +25,9 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'sex': _$SexEnumMap[instance.sex]!,
       'breed': instance.breed,
       'image': instance.image,
-      'animal': instance.animal,
+      'species': instance.species,
       'weight': instance.weight,
-      'age': instance.age.toJson(),
+      'dob': instance.dob.toIso8601String(),
     };
 
 const _$SexEnumMap = {

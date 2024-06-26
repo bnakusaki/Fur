@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/animals/domain/entities/breed.dart';
-import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
-import 'package:fur/core/animals/presentation/providers/list_breeds.dart';
+import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
+import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_age_screen.dart';
+import 'package:fur/core/pet/presentation/providers/list_breeds.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
@@ -17,7 +17,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
+class SelectPetBreedScreen extends HookConsumerWidget with PetsMixin {
   SelectPetBreedScreen({
     super.key,
     required this.pet,
@@ -37,7 +37,7 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
     final selectedBreed = useState<Breed?>(null);
 
     final breeds =
-        ref.watch(listBreedsProvider(Localizations.localeOf(context).languageCode, pet.animal));
+        ref.watch(listBreedsProvider(Localizations.localeOf(context).languageCode, pet.species));
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
@@ -117,7 +117,7 @@ class SelectPetBreedScreen extends HookConsumerWidget with AnimalMixin {
                         final filteredBreeds = searchTerm.value.isEmpty
                             ? value
                             : value
-                                .where((animal) => animal.name
+                                .where((species) => species.name
                                     .toLowerCase()
                                     .contains(searchTerm.value.toLowerCase()))
                                 .toList();

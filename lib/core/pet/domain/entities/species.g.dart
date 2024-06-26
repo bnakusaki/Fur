@@ -1,18 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'animal.dart';
+part of 'species.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AnimalImpl _$$AnimalImplFromJson(Map<String, dynamic> json) => _$AnimalImpl(
+_$SpeciesImpl _$$SpeciesImplFromJson(Map<String, dynamic> json) =>
+    _$SpeciesImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       imageUrl: json['imageUrl'] as String,
     );
 
-Map<String, dynamic> _$$AnimalImplToJson(_$AnimalImpl instance) =>
+Map<String, dynamic> _$$SpeciesImplToJson(_$SpeciesImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

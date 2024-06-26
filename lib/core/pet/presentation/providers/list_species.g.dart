@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'list_animals.dart';
+part of 'list_species.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listAnimalsHash() => r'1572d01e23eccda4ad8d061f7c6cc6a292f19891';
+String _$listSpeciesHash() => r'97e9320fa99e0fb379d36ae4b701f261cde2afcc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,27 +29,27 @@ class _SystemHash {
   }
 }
 
-/// See also [listAnimals].
-@ProviderFor(listAnimals)
-const listAnimalsProvider = ListAnimalsFamily();
+/// See also [listSpecies].
+@ProviderFor(listSpecies)
+const listSpeciesProvider = ListSpeciesFamily();
 
-/// See also [listAnimals].
-class ListAnimalsFamily extends Family<AsyncValue<List<Animal>>> {
-  /// See also [listAnimals].
-  const ListAnimalsFamily();
+/// See also [listSpecies].
+class ListSpeciesFamily extends Family<AsyncValue<List<Species>>> {
+  /// See also [listSpecies].
+  const ListSpeciesFamily();
 
-  /// See also [listAnimals].
-  ListAnimalsProvider call(
+  /// See also [listSpecies].
+  ListSpeciesProvider call(
     String languageCode,
   ) {
-    return ListAnimalsProvider(
+    return ListSpeciesProvider(
       languageCode,
     );
   }
 
   @override
-  ListAnimalsProvider getProviderOverride(
-    covariant ListAnimalsProvider provider,
+  ListSpeciesProvider getProviderOverride(
+    covariant ListSpeciesProvider provider,
   ) {
     return call(
       provider.languageCode,
@@ -68,32 +68,32 @@ class ListAnimalsFamily extends Family<AsyncValue<List<Animal>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'listAnimalsProvider';
+  String? get name => r'listSpeciesProvider';
 }
 
-/// See also [listAnimals].
-class ListAnimalsProvider extends AutoDisposeFutureProvider<List<Animal>> {
-  /// See also [listAnimals].
-  ListAnimalsProvider(
+/// See also [listSpecies].
+class ListSpeciesProvider extends AutoDisposeFutureProvider<List<Species>> {
+  /// See also [listSpecies].
+  ListSpeciesProvider(
     String languageCode,
   ) : this._internal(
-          (ref) => listAnimals(
-            ref as ListAnimalsRef,
+          (ref) => listSpecies(
+            ref as ListSpeciesRef,
             languageCode,
           ),
-          from: listAnimalsProvider,
-          name: r'listAnimalsProvider',
+          from: listSpeciesProvider,
+          name: r'listSpeciesProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$listAnimalsHash,
-          dependencies: ListAnimalsFamily._dependencies,
+                  : _$listSpeciesHash,
+          dependencies: ListSpeciesFamily._dependencies,
           allTransitiveDependencies:
-              ListAnimalsFamily._allTransitiveDependencies,
+              ListSpeciesFamily._allTransitiveDependencies,
           languageCode: languageCode,
         );
 
-  ListAnimalsProvider._internal(
+  ListSpeciesProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -107,12 +107,12 @@ class ListAnimalsProvider extends AutoDisposeFutureProvider<List<Animal>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<Animal>> Function(ListAnimalsRef provider) create,
+    FutureOr<List<Species>> Function(ListSpeciesRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: ListAnimalsProvider._internal(
-        (ref) => create(ref as ListAnimalsRef),
+      override: ListSpeciesProvider._internal(
+        (ref) => create(ref as ListSpeciesRef),
         from: from,
         name: null,
         dependencies: null,
@@ -124,13 +124,13 @@ class ListAnimalsProvider extends AutoDisposeFutureProvider<List<Animal>> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Animal>> createElement() {
-    return _ListAnimalsProviderElement(this);
+  AutoDisposeFutureProviderElement<List<Species>> createElement() {
+    return _ListSpeciesProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ListAnimalsProvider && other.languageCode == languageCode;
+    return other is ListSpeciesProvider && other.languageCode == languageCode;
   }
 
   @override
@@ -142,17 +142,18 @@ class ListAnimalsProvider extends AutoDisposeFutureProvider<List<Animal>> {
   }
 }
 
-mixin ListAnimalsRef on AutoDisposeFutureProviderRef<List<Animal>> {
+mixin ListSpeciesRef on AutoDisposeFutureProviderRef<List<Species>> {
   /// The parameter `languageCode` of this provider.
   String get languageCode;
 }
 
-class _ListAnimalsProviderElement
-    extends AutoDisposeFutureProviderElement<List<Animal>> with ListAnimalsRef {
-  _ListAnimalsProviderElement(super.provider);
+class _ListSpeciesProviderElement
+    extends AutoDisposeFutureProviderElement<List<Species>>
+    with ListSpeciesRef {
+  _ListSpeciesProviderElement(super.provider);
 
   @override
-  String get languageCode => (origin as ListAnimalsProvider).languageCode;
+  String get languageCode => (origin as ListSpeciesProvider).languageCode;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/animals/presentation/providers/retrieve_breed.dart';
+import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/core/pet/presentation/interface/screens/pet_profile_screen.dart';
@@ -33,7 +33,7 @@ class PetScreen extends ConsumerWidget {
 
     final breed = ref.watch(retrieveBreedProvider(
       Localizations.localeOf(context).languageCode,
-      pet.animal,
+      pet.species,
       pet.breed,
     ));
 
@@ -127,7 +127,7 @@ class PetScreen extends ConsumerWidget {
                           child: _InfoCard(
                             color: color,
                             title: localizations.age,
-                            value: parseAge(pet.age.dob),
+                            value: parseAge(pet.dob),
                             icon: AppIcons.clock,
                           ),
                         ),

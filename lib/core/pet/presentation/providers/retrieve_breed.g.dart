@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'list_breeds.dart';
+part of 'retrieve_breed.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listBreedsHash() => r'db4da316a0d3b174631708b508dc4f63b7dabdc6';
+String _$retrieveBreedHash() => r'46aa6e4bee7e66b2f6753676ac9441aa2fd7c05c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,33 +29,36 @@ class _SystemHash {
   }
 }
 
-/// See also [listBreeds].
-@ProviderFor(listBreeds)
-const listBreedsProvider = ListBreedsFamily();
+/// See also [retrieveBreed].
+@ProviderFor(retrieveBreed)
+const retrieveBreedProvider = RetrieveBreedFamily();
 
-/// See also [listBreeds].
-class ListBreedsFamily extends Family<AsyncValue<List<Breed>>> {
-  /// See also [listBreeds].
-  const ListBreedsFamily();
+/// See also [retrieveBreed].
+class RetrieveBreedFamily extends Family<AsyncValue<Breed>> {
+  /// See also [retrieveBreed].
+  const RetrieveBreedFamily();
 
-  /// See also [listBreeds].
-  ListBreedsProvider call(
+  /// See also [retrieveBreed].
+  RetrieveBreedProvider call(
     String languageCode,
-    String animalId,
+    String speciesId,
+    String breedId,
   ) {
-    return ListBreedsProvider(
+    return RetrieveBreedProvider(
       languageCode,
-      animalId,
+      speciesId,
+      breedId,
     );
   }
 
   @override
-  ListBreedsProvider getProviderOverride(
-    covariant ListBreedsProvider provider,
+  RetrieveBreedProvider getProviderOverride(
+    covariant RetrieveBreedProvider provider,
   ) {
     return call(
       provider.languageCode,
-      provider.animalId,
+      provider.speciesId,
+      provider.breedId,
     );
   }
 
@@ -71,35 +74,38 @@ class ListBreedsFamily extends Family<AsyncValue<List<Breed>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'listBreedsProvider';
+  String? get name => r'retrieveBreedProvider';
 }
 
-/// See also [listBreeds].
-class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
-  /// See also [listBreeds].
-  ListBreedsProvider(
+/// See also [retrieveBreed].
+class RetrieveBreedProvider extends AutoDisposeFutureProvider<Breed> {
+  /// See also [retrieveBreed].
+  RetrieveBreedProvider(
     String languageCode,
-    String animalId,
+    String speciesId,
+    String breedId,
   ) : this._internal(
-          (ref) => listBreeds(
-            ref as ListBreedsRef,
+          (ref) => retrieveBreed(
+            ref as RetrieveBreedRef,
             languageCode,
-            animalId,
+            speciesId,
+            breedId,
           ),
-          from: listBreedsProvider,
-          name: r'listBreedsProvider',
+          from: retrieveBreedProvider,
+          name: r'retrieveBreedProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$listBreedsHash,
-          dependencies: ListBreedsFamily._dependencies,
+                  : _$retrieveBreedHash,
+          dependencies: RetrieveBreedFamily._dependencies,
           allTransitiveDependencies:
-              ListBreedsFamily._allTransitiveDependencies,
+              RetrieveBreedFamily._allTransitiveDependencies,
           languageCode: languageCode,
-          animalId: animalId,
+          speciesId: speciesId,
+          breedId: breedId,
         );
 
-  ListBreedsProvider._internal(
+  RetrieveBreedProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -107,69 +113,79 @@ class ListBreedsProvider extends AutoDisposeFutureProvider<List<Breed>> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.languageCode,
-    required this.animalId,
+    required this.speciesId,
+    required this.breedId,
   }) : super.internal();
 
   final String languageCode;
-  final String animalId;
+  final String speciesId;
+  final String breedId;
 
   @override
   Override overrideWith(
-    FutureOr<List<Breed>> Function(ListBreedsRef provider) create,
+    FutureOr<Breed> Function(RetrieveBreedRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: ListBreedsProvider._internal(
-        (ref) => create(ref as ListBreedsRef),
+      override: RetrieveBreedProvider._internal(
+        (ref) => create(ref as RetrieveBreedRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         languageCode: languageCode,
-        animalId: animalId,
+        speciesId: speciesId,
+        breedId: breedId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Breed>> createElement() {
-    return _ListBreedsProviderElement(this);
+  AutoDisposeFutureProviderElement<Breed> createElement() {
+    return _RetrieveBreedProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ListBreedsProvider &&
+    return other is RetrieveBreedProvider &&
         other.languageCode == languageCode &&
-        other.animalId == animalId;
+        other.speciesId == speciesId &&
+        other.breedId == breedId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, languageCode.hashCode);
-    hash = _SystemHash.combine(hash, animalId.hashCode);
+    hash = _SystemHash.combine(hash, speciesId.hashCode);
+    hash = _SystemHash.combine(hash, breedId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin ListBreedsRef on AutoDisposeFutureProviderRef<List<Breed>> {
+mixin RetrieveBreedRef on AutoDisposeFutureProviderRef<Breed> {
   /// The parameter `languageCode` of this provider.
   String get languageCode;
 
-  /// The parameter `animalId` of this provider.
-  String get animalId;
+  /// The parameter `speciesId` of this provider.
+  String get speciesId;
+
+  /// The parameter `breedId` of this provider.
+  String get breedId;
 }
 
-class _ListBreedsProviderElement
-    extends AutoDisposeFutureProviderElement<List<Breed>> with ListBreedsRef {
-  _ListBreedsProviderElement(super.provider);
+class _RetrieveBreedProviderElement
+    extends AutoDisposeFutureProviderElement<Breed> with RetrieveBreedRef {
+  _RetrieveBreedProviderElement(super.provider);
 
   @override
-  String get languageCode => (origin as ListBreedsProvider).languageCode;
+  String get languageCode => (origin as RetrieveBreedProvider).languageCode;
   @override
-  String get animalId => (origin as ListBreedsProvider).animalId;
+  String get speciesId => (origin as RetrieveBreedProvider).speciesId;
+  @override
+  String get breedId => (origin as RetrieveBreedProvider).breedId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

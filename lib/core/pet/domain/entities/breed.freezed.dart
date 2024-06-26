@@ -22,7 +22,7 @@ Breed _$BreedFromJson(Map<String, dynamic> json) {
 mixin _$Breed {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get animal => throw _privateConstructorUsedError;
+  String get species => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $BreedCopyWith<$Res> {
   factory $BreedCopyWith(Breed value, $Res Function(Breed) then) =
       _$BreedCopyWithImpl<$Res, Breed>;
   @useResult
-  $Res call({String id, String name, String animal});
+  $Res call({String id, String name, String species});
 }
 
 /// @nodoc
@@ -52,7 +52,7 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? animal = null,
+    Object? species = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -63,9 +63,9 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      animal: null == animal
-          ? _value.animal
-          : animal // ignore: cast_nullable_to_non_nullable
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -78,7 +78,7 @@ abstract class _$$BreedImplCopyWith<$Res> implements $BreedCopyWith<$Res> {
       __$$BreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String animal});
+  $Res call({String id, String name, String species});
 }
 
 /// @nodoc
@@ -94,7 +94,7 @@ class __$$BreedImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? animal = null,
+    Object? species = null,
   }) {
     return _then(_$BreedImpl(
       id: null == id
@@ -105,9 +105,9 @@ class __$$BreedImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      animal: null == animal
-          ? _value.animal
-          : animal // ignore: cast_nullable_to_non_nullable
+      species: null == species
+          ? _value.species
+          : species // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -117,7 +117,7 @@ class __$$BreedImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BreedImpl implements _Breed {
   const _$BreedImpl(
-      {required this.id, required this.name, required this.animal});
+      {required this.id, required this.name, required this.species});
 
   factory _$BreedImpl.fromJson(Map<String, dynamic> json) =>
       _$$BreedImplFromJson(json);
@@ -127,11 +127,11 @@ class _$BreedImpl implements _Breed {
   @override
   final String name;
   @override
-  final String animal;
+  final String species;
 
   @override
   String toString() {
-    return 'Breed(id: $id, name: $name, animal: $animal)';
+    return 'Breed(id: $id, name: $name, species: $species)';
   }
 
   @override
@@ -141,12 +141,12 @@ class _$BreedImpl implements _Breed {
             other is _$BreedImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.animal, animal) || other.animal == animal));
+            (identical(other.species, species) || other.species == species));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, animal);
+  int get hashCode => Object.hash(runtimeType, id, name, species);
 
   @JsonKey(ignore: true)
   @override
@@ -166,7 +166,7 @@ abstract class _Breed implements Breed {
   const factory _Breed(
       {required final String id,
       required final String name,
-      required final String animal}) = _$BreedImpl;
+      required final String species}) = _$BreedImpl;
 
   factory _Breed.fromJson(Map<String, dynamic> json) = _$BreedImpl.fromJson;
 
@@ -175,7 +175,7 @@ abstract class _Breed implements Breed {
   @override
   String get name;
   @override
-  String get animal;
+  String get species;
   @override
   @JsonKey(ignore: true)
   _$$BreedImplCopyWith<_$BreedImpl> get copyWith =>

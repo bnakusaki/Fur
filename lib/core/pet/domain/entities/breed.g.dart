@@ -9,12 +9,12 @@ part of 'breed.dart';
 _$BreedImpl _$$BreedImplFromJson(Map<String, dynamic> json) => _$BreedImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      animal: json['animal'] as String,
+      species: json['species'] as String,
     );
 
 Map<String, dynamic> _$$BreedImplToJson(_$BreedImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'animal': instance.animal,
+      'species': instance.species,
     };

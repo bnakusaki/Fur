@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/animals/domain/entities/animal.dart';
-import 'package:fur/core/animals/presentation/bloc/animals_mixin.dart';
-import 'package:fur/core/animals/presentation/providers/list_animals.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
+import 'package:fur/core/pet/domain/entities/species.dart';
+import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/interface/screens/select_pet_breed_screen.dart';
+import 'package:fur/core/pet/presentation/providers/list_species.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/text_styles.dart';
@@ -19,8 +19,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
-  SelectPetSpeciesScreen({super.key, required this.pet});
+class SelectPetspeciescreen extends HookConsumerWidget with PetsMixin {
+  SelectPetspeciescreen({super.key, required this.pet});
 
   final Pet pet;
 
@@ -36,9 +36,9 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
     final searchFieldFocusNode = useFocusNode();
 
     final searchTerm = useState('');
-    final selectedAnimal = useState<Animal?>(null);
+    final selectedSpecies = useState<Species?>(null);
 
-    final animals = ref.watch(listAnimalsProvider(Localizations.localeOf(context).languageCode));
+    final species = ref.watch(listSpeciesProvider(Localizations.localeOf(context).languageCode));
 
     final randInt = useState(Random().nextInt(sadPets.length));
 
@@ -48,7 +48,7 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
         MaterialPageRoute(
           builder: (context) {
             return SelectPetBreedScreen(
-              pet: pet.copyWith(animal: selectedAnimal.value!.id),
+              pet: pet.copyWith(species: selectedSpecies.value!.id),
             );
           },
         ),
@@ -114,21 +114,21 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: switch (animals) {
+                child: switch (species) {
                   AsyncData(:final value) => Builder(
                       builder: (context) {
-                        late List<Animal> filteredAnimals;
+                        late List<Species> filteredspecies;
                         if (searchTerm.value.isEmpty) {
-                          filteredAnimals = value;
+                          filteredspecies = value;
                         } else {
-                          filteredAnimals = value.where((animal) {
-                            return animal.name
+                          filteredspecies = value.where((species) {
+                            return species.name
                                 .toLowerCase()
                                 .contains(searchTerm.value.toLowerCase());
                           }).toList();
                         }
 
-                        return filteredAnimals.isEmpty
+                        return filteredspecies.isEmpty
                             ? Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -162,24 +162,24 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
                             : Scrollbar(
                                 child: ListView.separated(
                                   itemBuilder: (context, index) {
-                                    late List<Animal> row;
+                                    late List<Species> row;
                                     try {
-                                      row = filteredAnimals.sublist(index * 2, (index * 2) + 2);
+                                      row = filteredspecies.sublist(index * 2, (index * 2) + 2);
                                     } catch (e) {
-                                      row = [filteredAnimals[index * 2], Animal.empty()];
+                                      row = [filteredspecies[index * 2], Species.empty()];
                                     }
                                     return Row(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: row
-                                          .map((animal) => Expanded(
-                                                child: animal == Animal.empty()
+                                          .map((species) => Expanded(
+                                                child: species == Species.empty()
                                                     ? const SizedBox()
                                                     : ImageAndLabel(
-                                                        imageUrl: animal.imageUrl,
-                                                        label: animal.name,
-                                                        selected: selectedAnimal.value == animal,
+                                                        imageUrl: species.imageUrl,
+                                                        label: species.name,
+                                                        selected: selectedSpecies.value == species,
                                                         onTap: () {
-                                                          selectedAnimal.value = animal;
+                                                          selectedSpecies.value = species;
                                                         },
                                                       ),
                                               ))
@@ -189,7 +189,7 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
                                   separatorBuilder: (context, index) {
                                     return const SizedBox(height: 10);
                                   },
-                                  itemCount: (filteredAnimals.length / 2).ceil(),
+                                  itemCount: (filteredspecies.length / 2).ceil(),
                                 ),
                               );
                       },
@@ -237,7 +237,7 @@ class SelectPetSpeciesScreen extends HookConsumerWidget with AnimalMixin {
             ],
           ),
         ),
-        bottomNavigationBar: selectedAnimal.value != null
+        bottomNavigationBar: selectedSpecies.value != null
             ? Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.paddingOf(context).bottom + 20,

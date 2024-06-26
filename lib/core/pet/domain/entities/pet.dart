@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:fur/core/pet/domain/entities/pet_age.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 
 part 'pet.freezed.dart';
@@ -17,9 +16,9 @@ class Pet with _$Pet {
     required Sex sex,
     required String breed,
     required String image,
-    required String animal,
+    required String species,
     required double weight,
-    required PetAge age,
+    required DateTime dob,
   }) = _Pet;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
@@ -32,9 +31,9 @@ class Pet with _$Pet {
       sex: Sex.male,
       breed: '',
       image: '',
-      animal: '',
+      species: '',
       weight: 0.0,
-      age: PetAge.empty(),
+      dob: DateTime.now(),
     );
   }
 }

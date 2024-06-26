@@ -98,7 +98,7 @@
 
 
     "petNameQuestion": "What is your pet's name?",
-    "selectAnimalQuestion": "{value} is a ... ?",
-    "@selectAnimalQuestion": {"placeholders": {"value": {}}},
+    "selectSpeciesQuestion": "{value} is a ... ?",
+    "@selectSpeciesQuestion": {"placeholders": {"value": {}}},
     "myPets": "My pets"
 }

@@ -8,7 +8,7 @@ class Breed with _$Breed {
   const factory Breed({
     required String id,
     required String name,
-    required String animal,
+    required String species,
   }) = _Breed;
 
   factory Breed.fromJson(Map<String, dynamic> json) => _$BreedFromJson(json);
@@ -16,6 +16,6 @@ class Breed with _$Breed {
   factory Breed.empty() => const Breed(
         id: '',
         name: '',
-        animal: '',
+        species: '',
       );
 }

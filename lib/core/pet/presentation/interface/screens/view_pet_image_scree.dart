@@ -3,7 +3,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
 // import 'package:fur/common_libs.dart';
-// import 'package:fur/core/animals/presentation/interface/screens/select_animal_screen.dart';
+// import 'package:fur/core/species/presentation/interface/screens/select_species_screen.dart';
 // import 'package:fur/shared/widgets/app_back_button.dart';
 // import 'package:image_picker/image_picker.dart';
 
@@ -20,7 +20,7 @@
 //       Navigator.push(
 //         context,
 //         MaterialPageRoute(
-//           builder: (context) => SelectAnimalScreen(),
+//           builder: (context) => Selectspeciescreen(),
 //         ),
 //       );
 //     }

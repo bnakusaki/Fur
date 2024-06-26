@@ -1,7 +1,6 @@
 class FirebaseCollectionReferences {
-  static const animals = 'animals';
+  static const species = 'species';
   static const breeds = 'breeds';
   static const pets = 'pets';
-  static const animalData = 'animal-data';
   static const userProfiles = 'user-profiles';
 }

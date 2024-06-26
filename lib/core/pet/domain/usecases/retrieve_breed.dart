@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
-import 'package:fur/core/animals/domain/entities/breed.dart';
-import 'package:fur/core/animals/domain/repositories/animals_repository.dart';
+import 'package:fur/core/pet/domain/entities/breed.dart';
+import 'package:fur/core/pet/domain/repositories/pet_repository.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/usecase/usecase.dart';
 
 class RetrieveBreed extends UseCase<Breed, ObjectParams<RetrieveBreedParams>> {
-  final AnimalsRepository repository;
+  final PetsRepository repository;
 
   RetrieveBreed(this.repository);
 
@@ -14,7 +14,7 @@ class RetrieveBreed extends UseCase<Breed, ObjectParams<RetrieveBreedParams>> {
     return await repository.retrieveBreed(
       params.value.languageCode,
       params.value.breedId,
-      params.value.animalId,
+      params.value.speciesId,
     );
   }
 }
@@ -22,11 +22,11 @@ class RetrieveBreed extends UseCase<Breed, ObjectParams<RetrieveBreedParams>> {
 class RetrieveBreedParams {
   final String languageCode;
   final String breedId;
-  final String animalId;
+  final String speciesId;
 
   RetrieveBreedParams({
     required this.languageCode,
     required this.breedId,
-    required this.animalId,
+    required this.speciesId,
   });
 }
