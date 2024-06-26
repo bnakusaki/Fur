@@ -5,6 +5,7 @@ part 'pet_age.g.dart';
 
 @freezed
 class PetAge with _$PetAge {
+  @JsonSerializable(explicitToJson: true)
   const factory PetAge({
     required DateTime updatedOn,
     required DateTime dob,

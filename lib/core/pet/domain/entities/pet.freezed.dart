@@ -207,9 +207,10 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$PetImpl implements _Pet {
-  _$PetImpl(
+  const _$PetImpl(
       {required this.id,
       required this.name,
       required this.owner,
@@ -283,7 +284,7 @@ class _$PetImpl implements _Pet {
 }
 
 abstract class _Pet implements Pet {
-  factory _Pet(
+  const factory _Pet(
       {required final String id,
       required final String name,
       required final String owner,

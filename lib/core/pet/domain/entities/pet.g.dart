@@ -27,7 +27,7 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'image': instance.image,
       'animal': instance.animal,
       'weight': instance.weight,
-      'age': instance.age,
+      'age': instance.age.toJson(),
     };
 
 const _$SexEnumMap = {

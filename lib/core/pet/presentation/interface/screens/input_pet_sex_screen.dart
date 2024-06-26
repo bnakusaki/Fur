@@ -23,15 +23,13 @@ class InputPetSexScreen extends HookWidget {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    final sex = useState<Sex?>(null);
-
-    void handleOnPressed(Sex sex0) {
+    void handleOnPressed(Sex sex) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) {
             return InputPetWeightScreen(
-              pet: pet.copyWith(sex: sex.value!),
+              pet: pet.copyWith(sex: sex),
             );
           },
         ),

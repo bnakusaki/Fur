@@ -103,7 +103,8 @@ class __$$PetAgeImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$PetAgeImpl implements _PetAge {
   const _$PetAgeImpl({required this.updatedOn, required this.dob});
 

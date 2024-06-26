@@ -1,11 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:fur/core/pet/data/databases/pets_remote_database.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/repositories/pet_repository.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/platform/network_info.dart';
+import 'package:logger/logger.dart';
 
 class PetsRepositoryImpl implements PetsRepository {
   final NetworkInfo networkInfo;
@@ -39,6 +41,7 @@ class PetsRepositoryImpl implements PetsRepository {
     } on Failure catch (e) {
       return Left(e);
     } catch (e) {
+      if (kDebugMode) Logger().e(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
