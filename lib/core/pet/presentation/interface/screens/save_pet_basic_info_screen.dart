@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
@@ -25,6 +26,7 @@ class SavePetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
     useMemoized(() async {
       try {
         await createPet(pet.copyWith(owner: FirebaseAuth.instance.currentUser!.uid));
+        ref.watch(cachedPetsProvider.notifier).add(pet);
 
         if (context.mounted) {
           Navigator.push(

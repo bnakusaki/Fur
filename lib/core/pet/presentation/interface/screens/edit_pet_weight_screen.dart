@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/styles/text_styles.dart';
@@ -14,9 +15,10 @@ import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EditPetWeightScreen extends HookConsumerWidget with PetsMixin {
-  EditPetWeightScreen({super.key, required this.pet});
+  EditPetWeightScreen({super.key, required this.pet, required this.weight});
 
-  final Pet pet;
+  final ValueNotifier<Pet> pet;
+  final ValueNotifier<double> weight;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,11 +26,14 @@ class EditPetWeightScreen extends HookConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    final weight = useState(pet.weight);
+    final weight0 = useState(pet.value.weight);
 
     Future<void> handleSave() async {
       try {
-        await updatePet(pet.copyWith(weight: weight.value));
+        pet.value = pet.value.copyWith(weight: weight0.value);
+        weight.value = weight0.value;
+        ref.watch(cachedPetsProvider.notifier).updatePet(pet.value);
+        await updatePet(pet.value);
         if (context.mounted) Navigator.pop(context);
       } on Failure catch (e) {
         if (context.mounted) AppSnackBar.error(context, e.code);
@@ -70,9 +75,9 @@ class EditPetWeightScreen extends HookConsumerWidget with PetsMixin {
                     flex: 2,
                     child: AppTextFormField(
                       hintText: localizations.appTextFieldHintsEnterWeight,
-                      initialValue: weight.value.toString(),
+                      initialValue: weight0.value.toString(),
                       onChanged: (value) {
-                        weight.value = double.parse(value!);
+                        weight0.value = double.parse(value!);
                       },
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
@@ -96,7 +101,7 @@ class EditPetWeightScreen extends HookConsumerWidget with PetsMixin {
             ],
           ),
         ),
-        bottomNavigationBar: weight.value != pet.weight && weight.value > 0
+        bottomNavigationBar: weight0.value != pet.value.weight && weight0.value > 0
             ? Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).padding.bottom + 20,

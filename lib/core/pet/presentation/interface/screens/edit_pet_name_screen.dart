@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
@@ -14,8 +15,9 @@ import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class EditPetNameScreen extends HookConsumerWidget with PetsMixin {
-  EditPetNameScreen({super.key, required this.pet});
-  final Pet pet;
+  EditPetNameScreen({super.key, required this.pet, required this.name});
+  final ValueNotifier<Pet> pet;
+  final ValueNotifier<String> name;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,11 +25,14 @@ class EditPetNameScreen extends HookConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    final name = useState(pet.name);
+    final name0 = useState(pet.value.name);
 
     Future<void> handleSave() async {
       try {
-        await updatePet(pet.copyWith(name: name.value));
+        pet.value = pet.value.copyWith(name: name0.value);
+        name.value = name0.value;
+        ref.watch(cachedPetsProvider.notifier).updatePet(pet.value);
+        await updatePet(pet.value);
         if (context.mounted) Navigator.pop(context);
       } on Failure catch (e) {
         if (context.mounted) AppSnackBar.error(context, e.code);
@@ -63,10 +68,10 @@ class EditPetNameScreen extends HookConsumerWidget with PetsMixin {
               ),
               const SizedBox(height: 10),
               AppTextFormField(
-                initialValue: name.value,
+                initialValue: name0.value,
                 hintText: localizations.appTextFieldHintsPetName,
                 onChanged: (value) {
-                  name.value = value!.trim();
+                  name0.value = value!.trim();
                 },
               ),
               const SizedBox(height: 10),
@@ -77,7 +82,7 @@ class EditPetNameScreen extends HookConsumerWidget with PetsMixin {
             ],
           ),
         ),
-        bottomNavigationBar: name.value != pet.name && name.value.isNotEmpty
+        bottomNavigationBar: name0.value != pet.value.name && name0.value.isNotEmpty
             ? Padding(
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).padding.bottom + 20,

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
@@ -17,7 +18,7 @@ import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PetScreen extends ConsumerWidget with PetsMixin {
+class PetScreen extends HookConsumerWidget with PetsMixin {
   PetScreen({super.key, required this.pet});
   final Pet pet;
 
@@ -27,21 +28,23 @@ class PetScreen extends ConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    final color = switch (pet.sex) {
+    final pet0 = useState(pet);
+
+    final color = switch (pet0.value.sex) {
       Sex.male => Colors.blue,
       Sex.female => Colors.pink,
     };
 
     final breed = ref.watch(retrieveBreedProvider(
       Localizations.localeOf(context).languageCode,
-      pet.species,
-      pet.breed,
+      pet0.value.breed,
+      pet0.value.species,
     ));
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _AppBar(pet: pet, textStyles: textStyles),
+          _AppBar(pet: pet0.value, textStyles: textStyles),
           SliverList(
             delegate: SliverChildListDelegate(
               [
@@ -55,7 +58,7 @@ class PetScreen extends ConsumerWidget with PetsMixin {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            pet.name.capitalize(),
+                            pet0.value.name.capitalize(),
                             style: textStyles.h1,
                           ),
                           const SizedBox(height: 5),
@@ -73,7 +76,7 @@ class PetScreen extends ConsumerWidget with PetsMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PetProfileScreen(pet: pet),
+                              builder: (context) => PetProfileScreen(pet: pet0),
                             ),
                           );
                         },
@@ -85,7 +88,7 @@ class PetScreen extends ConsumerWidget with PetsMixin {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
                   child: SizedBox(
@@ -96,21 +99,22 @@ class PetScreen extends ConsumerWidget with PetsMixin {
                           child: _InfoCard(
                             color: color,
                             title: localizations.sex,
-                            value: switch (pet.sex) {
+                            value: switch (pet0.value.sex) {
                               Sex.male => localizations.male,
                               Sex.female => localizations.female,
                             },
-                            icon: switch (pet.sex) {
+                            icon: switch (pet0.value.sex) {
                               Sex.male => AppIcons.male,
                               Sex.female => AppIcons.female,
                             },
                           ),
                         ),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: _InfoCard(
                             color: color,
                             title: localizations.age,
-                            value: parseAge(pet.dob, localizations),
+                            value: parseAge(pet0.value.dob, localizations),
                             icon: AppIcons.clock,
                           ),
                         ),
@@ -118,7 +122,6 @@ class PetScreen extends ConsumerWidget with PetsMixin {
                     ),
                   ),
                 ),
-                const SizedBox(height: 5000),
               ],
             ),
           )

@@ -6,6 +6,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_name_screen.dart';
 import 'package:fur/core/pet/presentation/interface/screens/pet_screen.dart';
+import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/core/pet/presentation/providers/list_pets.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
@@ -27,6 +28,7 @@ class PetsCarousel extends HookConsumerWidget {
     final currentPage = useState(0);
 
     final pets = ref.watch(listPetsProvider(FirebaseAuth.instance.currentUser!.uid));
+    final cachedPets = ref.watch(cachedPetsProvider);
 
     return switch (pets) {
       AsyncData(:final value) => value.isNotEmpty
@@ -61,7 +63,7 @@ class PetsCarousel extends HookConsumerWidget {
                 const SizedBox(height: 5),
                 AspectRatio(
                   aspectRatio: 2,
-                  child: _Carousel(currentPage: currentPage, value: value),
+                  child: _Carousel(currentPage: currentPage, value: cachedPets),
                 ),
               ],
             )

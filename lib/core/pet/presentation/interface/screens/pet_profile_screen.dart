@@ -9,7 +9,7 @@ import 'package:fur/shared/widgets/app_back_button.dart';
 
 class PetProfileScreen extends StatelessWidget {
   const PetProfileScreen({super.key, required this.pet});
-  final Pet pet;
+  final ValueNotifier<Pet> pet;
 
   @override
   Widget build(BuildContext context) {
