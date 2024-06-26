@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fur/shared/exceptions/error_codes.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/platform/network_info.dart';
 import 'package:fur/src/authentication/data/databases/authentication_remote_database.dart';
-import 'package:fur/src/authentication/domain/entities/user.dart';
 import 'package:fur/src/authentication/domain/repositories/authentication_repository.dart';
 import 'package:logger/logger.dart';
 

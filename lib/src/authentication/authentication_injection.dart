@@ -16,7 +16,6 @@ void initAuthentication() {
           sl(),
           sl(),
           sl(),
-          sl(),
         ))
     ..registerLazySingleton<AuthenticationRepository>(
       () => AuthenticationRepositoryImpl(sl(), sl()),

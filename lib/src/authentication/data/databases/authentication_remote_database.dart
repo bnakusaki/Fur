@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:fur/src/authentication/domain/entities/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class AuthenticationRemoteDatabase {
@@ -22,15 +21,15 @@ class AuthenticationRemoteDatabaseImpl implements AuthenticationRemoteDatabase {
       idToken: googleAuth?.idToken,
     );
 
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    return User.empty();
+    final response = await FirebaseAuth.instance.signInWithCredential(credential);
+    return response.user!;
   }
 
   @override
   Future<User> authenticateWithApple() async {
     final appleProvider = AppleAuthProvider();
-    await FirebaseAuth.instance.signInWithProvider(appleProvider);
-    return User.empty();
+    final response = await FirebaseAuth.instance.signInWithProvider(appleProvider);
+    return response.user!;
   }
 
   @override
@@ -43,8 +42,8 @@ class AuthenticationRemoteDatabaseImpl implements AuthenticationRemoteDatabase {
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
-    FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-    return User.empty();
+    final response = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    return response.user!;
   }
 
   @override

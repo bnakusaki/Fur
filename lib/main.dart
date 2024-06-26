@@ -4,8 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fur/firebase_options.dart';
 import 'package:fur/injection_container.dart';
 import 'package:fur/shared/styles/app_theme.dart';
-import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
-import 'package:fur/src/onboarding/presentation/interface/screens/onboarding_screen.dart';
 import 'package:fur/wrapper.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -15,26 +13,15 @@ Future<void> main() async {
 
   init();
 
-  final onboardingStatus = await sl<OnboardingBloc>().isOnboardingCompleted();
-  final isOnboardingCompleted = onboardingStatus.fold(
-    (failure) => false,
-    (success) => success,
-  );
   runApp(
-    ProviderScope(
-      child: FurApp(
-        isOnboardingCompleted: isOnboardingCompleted,
-      ),
+    const ProviderScope(
+      child: FurApp(),
     ),
   );
 }
 
 class FurApp extends StatelessWidget {
-  const FurApp({
-    super.key,
-    required this.isOnboardingCompleted,
-  });
-  final bool isOnboardingCompleted;
+  const FurApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +30,7 @@ class FurApp extends StatelessWidget {
       theme: AppTheme().theme(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: isOnboardingCompleted ? const Wrapper() : OnboardingScreen(),
+      home: const Wrapper(),
     );
   }
 }

@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fur/injection_container.dart';
-import 'package:fur/src/authentication/domain/entities/user.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 
@@ -38,17 +38,6 @@ mixin AuthenticationMixin {
       (failure) => throw failure,
       (user) {
         _onAuthSuccess(context);
-        return user;
-      },
-    );
-  }
-
-  Future<User> createProfile({required User user}) async {
-    final response = await bloc.createProfile(user);
-
-    return response.fold(
-      (failure) => throw failure,
-      (user) {
         return user;
       },
     );

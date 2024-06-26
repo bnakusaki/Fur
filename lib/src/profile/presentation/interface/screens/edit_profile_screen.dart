@@ -10,11 +10,10 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
-import 'package:fur/src/profile/presentation/bloc/profile_mixin.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
-  EditProfileScreen({super.key});
+class EditProfileScreen extends HookConsumerWidget {
+  const EditProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -170,37 +169,6 @@ class EditProfileScreen extends HookConsumerWidget with ProfileMixin {
             ],
           ),
         ),
-        // bottomNavigationBar: email.value != userProfile.email ||
-        //         name.value != userProfile.firstName
-        //     ? Padding(
-        //         padding: EdgeInsets.only(
-        //           bottom: MediaQuery.paddingOf(context).bottom + 20,
-        //           left: 20,
-        //           right: 20,
-        //         ),
-        //         child: ElevatedButton(
-        //           onPressed: null,
-        //           child: Text(localizations.appButtonsSaveChanges),
-        //         )
-        //             .withLoadingState(
-        //               onPressed: () async {
-        //                 if (formKey.currentState!.validate()) {
-        //                   await updateProfile(
-        //                     user: userProfile.copyWith(
-        //                       email: email.value,
-        //                       firstName: name.value,
-
-        //                     ),
-        //                     ref: ref,
-        //                   );
-        //                 }
-        //               },
-        //             )
-        //             .animate()
-        //             .fadeIn()
-        //             .slideY(begin: 0.1),
-        //       )
-        //     : null,
       ),
     );
   }
