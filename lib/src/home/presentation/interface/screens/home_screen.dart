@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
 import 'package:fur/src/home/presentation/interface/widgets/pets_carousel.dart';
 import 'package:lottie/lottie.dart';
@@ -12,9 +10,6 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final textStyles = Theme.of(context).extension<TextStyles>()!;
-
     final menuAnimationController =
         useAnimationController(duration: const Duration(milliseconds: 1000));
 
