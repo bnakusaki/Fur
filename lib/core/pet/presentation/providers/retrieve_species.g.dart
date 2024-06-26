@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'list_species.dart';
+part of 'retrieve_species.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$listSpeciesHash() => r'21ce561818f3142191c90f6cdcbd837d9548cb35';
+String _$retrieveSpeciesHash() => r'2a8d869ceb18f7eefa416c0291dbe6677f0a5346';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,30 +29,33 @@ class _SystemHash {
   }
 }
 
-/// See also [listSpecies].
-@ProviderFor(listSpecies)
-const listSpeciesProvider = ListSpeciesFamily();
+/// See also [retrieveSpecies].
+@ProviderFor(retrieveSpecies)
+const retrieveSpeciesProvider = RetrieveSpeciesFamily();
 
-/// See also [listSpecies].
-class ListSpeciesFamily extends Family<AsyncValue<List<Species>>> {
-  /// See also [listSpecies].
-  const ListSpeciesFamily();
+/// See also [retrieveSpecies].
+class RetrieveSpeciesFamily extends Family<AsyncValue<Species>> {
+  /// See also [retrieveSpecies].
+  const RetrieveSpeciesFamily();
 
-  /// See also [listSpecies].
-  ListSpeciesProvider call(
+  /// See also [retrieveSpecies].
+  RetrieveSpeciesProvider call(
     String languageCode,
+    String speciesId,
   ) {
-    return ListSpeciesProvider(
+    return RetrieveSpeciesProvider(
       languageCode,
+      speciesId,
     );
   }
 
   @override
-  ListSpeciesProvider getProviderOverride(
-    covariant ListSpeciesProvider provider,
+  RetrieveSpeciesProvider getProviderOverride(
+    covariant RetrieveSpeciesProvider provider,
   ) {
     return call(
       provider.languageCode,
+      provider.speciesId,
     );
   }
 
@@ -68,32 +71,35 @@ class ListSpeciesFamily extends Family<AsyncValue<List<Species>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'listSpeciesProvider';
+  String? get name => r'retrieveSpeciesProvider';
 }
 
-/// See also [listSpecies].
-class ListSpeciesProvider extends AutoDisposeFutureProvider<List<Species>> {
-  /// See also [listSpecies].
-  ListSpeciesProvider(
+/// See also [retrieveSpecies].
+class RetrieveSpeciesProvider extends AutoDisposeFutureProvider<Species> {
+  /// See also [retrieveSpecies].
+  RetrieveSpeciesProvider(
     String languageCode,
+    String speciesId,
   ) : this._internal(
-          (ref) => listSpecies(
-            ref as ListSpeciesRef,
+          (ref) => retrieveSpecies(
+            ref as RetrieveSpeciesRef,
             languageCode,
+            speciesId,
           ),
-          from: listSpeciesProvider,
-          name: r'listSpeciesProvider',
+          from: retrieveSpeciesProvider,
+          name: r'retrieveSpeciesProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$listSpeciesHash,
-          dependencies: ListSpeciesFamily._dependencies,
+                  : _$retrieveSpeciesHash,
+          dependencies: RetrieveSpeciesFamily._dependencies,
           allTransitiveDependencies:
-              ListSpeciesFamily._allTransitiveDependencies,
+              RetrieveSpeciesFamily._allTransitiveDependencies,
           languageCode: languageCode,
+          speciesId: speciesId,
         );
 
-  ListSpeciesProvider._internal(
+  RetrieveSpeciesProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -101,59 +107,69 @@ class ListSpeciesProvider extends AutoDisposeFutureProvider<List<Species>> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.languageCode,
+    required this.speciesId,
   }) : super.internal();
 
   final String languageCode;
+  final String speciesId;
 
   @override
   Override overrideWith(
-    FutureOr<List<Species>> Function(ListSpeciesRef provider) create,
+    FutureOr<Species> Function(RetrieveSpeciesRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: ListSpeciesProvider._internal(
-        (ref) => create(ref as ListSpeciesRef),
+      override: RetrieveSpeciesProvider._internal(
+        (ref) => create(ref as RetrieveSpeciesRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         languageCode: languageCode,
+        speciesId: speciesId,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<Species>> createElement() {
-    return _ListSpeciesProviderElement(this);
+  AutoDisposeFutureProviderElement<Species> createElement() {
+    return _RetrieveSpeciesProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is ListSpeciesProvider && other.languageCode == languageCode;
+    return other is RetrieveSpeciesProvider &&
+        other.languageCode == languageCode &&
+        other.speciesId == speciesId;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, languageCode.hashCode);
+    hash = _SystemHash.combine(hash, speciesId.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
-mixin ListSpeciesRef on AutoDisposeFutureProviderRef<List<Species>> {
+mixin RetrieveSpeciesRef on AutoDisposeFutureProviderRef<Species> {
   /// The parameter `languageCode` of this provider.
   String get languageCode;
+
+  /// The parameter `speciesId` of this provider.
+  String get speciesId;
 }
 
-class _ListSpeciesProviderElement
-    extends AutoDisposeFutureProviderElement<List<Species>>
-    with ListSpeciesRef {
-  _ListSpeciesProviderElement(super.provider);
+class _RetrieveSpeciesProviderElement
+    extends AutoDisposeFutureProviderElement<Species> with RetrieveSpeciesRef {
+  _RetrieveSpeciesProviderElement(super.provider);
 
   @override
-  String get languageCode => (origin as ListSpeciesProvider).languageCode;
+  String get languageCode => (origin as RetrieveSpeciesProvider).languageCode;
+  @override
+  String get speciesId => (origin as RetrieveSpeciesProvider).speciesId;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

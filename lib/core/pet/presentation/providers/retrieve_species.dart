@@ -1,23 +1,22 @@
-import 'package:fur/core/pet/domain/entities/breed.dart';
+import 'package:fur/core/pet/domain/entities/species.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_bloc.dart';
 import 'package:fur/injection_container.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'retrieve_breed.g.dart';
+part 'retrieve_species.g.dart';
 
 @riverpod
-Future<Breed> retrieveBreed(
-  RetrieveBreedRef ref,
+Future<Species> retrieveSpecies(
+  RetrieveSpeciesRef ref,
   String languageCode,
   String speciesId,
-  String breedId,
 ) async {
   final bloc = sl<PetsBloc>();
 
-  final result = await bloc.retrieveBreed(languageCode, speciesId, breedId);
+  final result = await bloc.retrieveSpecies(languageCode, speciesId);
 
   return result.fold(
     (failure) => throw failure,
-    (breed) => breed,
+    (species) => species,
   );
 }

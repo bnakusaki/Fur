@@ -17,16 +17,17 @@ class PetsRepositoryImpl implements PetsRepository {
   PetsRepositoryImpl(this.networkInfo, this.remoteDatabase);
 
   @override
-  Future<Either<Failure, void>> savePetImage(String petId, String path) async {
+  Future<Either<Failure, Species>> retrieveSpecies(String languageCode, String speciesId) async {
     try {
       await networkInfo.hasInternet();
-      final response = await remoteDatabase.savePetImage(petId, path);
+      final response = await remoteDatabase.retrieveSpecies(languageCode, speciesId);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));
     } on Failure catch (e) {
       return Left(e);
     } catch (e) {
+      Logger().e(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }
@@ -101,6 +102,22 @@ class PetsRepositoryImpl implements PetsRepository {
     try {
       await networkInfo.hasInternet();
       final response = await remoteDatabase.retrieveBreed(languageCode, breedId, speciesId);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      Logger().e(e);
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Pet>> update(Pet pet) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.update(pet);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));

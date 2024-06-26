@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
+import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/interface/screens/pet_profile_screen.dart';
+import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
 import 'package:fur/shared/extensions/string.dart';
@@ -16,8 +17,8 @@ import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class PetScreen extends ConsumerWidget {
-  const PetScreen({super.key, required this.pet});
+class PetScreen extends ConsumerWidget with PetsMixin {
+  PetScreen({super.key, required this.pet});
   final Pet pet;
 
   @override
@@ -36,24 +37,6 @@ class PetScreen extends ConsumerWidget {
       pet.species,
       pet.breed,
     ));
-
-    String parseAge(DateTime dob) {
-      final now = DateTime.now();
-      final years = now.difference(dob).inDays ~/ 365;
-      final months = (now.difference(dob).inDays % 365) ~/ 30;
-      final weeks = ((now.difference(dob).inDays % 365) % 30) ~/ 7;
-      final days = ((now.difference(dob).inDays % 365) % 30) % 7;
-
-      if (years > 0) {
-        return localizations.years(years);
-      } else if (months > 0) {
-        return localizations.months(months);
-      } else if (weeks > 0) {
-        return localizations.weeks(weeks);
-      } else {
-        return localizations.days(days);
-      }
-    }
 
     return Scaffold(
       body: CustomScrollView(
@@ -127,7 +110,7 @@ class PetScreen extends ConsumerWidget {
                           child: _InfoCard(
                             color: color,
                             title: localizations.age,
-                            value: parseAge(pet.dob),
+                            value: parseAge(pet.dob, localizations),
                             icon: AppIcons.clock,
                           ),
                         ),

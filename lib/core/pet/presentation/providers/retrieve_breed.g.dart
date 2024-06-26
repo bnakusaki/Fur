@@ -6,7 +6,7 @@ part of 'retrieve_breed.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$retrieveBreedHash() => r'46aa6e4bee7e66b2f6753676ac9441aa2fd7c05c';
+String _$retrieveBreedHash() => r'9392d939379e5d00c19c53089517627cde68c23c';
 
 /// Copied from Dart SDK
 class _SystemHash {

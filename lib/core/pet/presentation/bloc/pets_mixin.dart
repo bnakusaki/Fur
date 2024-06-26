@@ -1,3 +1,4 @@
+import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_bloc.dart';
 import 'package:fur/injection_container.dart';
@@ -21,5 +22,32 @@ mixin PetsMixin {
       (failure) => throw failure,
       (pet) => pet,
     );
+  }
+
+  Future<Pet> updatePet(Pet pet) async {
+    final reponse = await bloc.updatePet(pet);
+
+    return reponse.fold(
+      (failure) => throw failure,
+      (pet) => pet,
+    );
+  }
+
+  String parseAge(DateTime dob, AppLocalizations localizations) {
+    final now = DateTime.now();
+    final years = now.difference(dob).inDays ~/ 365;
+    final months = (now.difference(dob).inDays % 365) ~/ 30;
+    final weeks = ((now.difference(dob).inDays % 365) % 30) ~/ 7;
+    final days = ((now.difference(dob).inDays % 365) % 30) % 7;
+
+    if (years > 0) {
+      return localizations.years(years);
+    } else if (months > 0) {
+      return localizations.months(months);
+    } else if (weeks > 0) {
+      return localizations.weeks(weeks);
+    } else {
+      return localizations.days(days);
+    }
   }
 }

@@ -11,6 +11,7 @@
     "appButtonsContinueWithApple": "Continue with Apple",
     "appButtonsContinueWithFacebook": "Continue with Facebook",
     "appButtonsViewProfile": "View profile",
+    "appButtonsUpdate": "Update",
     "appButtonsAddPicture": "Add picture",
     "appButtonsChangePicture": "Change  picture",
     "appButtonsSignOut": "Sign out",
@@ -30,14 +31,16 @@
     "appTextFieldHintsWeeks": "Weeks",
     "appTextFieldHintsDays": "Days",
     "appTextFieldHintsEnterWeight": "Enter weight",
-    "appTextFieldHintsEmail": "Email",
-    "appTextFieldHintsName": "Name",
+    "appTextFieldHintsEnterNewName": "Enter new name",
+    "appTextFieldHintsEnterNewWeight": "Enter new weight",
 
 
     "pageTitles_": "",
     "appPageTitlesBasicInformation": "Basic information",
     "appPageTitlesProfile": "Profile",
     "appPageTitlesEditProfile": "Edit profile",
+    "appPageTitlesEditPetName": "Edit pet name",
+    "appPageTitlesEditPetWeight": "Edit pet weight",
 
     "questions_": "",
     "appQuestionsPetName": "What is your pet's name?",

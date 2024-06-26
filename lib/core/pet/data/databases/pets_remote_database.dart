@@ -3,14 +3,17 @@ import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/species.dart';
 import 'package:fur/shared/firebase_collection_references.dart';
+import 'package:logger/logger.dart';
 
 abstract class PetsRemoteDatabase {
   Future<void> savePetImage(String petId, String path);
   Future<Pet> create(Pet pet);
+  Future<Pet> update(Pet pet);
   Future<List<Pet>> list(String uid);
   Future<List<Species>> listSpecies(String languageCode);
   Future<List<Breed>> listBreeds(String languageCode, String speciesId);
   Future<Breed> retrieveBreed(String languageCode, String breedId, String speciesId);
+  Future<Species> retrieveSpecies(String languageCode, String speciesId);
 }
 
 class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
@@ -91,10 +94,36 @@ class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
         .doc(breedId)
         .get();
 
+    Logger().d(speciesId);
+    Logger().d(breedId);
+
     final json = reponse.data()!;
 
     json['name'] = json['name'][languageCode];
 
     return Breed.fromJson(json);
+  }
+
+  @override
+  Future<Species> retrieveSpecies(String languageCode, String speciesId) async {
+    final doc = await FirebaseFirestore.instance
+        .collection(FirebaseCollectionReferences.species)
+        .doc(speciesId)
+        .get();
+
+    final json = doc.data()!;
+    json['name'] = json['name'][languageCode];
+
+    return Species.fromJson(json);
+  }
+
+  @override
+  Future<Pet> update(Pet pet) async {
+    await FirebaseFirestore.instance
+        .collection(FirebaseCollectionReferences.pets)
+        .doc(pet.id)
+        .update(pet.toJson());
+
+    return pet;
   }
 }
