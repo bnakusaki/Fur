@@ -66,6 +66,8 @@
     "petOwners": "- Pet owners",
     "petSitters": "- Pet sitters",
     "veterinarians": "- Veterinarians",
+    "youHaveNoPets": "You have no pets.",
+    "tapToAddYourFirstPet": "Tap to add your first pet.",
 
 
     "welcomeToApp": "Welcome to Fur!",

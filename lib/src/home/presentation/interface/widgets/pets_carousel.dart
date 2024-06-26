@@ -1,10 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_name_screen.dart';
 import 'package:fur/core/pet/presentation/providers/list_pets.dart';
+import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
+import 'package:fur/shared/styles/app_sizes.dart';
+import 'package:fur/shared/styles/text_styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,105 +20,102 @@ class PetsCarousel extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final textStyles = theme.extension<TextStyles>()!;
     final currentPage = useState(0);
 
     final pets = ref.watch(listPetsProvider(FirebaseAuth.instance.currentUser!.uid));
 
-    return AspectRatio(
-        aspectRatio: 2,
-        child: switch (pets) {
-          AsyncData(:final value) => value.isNotEmpty
-              ? _Carousel(currentPage: currentPage, value: value)
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Card(
-                    child: Stack(
-                      children: [
-                        const Positioned.fill(
-                          child: Image(
-                            image: AssetImage(AppImages.authenticationScreenBg),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0.1),
-                                Colors.black.withOpacity(0.2),
-                                Colors.black.withOpacity(0.3),
-                                Colors.black.withOpacity(0.4),
-                                Colors.black.withOpacity(0.5),
-                                Colors.black.withOpacity(0.6),
-                                Colors.black.withOpacity(0.7),
-                                Colors.black.withOpacity(0.8),
-                                Colors.black.withOpacity(0.9),
-                                Colors.black,
-                                Colors.black,
-                              ],
+    return switch (pets) {
+      AsyncData(:final value) => value.isNotEmpty
+          ? Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        localizations.myPets,
+                        style: textStyles.h2,
+                      ),
+                      IconButton.filledTonal(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const InputPetNameScreen(),
                             ),
-                          ),
+                          );
+                        },
+                        icon: SvgPicture.asset(
+                          AppIcons.plus,
+                          height: 16,
                         ),
-                        const Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'You have no pets',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const InputPetNameScreen(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                      )
+                    ],
                   ),
                 ),
-          _ => PageView.builder(
-              controller: PageController(
-                viewportFraction: 0.90,
-              ),
-              onPageChanged: (value) {
-                currentPage.value = value;
-              },
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.grey.shade200,
-                    highlightColor: Colors.grey.shade100,
-                    child: const Card(),
+                const SizedBox(height: 5),
+                AspectRatio(
+                  aspectRatio: 2,
+                  child: _Carousel(currentPage: currentPage, value: value),
+                ),
+              ],
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const InputPetNameScreen(),
+                    ),
+                  );
+                },
+                tileColor: theme.primaryColor.withOpacity(0.1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: Text(
+                  localizations.youHaveNoPets,
+                  style: TextStyle(
+                    color: theme.primaryColor,
+                    fontWeight: FontWeight.w600,
                   ),
-                );
-              },
-              itemCount: 2,
+                ),
+                subtitle: Text(localizations.tapToAddYourFirstPet),
+                trailing: SvgPicture.asset(
+                  AppIcons.angleSmallRight,
+                  height: 20,
+                ),
+              ),
             ),
-        });
+      _ => AspectRatio(
+          aspectRatio: 2,
+          child: PageView.builder(
+            controller: PageController(
+              viewportFraction: 0.90,
+            ),
+            onPageChanged: (value) {
+              currentPage.value = value;
+            },
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey.shade200,
+                  highlightColor: Colors.grey.shade100,
+                  child: const Card(),
+                ),
+              );
+            },
+            itemCount: 2,
+          ),
+        ),
+    };
   }
 }
 

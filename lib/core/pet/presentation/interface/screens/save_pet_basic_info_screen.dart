@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,7 +24,7 @@ class SavePetBasicInfoScreen extends HookConsumerWidget with AnimalMixin {
 
     useMemoized(() async {
       try {
-        await createPet(pet);
+        await createPet(pet.copyWith(owner: FirebaseAuth.instance.currentUser!.uid));
 
         if (context.mounted) {
           Navigator.push(

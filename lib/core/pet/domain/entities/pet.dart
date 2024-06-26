@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fur/core/pet/domain/entities/pet_age.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
@@ -8,8 +10,6 @@ part 'pet.g.dart';
 @freezed
 class Pet with _$Pet {
   @JsonSerializable(explicitToJson: true)
-
-
   const factory Pet({
     required String id,
     required String name,
