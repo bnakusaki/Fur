@@ -29,6 +29,11 @@ class AppIcons {
   static const clock = '$_path/clock.svg';
   static const gym = '$_path/gym.svg';
   static const listTimeline = '$_path/list-timeline.svg';
+  static const info = '$_path/info.svg';
+  static const makeupBrush = '$_path/makeup-brush.svg';
+  static const heartRate = '$_path/heart-rate.svg';
+  static const brain = '$_path/brain.svg';
+  static const phoneGuide = '$_path/phone-guide.svg';
 }
 
 class AppAnimatedIcons {

@@ -43,6 +43,10 @@
     "appPageTitlesPetWeight": "{value}'s weight",
     "@appPageTitlesPetWeight": {"placeholders": {"value": {}}},
     "appPageTitlesAppearance": "Appearance",
+    "appPageTitlesHealthAndCare": "Health and care",
+    "appPageTitlesBehavorialInformation": "Behavorial information",
+    "appPageTitlesContactInformation": "Contact information",
+    "appPageTitlesPetProfile": "Pet profile",
 
 
     "questions_": "",
@@ -98,6 +102,20 @@
     "color": "Color",
     "markings": "Markings",
     "size": "Size",
+    "vaccinationStatus": "Vaccination status",
+    "medicalHistory": "Medical history",
+    "allergies": "Allergies",
+    "dieteryPreferences": "Dietery preferences",
+    "medications": "Medications",
+    "temprament": "Temprament",
+    "trainingLevel": "Training level",
+    "favoriteActivities": "Favorite activities",
+    "compatibilityWithOtherPets": "Compatibility with other pets",
+    "behavorialIssues": "Behavorial issues",
+    "ownersName": "Owner's name",
+    "ownersContactInformation": "Owner's contant information",
+    "veterinariansContactInformation": "Veterinarian's contact information",
+
 
 
     "welcomeToApp": "Welcome to Fur!",
