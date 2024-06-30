@@ -40,7 +40,10 @@
     "appPageTitlesProfile": "Profile",
     "appPageTitlesEditProfile": "Edit profile",
     "appPageTitlesEditPetName": "Edit pet name",
-    "appPageTitlesEditPetWeight": "Edit pet weight",
+    "appPageTitlesPetWeight": "{value}'s weight",
+    "@appPageTitlesPetWeight": {"placeholders": {"value": {}}},
+    "appPageTitlesAppearance": "Appearance",
+
 
     "questions_": "",
     "appQuestionsPetName": "What is your pet's name?",
@@ -60,6 +63,10 @@
     "appCaptionsInputPetName": "Enter your pet's name to continue.",
     "appCaptionsPetAgeInputOptions": "You can select the date of bith of benny from a calendar by clicking the button below.",
     "appCaptionsInputPetWeight": "Enter your pet's weight in kilograms.",
+
+
+    "dialogTitles_": "",
+    "appDialogTitlesSignOut": "Sign out",
 
 
     "male": "Male",
@@ -82,6 +89,15 @@
     "@days": {"placeholders": {"count": {}}},
     "sex": "Sex",
     "age": "Age",
+    "name": "Name",
+    "species": "Species",
+    "breed": "Breed",
+    "weight": "Weight",
+    "weightInKg": "{value} kg",
+    "@weightInKg": {"placeholders": {"value": {}}},
+    "color": "Color",
+    "markings": "Markings",
+    "size": "Size",
 
 
     "welcomeToApp": "Welcome to Fur!",
@@ -97,7 +113,8 @@
     "@searchBreed": {"placeholders": {"value": {}}},
     "appPageTitlesAddPetPicture": "Add pet picture",
     "areYouSureYouWantToSignOut": "Are you sure you want to Sign out?",
-    "appDiaSignTitlesSignOut": "Sign out",
+
+
 
 
     "petNameQuestion": "What is your pet's name?",

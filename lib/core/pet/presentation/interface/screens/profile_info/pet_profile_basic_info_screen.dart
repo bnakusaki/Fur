@@ -6,8 +6,8 @@ import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
-import 'package:fur/core/pet/presentation/interface/screens/edit_pet_name_screen.dart';
-import 'package:fur/core/pet/presentation/interface/screens/edit_pet_weight_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_name_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_weight_screen.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_species.dart';
 import 'package:fur/shared/assets/app_icons.dart';
@@ -55,23 +55,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
 
     var infos = <_InfoData>[
       _InfoData(
-        title: 'Age',
-        onEdit: (pet) {},
-        value: parseAge(pet.value.dob, localizations),
-        editable: false,
-      ),
-      _InfoData(
-        title: 'Breed',
-        onEdit: (pet) {},
-        value: breed.when(
-          data: (value) => value.name,
-          error: (error, stacktrace) => '$error',
-          loading: () => '...',
-        ),
-        editable: false,
-      ),
-      _InfoData(
-        title: 'Species',
+        title: localizations.species,
         onEdit: (pet) {},
         value: species.when(
           data: (value) => value.name,
@@ -81,12 +65,28 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         editable: false,
       ),
       _InfoData(
-        title: 'Sex',
+        title: localizations.breed,
+        onEdit: (pet) {},
+        value: breed.when(
+          data: (value) => value.name,
+          error: (error, stacktrace) => '$error',
+          loading: () => '...',
+        ),
+        editable: false,
+      ),
+      _InfoData(
+        title: localizations.sex,
         onEdit: (pet) {},
         value: switch (pet.value.sex) {
           Sex.male => localizations.male,
           Sex.female => localizations.female,
         },
+        editable: false,
+      ),
+      _InfoData(
+        title: localizations.age,
+        onEdit: (pet) {},
+        value: parseAge(pet.value.dob, localizations),
         editable: false,
       ),
     ];
@@ -120,45 +120,14 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                   ),
                 );
               },
-              title: const Text(
-                'Name',
-                style: TextStyle(
+              title: Text(
+                localizations.name,
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
               ),
               subtitle: Text(
                 name.value,
-                style: textStyles.caption,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              tileColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              trailing: SvgPicture.asset(
-                AppIcons.edit,
-                height: 20,
-              ),
-            ),
-            const SizedBox(height: 10),
-            ListTile(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditPetWeightScreen(pet: pet, weight: weight),
-                  ),
-                );
-              },
-              title: const Text(
-                'Weight',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              subtitle: Text(
-                '${weight.value} kg',
                 style: textStyles.caption,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -216,6 +185,37 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                 return const SizedBox(height: 10);
               },
               itemCount: infos.length,
+            ),
+            const SizedBox(height: 10),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PetWeightScreen(pet: pet, weight: weight),
+                  ),
+                );
+              },
+              title: Text(
+                localizations.weight,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              subtitle: Text(
+                localizations.weightInKg(weight.value),
+                style: textStyles.caption,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              tileColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              trailing: SvgPicture.asset(
+                AppIcons.angleSmallRight,
+                height: 20,
+              ),
             ),
           ],
         ),

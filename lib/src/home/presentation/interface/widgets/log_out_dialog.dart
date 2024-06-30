@@ -54,7 +54,7 @@ class LogoutDialog extends StatelessWidget with HomeMixin {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  localizations.appDiaSignTitlesSignOut,
+                  localizations.appDialogTitlesSignOut,
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w600,

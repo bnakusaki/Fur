@@ -7,7 +7,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/species.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
-import 'package:fur/core/pet/presentation/interface/screens/select_pet_breed_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/select_pet_breed_screen.dart';
 import 'package:fur/core/pet/presentation/providers/list_species.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/extensions/string.dart';

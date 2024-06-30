@@ -28,6 +28,7 @@ class AppIcons {
   static const bone = '$_path/bone.svg';
   static const clock = '$_path/clock.svg';
   static const gym = '$_path/gym.svg';
+  static const listTimeline = '$_path/list-timeline.svg';
 }
 
 class AppAnimatedIcons {
