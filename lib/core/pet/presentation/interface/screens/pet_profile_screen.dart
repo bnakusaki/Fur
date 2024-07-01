@@ -147,7 +147,9 @@ class PetProfileScreen extends StatelessWidget {
 
                   return ListTile(
                     onTap: profileSection.onTap,
-                    leading: SvgPicture.asset(profileSection.icon),
+                    leading: SvgPicture.asset(
+                      profileSection.icon,
+                    ),
                     title: Text(
                       profileSection.title,
                       style: const TextStyle(

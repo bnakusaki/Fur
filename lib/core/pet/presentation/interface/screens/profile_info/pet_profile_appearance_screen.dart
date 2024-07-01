@@ -20,32 +20,22 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    // final name = useState(pet.value.name);
-    // final weight = useState(pet.value.weight);
-
-    // useEffect(() {
-    //   name.value = pet.value.name;
-    //   return null;
-    // }, [pet.value.name]);
-
-    // useEffect(() {
-    //   weight.value = pet.value.weight;
-    //   return null;
-    // }, [pet.value.weight]);
-
     var infos = <_InfoData>[
       _InfoData(
         title: localizations.color,
+        icon: AppIcons.palette,
         onEdit: (pet) {},
         value: pet.value.color,
       ),
       _InfoData(
         title: localizations.markings,
+        icon: AppIcons.clawMarks,
         onEdit: (pet) {},
         value: pet.value.markings,
       ),
       _InfoData(
         title: localizations.size,
+        icon: AppIcons.sortSizeUp,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
@@ -79,6 +69,7 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
 
                 return ListTile(
                   onTap: () => info.onEdit(pet),
+                  leading: SvgPicture.asset(info.icon),
                   title: Text(
                     info.title,
                     style: const TextStyle(
@@ -119,10 +110,12 @@ class _InfoData {
   final String title;
   final String? value;
   final Function(ValueNotifier<Pet> param) onEdit;
+  final String icon;
 
   _InfoData({
     required this.title,
     required this.value,
     required this.onEdit,
+    required this.icon,
   });
 }

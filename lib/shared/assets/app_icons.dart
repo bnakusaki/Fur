@@ -34,6 +34,9 @@ class AppIcons {
   static const heartRate = '$_path/heart-rate.svg';
   static const brain = '$_path/brain.svg';
   static const phoneGuide = '$_path/phone-guide.svg';
+  static const palette = '$_path/palette.svg';
+  static const clawMarks = '$_path/claw-marks.svg';
+  static const sortSizeUp = '$_path/sort-size-up.svg';
 }
 
 class AppAnimatedIcons {
