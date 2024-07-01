@@ -42,6 +42,12 @@ class AppIcons {
   static const salad = '$_path/salad.svg';
   static const medicine = '$_path/medicine.svg';
   static const fileMedicalAlt = '$_path/file-medical-alt.svg';
+  static const careerGrowth = '$_path/career-growth.svg';
+  static const mehBlank = '$_path/meh-blank.svg';
+  static const star = '$_path/star.svg';
+  static const thoughtBubble = '$_path/thought-bubble.svg';
+  static const users = '$_path/users.svg';
+  static const userMd = '$_path/user-md.svg';
 }
 
 class AppAnimatedIcons {

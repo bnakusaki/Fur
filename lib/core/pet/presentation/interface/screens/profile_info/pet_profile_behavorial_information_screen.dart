@@ -36,26 +36,31 @@ class PetProfileBehavorialInformationScreen extends HookConsumerWidget with Pets
     var infos = <_InfoData>[
       _InfoData(
         title: 'Temprament',
+        icon: AppIcons.mehBlank,
         onEdit: (pet) {},
         value: pet.value.color,
       ),
       _InfoData(
         title: 'Training level',
+        icon: AppIcons.careerGrowth,
         onEdit: (pet) {},
         value: pet.value.markings,
       ),
       _InfoData(
         title: 'Favorite activities',
+        icon: AppIcons.star,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
       _InfoData(
         title: 'Compactibility with other pets',
+        icon: AppIcons.users,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
       _InfoData(
         title: 'Behavorial issues',
+        icon: AppIcons.thoughtBubble,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
@@ -89,6 +94,7 @@ class PetProfileBehavorialInformationScreen extends HookConsumerWidget with Pets
 
                 return ListTile(
                   onTap: () => info.onEdit(pet),
+                  leading: SvgPicture.asset(info.icon),
                   title: Text(
                     info.title,
                     style: const TextStyle(
@@ -129,10 +135,12 @@ class _InfoData {
   final String title;
   final String? value;
   final Function(ValueNotifier<Pet> param) onEdit;
+  final String icon;
 
   _InfoData({
     required this.title,
     required this.value,
     required this.onEdit,
+    required this.icon,
   });
 }
