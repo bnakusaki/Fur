@@ -6,7 +6,7 @@ part of 'pet_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$petNotifierHash() => r'8a8098189415f5421467552ff8eee627e765f88e';
+String _$petNotifierHash() => r'f764edbef32c2fc1200a1e8d2ef3eff219d66054';
 
 /// See also [PetNotifier].
 @ProviderFor(PetNotifier)

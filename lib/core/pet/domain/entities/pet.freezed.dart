@@ -32,6 +32,8 @@ mixin _$Pet {
   String? get color => throw _privateConstructorUsedError;
   String? get markings => throw _privateConstructorUsedError;
   double? get size => throw _privateConstructorUsedError;
+  DateTime get createdOn => throw _privateConstructorUsedError;
+  DateTime get updatedOn => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +57,9 @@ abstract class $PetCopyWith<$Res> {
       DateTime dob,
       String? color,
       String? markings,
-      double? size});
+      double? size,
+      DateTime createdOn,
+      DateTime updatedOn});
 }
 
 /// @nodoc
@@ -82,6 +86,8 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
     Object? color = freezed,
     Object? markings = freezed,
     Object? size = freezed,
+    Object? createdOn = null,
+    Object? updatedOn = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -132,6 +138,14 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as double?,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedOn: null == updatedOn
+          ? _value.updatedOn
+          : updatedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -154,7 +168,9 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       DateTime dob,
       String? color,
       String? markings,
-      double? size});
+      double? size,
+      DateTime createdOn,
+      DateTime updatedOn});
 }
 
 /// @nodoc
@@ -178,6 +194,8 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     Object? color = freezed,
     Object? markings = freezed,
     Object? size = freezed,
+    Object? createdOn = null,
+    Object? updatedOn = null,
   }) {
     return _then(_$PetImpl(
       id: null == id
@@ -228,6 +246,14 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as double?,
+      createdOn: null == createdOn
+          ? _value.createdOn
+          : createdOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      updatedOn: null == updatedOn
+          ? _value.updatedOn
+          : updatedOn // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -248,7 +274,9 @@ class _$PetImpl implements _Pet {
       required this.dob,
       required this.color,
       required this.markings,
-      required this.size})
+      required this.size,
+      required this.createdOn,
+      required this.updatedOn})
       : _weight = weight;
 
   factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
@@ -284,10 +312,14 @@ class _$PetImpl implements _Pet {
   final String? markings;
   @override
   final double? size;
+  @override
+  final DateTime createdOn;
+  @override
+  final DateTime updatedOn;
 
   @override
   String toString() {
-    return 'Pet(id: $id, name: $name, owner: $owner, sex: $sex, breed: $breed, image: $image, species: $species, weight: $weight, dob: $dob, color: $color, markings: $markings, size: $size)';
+    return 'Pet(id: $id, name: $name, owner: $owner, sex: $sex, breed: $breed, image: $image, species: $species, weight: $weight, dob: $dob, color: $color, markings: $markings, size: $size, createdOn: $createdOn, updatedOn: $updatedOn)';
   }
 
   @override
@@ -307,7 +339,11 @@ class _$PetImpl implements _Pet {
             (identical(other.color, color) || other.color == color) &&
             (identical(other.markings, markings) ||
                 other.markings == markings) &&
-            (identical(other.size, size) || other.size == size));
+            (identical(other.size, size) || other.size == size) &&
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
+            (identical(other.updatedOn, updatedOn) ||
+                other.updatedOn == updatedOn));
   }
 
   @JsonKey(ignore: true)
@@ -325,7 +361,9 @@ class _$PetImpl implements _Pet {
       dob,
       color,
       markings,
-      size);
+      size,
+      createdOn,
+      updatedOn);
 
   @JsonKey(ignore: true)
   @override
@@ -354,7 +392,9 @@ abstract class _Pet implements Pet {
       required final DateTime dob,
       required final String? color,
       required final String? markings,
-      required final double? size}) = _$PetImpl;
+      required final double? size,
+      required final DateTime createdOn,
+      required final DateTime updatedOn}) = _$PetImpl;
 
   factory _Pet.fromJson(Map<String, dynamic> json) = _$PetImpl.fromJson;
 
@@ -382,6 +422,10 @@ abstract class _Pet implements Pet {
   String? get markings;
   @override
   double? get size;
+  @override
+  DateTime get createdOn;
+  @override
+  DateTime get updatedOn;
   @override
   @JsonKey(ignore: true)
   _$$PetImplCopyWith<_$PetImpl> get copyWith =>

@@ -22,6 +22,8 @@ class Pet with _$Pet {
     required String? color,
     required String? markings,
     required double? size,
+    required DateTime createdOn,
+    required DateTime updatedOn,
   }) = _Pet;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
@@ -40,6 +42,8 @@ class Pet with _$Pet {
       color: null,
       markings: null,
       size: null,
+      createdOn: DateTime.now(),
+      updatedOn: DateTime.now(),
     );
   }
 }

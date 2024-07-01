@@ -209,7 +209,7 @@ class _Carousel extends ConsumerWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => PetScreen(pet: pet),
+                          builder: (context) => PetScreen(),
                         ),
                       );
                     },

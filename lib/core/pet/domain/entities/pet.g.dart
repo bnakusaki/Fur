@@ -21,6 +21,8 @@ _$PetImpl _$$PetImplFromJson(Map<String, dynamic> json) => _$PetImpl(
       color: json['color'] as String?,
       markings: json['markings'] as String?,
       size: (json['size'] as num?)?.toDouble(),
+      createdOn: DateTime.parse(json['createdOn'] as String),
+      updatedOn: DateTime.parse(json['updatedOn'] as String),
     );
 
 Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
@@ -36,6 +38,8 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'color': instance.color,
       'markings': instance.markings,
       'size': instance.size,
+      'createdOn': instance.createdOn.toIso8601String(),
+      'updatedOn': instance.updatedOn.toIso8601String(),
     };
 
 const _$SexEnumMap = {

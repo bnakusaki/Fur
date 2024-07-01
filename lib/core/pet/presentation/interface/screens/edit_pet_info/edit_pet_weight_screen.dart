@@ -18,20 +18,6 @@ class PetWeightScreen extends HookConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    // final weight0 = useState(pet.value.weight.values.last);
-
-    // Future<void> handleSave() async {
-    //   try {
-    //     pet.value = pet.value.copyWith(weight: {DateTime.now(): weight0.value});
-    //     weight.value = {DateTime.now(): weight0.value};
-    //     ref.watch(cachedPetsProvider.notifier).updatePet(pet.value);
-    //     await updatePet(pet.value);
-    //     if (context.mounted) Navigator.pop(context);
-    //   } on Failure catch (e) {
-    //     if (context.mounted) AppSnackBar.error(context, e.code);
-    //   }
-    // }
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
