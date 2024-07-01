@@ -28,11 +28,13 @@ class PetProfileContactInformationScreen extends HookConsumerWidget with PetsMix
       ),
       _InfoData(
         title: 'Owner\'s contact information',
+        icon: AppIcons.houseUser,
         onEdit: (pet) {},
         value: pet.value.markings,
       ),
       _InfoData(
         title: 'Veterinarians\'s contact information',
+        icon: AppIcons.userMd,
         onEdit: (pet) {},
         value: pet.value.markings,
       ),
@@ -66,6 +68,7 @@ class PetProfileContactInformationScreen extends HookConsumerWidget with PetsMix
 
                 return ListTile(
                   onTap: () => info.onEdit(pet),
+                  leading: info.icon != null ? SvgPicture.asset(info.icon!) : null,
                   title: Text(
                     info.title,
                     style: const TextStyle(
@@ -106,10 +109,12 @@ class _InfoData {
   final String title;
   final String? value;
   final Function(ValueNotifier<Pet> param) onEdit;
+  final String? icon;
 
   _InfoData({
     required this.title,
     required this.value,
     required this.onEdit,
+    this.icon,
   });
 }

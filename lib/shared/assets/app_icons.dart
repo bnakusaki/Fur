@@ -48,6 +48,7 @@ class AppIcons {
   static const thoughtBubble = '$_path/thought-bubble.svg';
   static const users = '$_path/users.svg';
   static const userMd = '$_path/user-md.svg';
+  static const houseUser = '$_path/house-user.svg';
 }
 
 class AppAnimatedIcons {
