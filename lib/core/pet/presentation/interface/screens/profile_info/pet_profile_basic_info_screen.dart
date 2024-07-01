@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,8 +7,8 @@ import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
-import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_name_screen.dart';
-import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_weight_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_name_dialog.dart';
+import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_species.dart';
 import 'package:fur/shared/assets/app_icons.dart';
@@ -17,9 +18,7 @@ import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
-  PetProfileBasicInfoScreen({super.key, required this.pet});
-
-  final ValueNotifier<Pet> pet;
+  PetProfileBasicInfoScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,28 +28,30 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
 
     final languageCode = Localizations.localeOf(context).languageCode;
 
-    final name = useState(pet.value.name);
-    final weight = useState(pet.value.weight);
+    final pet = ref.watch(petNotifierProvider)!;
+
+    final name = useState(pet.name);
+    final weight = useState(pet.weight);
 
     useEffect(() {
-      name.value = pet.value.name;
+      name.value = pet.name;
       return null;
-    }, [pet.value.name]);
+    }, [pet.name]);
 
     useEffect(() {
-      weight.value = pet.value.weight;
+      weight.value = pet.weight;
       return null;
-    }, [pet.value.weight]);
+    }, [pet.weight]);
 
     final AsyncValue<Breed> breed = ref.watch(retrieveBreedProvider(
       languageCode,
-      pet.value.breed,
-      pet.value.species,
+      pet.breed,
+      pet.species,
     ));
 
     final species = ref.watch(retrieveSpeciesProvider(
       languageCode,
-      pet.value.species,
+      pet.species,
     ));
 
     var infos = <_InfoData>[
@@ -59,7 +60,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         onEdit: (pet) {},
         value: species.when(
           data: (value) => value.name,
-          error: (error, stacktrace) => 'N/A',
+          error: (error, stacktrace) => localizations.notAvailableShort,
           loading: () => '...',
         ),
         editable: false,
@@ -69,7 +70,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         onEdit: (pet) {},
         value: breed.when(
           data: (value) => value.name,
-          error: (error, stacktrace) => '$error',
+          error: (error, stacktrace) => localizations.notAvailableShort,
           loading: () => '...',
         ),
         editable: false,
@@ -77,7 +78,8 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
       _InfoData(
         title: localizations.sex,
         onEdit: (pet) {},
-        value: switch (pet.value.sex) {
+        icon: AppIcons.venusMars,
+        value: switch (pet.sex) {
           Sex.male => localizations.male,
           Sex.female => localizations.female,
         },
@@ -86,7 +88,8 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
       _InfoData(
         title: localizations.age,
         onEdit: (pet) {},
-        value: parseAge(pet.value.dob, localizations),
+        icon: AppIcons.clockThree,
+        value: parseAge(pet.dob, localizations),
         editable: false,
       ),
     ];
@@ -113,11 +116,11 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
             const SizedBox(height: 20),
             ListTile(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditPetNameScreen(pet: pet, name: name),
-                  ),
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) {
+                    return EditPetNameDialog();
+                  },
                 );
               },
               title: Text(
@@ -149,7 +152,8 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                 final info = infos[index];
 
                 return ListTile(
-                  onTap: info.editable ? () => info.onEdit(pet) : null,
+                  // onTap: info.editable ? () => info.onEdit(pet) : null,
+                  leading: info.icon != null ? SvgPicture.asset(info.icon!) : null,
                   title: Text(
                     info.title,
                     style: const TextStyle(
@@ -189,13 +193,14 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
             const SizedBox(height: 10),
             ListTile(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PetWeightScreen(pet: pet, weight: weight),
-                  ),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => PetWeightScreen(),
+                //   ),
+                // );
               },
+              leading: SvgPicture.asset(AppIcons.gym),
               title: Text(
                 localizations.weight,
                 style: const TextStyle(
@@ -228,12 +233,14 @@ class _InfoData {
   final String title;
   final String value;
   final Function(ValueNotifier<Pet> param) onEdit;
+  final String? icon;
   final bool editable;
 
   _InfoData({
     required this.title,
     required this.value,
     required this.onEdit,
+    this.icon,
     this.editable = true,
   });
 }

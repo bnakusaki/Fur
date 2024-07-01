@@ -49,6 +49,8 @@ class AppIcons {
   static const users = '$_path/users.svg';
   static const userMd = '$_path/user-md.svg';
   static const houseUser = '$_path/house-user.svg';
+  static const venusMars = '$_path/venus-mars.svg';
+  static const clockThree = '$_path/clock-three.svg';
 }
 
 class AppAnimatedIcons {

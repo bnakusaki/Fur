@@ -76,7 +76,7 @@ class PetScreen extends HookConsumerWidget with PetsMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PetProfileScreen(pet: pet0),
+                              builder: (context) => const PetProfileScreen(),
                             ),
                           );
                         },

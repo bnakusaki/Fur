@@ -8,6 +8,7 @@ import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input
 import 'package:fur/core/pet/presentation/interface/screens/pet_screen.dart';
 import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/core/pet/presentation/providers/list_pets.dart';
+import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/assets/app_images.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
@@ -122,7 +123,7 @@ class PetsCarousel extends HookConsumerWidget {
   }
 }
 
-class _Carousel extends StatelessWidget {
+class _Carousel extends ConsumerWidget {
   const _Carousel({
     required this.currentPage,
     required this.value,
@@ -132,7 +133,7 @@ class _Carousel extends StatelessWidget {
   final List<Pet> value;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return PageView.builder(
       controller: PageController(
         viewportFraction: 0.90,
@@ -204,6 +205,7 @@ class _Carousel extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
+                      ref.watch(petNotifierProvider.notifier).set(pet);
                       Navigator.push(
                         context,
                         MaterialPageRoute(

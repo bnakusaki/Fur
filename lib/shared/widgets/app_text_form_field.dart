@@ -16,6 +16,7 @@ class AppTextFormField extends StatelessWidget {
     this.labelText,
     this.initialValue,
     this.readOnly = false,
+    this.autofocus = false,
   });
 
   final bool obscureText;
@@ -30,6 +31,7 @@ class AppTextFormField extends StatelessWidget {
   final String? labelText;
   final String? initialValue;
   final bool readOnly;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class AppTextFormField extends StatelessWidget {
       ),
       focusNode: focusNode,
       inputFormatters: inputFormatters,
+      autofocus: autofocus,
     );
   }
 }
