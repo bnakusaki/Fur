@@ -37,6 +37,11 @@ class AppIcons {
   static const palette = '$_path/palette.svg';
   static const clawMarks = '$_path/claw-marks.svg';
   static const sortSizeUp = '$_path/sort-size-up.svg';
+  static const wheatSlash = '$_path/wheat-slash.svg';
+  static const syringe = '$_path/syringe.svg';
+  static const salad = '$_path/salad.svg';
+  static const medicine = '$_path/medicine.svg';
+  static const fileMedicalAlt = '$_path/file-medical-alt.svg';
 }
 
 class AppAnimatedIcons {

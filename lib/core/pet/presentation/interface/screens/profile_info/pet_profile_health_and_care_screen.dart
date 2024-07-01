@@ -36,26 +36,31 @@ class PetProfileHealthAndCareScreen extends HookConsumerWidget with PetsMixin {
     var infos = <_InfoData>[
       _InfoData(
         title: 'Vaccination status',
+        icon: AppIcons.syringe,
         onEdit: (pet) {},
         value: pet.value.color,
       ),
       _InfoData(
         title: 'Medical history',
+        icon: AppIcons.fileMedicalAlt,
         onEdit: (pet) {},
         value: pet.value.markings,
       ),
       _InfoData(
         title: 'Allergies',
+        icon: AppIcons.wheatSlash,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
       _InfoData(
         title: 'Dietary preferences',
+        icon: AppIcons.salad,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
       _InfoData(
         title: 'Medications',
+        icon: AppIcons.medicine,
         onEdit: (pet) {},
         value: pet.value.size?.toString(),
       ),
@@ -89,6 +94,7 @@ class PetProfileHealthAndCareScreen extends HookConsumerWidget with PetsMixin {
 
                 return ListTile(
                   onTap: () => info.onEdit(pet),
+                  leading: SvgPicture.asset(info.icon),
                   title: Text(
                     info.title,
                     style: const TextStyle(
@@ -129,10 +135,12 @@ class _InfoData {
   final String title;
   final String? value;
   final Function(ValueNotifier<Pet> param) onEdit;
+  final String icon;
 
   _InfoData({
     required this.title,
     required this.value,
     required this.onEdit,
+    required this.icon,
   });
 }
