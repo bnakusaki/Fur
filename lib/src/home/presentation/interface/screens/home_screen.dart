@@ -1,18 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:fur/core/pet/presentation/providers/list_pets.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
 import 'package:fur/src/home/presentation/interface/widgets/no_pets_carousel.dart';
+import 'package:fur/src/home/presentation/interface/widgets/pets_carousel.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-class HomeScreen extends HookWidget {
+class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final menuAnimationController =
-        useAnimationController(duration: const Duration(milliseconds: 1000));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final menuAnimationController = useAnimationController(
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    final pets = ref.watch(listPetsProvider(FirebaseAuth.instance.currentUser!.uid));
 
     return Scaffold(
       onDrawerChanged: (isOpened) {
@@ -42,15 +49,26 @@ class HomeScreen extends HookWidget {
           child: AppDrawer(),
         ),
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-              child: NoPetsCarousel(),
-            )
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+                child: switch (pets) {
+                  AsyncData(:final value) => Builder(
+                      builder: (context) {
+                        if (value.isEmpty) {
+                          return const NoPetsCarousel();
+                        }
+
+                        return const PetsCarousel();
+                      },
+                    ),
+                  AsyncError(:final error) => Text(error.toString()),
+                  _ => const CircularProgressIndicator(),
+                })
             // PetsCarousel(),
           ],
         ),

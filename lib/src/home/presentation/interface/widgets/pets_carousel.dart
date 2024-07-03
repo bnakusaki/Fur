@@ -1,226 +1,177 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/domain/entities/pet.dart';
-import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_basic_info_screen.dart';
 import 'package:fur/core/pet/presentation/interface/screens/pet_screen.dart';
 import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
-import 'package:fur/core/pet/presentation/providers/list_pets.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
-import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/assets/app_images.dart';
-import 'package:fur/shared/styles/app_sizes.dart';
-import 'package:fur/shared/styles/text_styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PetsCarousel extends HookConsumerWidget {
-  const PetsCarousel({
-    super.key,
-  });
+  const PetsCarousel({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final textStyles = theme.extension<TextStyles>()!;
-    final currentPage = useState(0);
 
-    final pets = ref.watch(listPetsProvider(FirebaseAuth.instance.currentUser!.uid));
-    final cachedPets = ref.watch(cachedPetsProvider);
+    final controller = usePageController();
+    final page = useState(0);
 
-    return switch (pets) {
-      AsyncData(:final value) => value.isNotEmpty
-          ? Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        localizations.myPets,
-                        style: textStyles.h2,
-                      ),
-                      IconButton.filledTonal(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InputPetBasicInfoScreen(),
-                            ),
-                          );
-                        },
-                        icon: SvgPicture.asset(
-                          AppIcons.plus,
-                          height: 16,
-                        ),
-                      )
-                    ],
+    final pets = ref.watch(cachedPetsProvider);
+
+    useEffect(() {
+      Future.microtask(() async {
+        while (true) {
+          await Future.delayed(const Duration(seconds: 10));
+          if (controller.hasClients) {
+            final nextPage = (controller.page!.round() + 1) % pets.length;
+            controller.animateToPage(
+              nextPage,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+            );
+          }
+        }
+      });
+      return;
+    }, []);
+
+    return AspectRatio(
+      aspectRatio: 0.9,
+      child: Stack(
+        children: [
+          Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: PageView.builder(
+              controller: controller,
+              onPageChanged: (index) {
+                page.value = index;
+              },
+              itemBuilder: (context, index) {
+                final pet = pets[index % pets.length];
+
+                return _Image(
+                  image: pet.image,
+                  index: index,
+                  currentIndex: page.value,
+                );
+              },
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.1),
+                  Colors.black.withOpacity(0.5),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 10,
+            right: 10,
+            child: TextButton(
+              onPressed: () {
+                ref.watch(petNotifierProvider.notifier).set(pets[page.value]);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PetScreen(),
                   ),
-                ),
-                const SizedBox(height: 5),
-                AspectRatio(
-                  aspectRatio: 2,
-                  child: _Carousel(currentPage: currentPage, value: cachedPets),
-                ),
-              ],
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-              child: ListTile(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => InputPetBasicInfoScreen(),
-                    ),
-                  );
-                },
-                tileColor: theme.primaryColor.withOpacity(0.1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: Text(
-                  localizations.youHaveNoPets,
-                  style: TextStyle(
-                    color: theme.primaryColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                subtitle: Text(localizations.tapToAddYourFirstPet),
-                trailing: SvgPicture.asset(
-                  AppIcons.angleSmallRight,
-                  height: 20,
+                );
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: theme.primaryColor.withOpacity(0.5),
+              ),
+              child: Text(
+                localizations.appButtonsViewPet,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-      _ => AspectRatio(
-          aspectRatio: 2,
-          child: PageView.builder(
-            controller: PageController(
-              viewportFraction: 0.90,
-            ),
-            onPageChanged: (value) {
-              currentPage.value = value;
-            },
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey.shade200,
-                  highlightColor: Colors.grey.shade100,
-                  child: const Card(),
-                ),
-              );
-            },
-            itemCount: 2,
           ),
-        ),
-    };
-  }
-}
-
-class _Carousel extends ConsumerWidget {
-  const _Carousel({
-    required this.currentPage,
-    required this.value,
-  });
-
-  final ValueNotifier<int> currentPage;
-  final List<Pet> value;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return PageView.builder(
-      controller: PageController(
-        viewportFraction: 0.90,
-      ),
-      onPageChanged: (value) {
-        currentPage.value = value;
-      },
-      itemBuilder: (context, index) {
-        final inFocus = index == currentPage.value;
-        final pet = value[index];
-
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: value.length > 1 ? 5 : 0),
-          child: Card(
-            child: Stack(
+          Positioned(
+            bottom: 10,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Positioned.fill(
-                  child: Image(
-                    image: AssetImage(AppImages.authenticationScreenBg),
-                    fit: BoxFit.cover,
+                Text(
+                  pets[page.value].name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: inFocus ? 0.8 : 0.3,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.1),
-                          Colors.black.withOpacity(0.2),
-                          Colors.black.withOpacity(0.3),
-                          Colors.black.withOpacity(0.4),
-                          Colors.black.withOpacity(0.5),
-                          Colors.black.withOpacity(0.6),
-                          Colors.black.withOpacity(0.7),
-                          Colors.black.withOpacity(0.8),
-                          Colors.black.withOpacity(0.9),
-                          Colors.black,
-                          Colors.black,
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 200),
-                      opacity: inFocus ? 1 : 0,
-                      child: Text(
-                        pet.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      ref.watch(petNotifierProvider.notifier).set(pet);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PetScreen(),
-                        ),
-                      );
-                    },
+                const SizedBox(height: 10),
+                SmoothPageIndicator(
+                  controller: controller,
+                  count: pets.length,
+                  effect: ExpandingDotsEffect(
+                    dotWidth: 8,
+                    dotHeight: 8,
+                    activeDotColor: theme.primaryColor,
+                    dotColor: theme.highlightColor,
                   ),
                 ),
               ],
             ),
           ),
-        );
+        ],
+      ),
+    );
+  }
+}
+
+class _Image extends HookWidget {
+  const _Image({
+    required this.image,
+    required this.index,
+    required this.currentIndex,
+  });
+
+  final String image;
+  final int index;
+  final int currentIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    final animation = useAnimationController(
+      duration: const Duration(seconds: 10),
+      lowerBound: 1,
+      upperBound: 1.2,
+    );
+
+    useEffect(
+      () {
+        if (index == currentIndex) {
+          animation.forward();
+        } else {
+          animation.reverse();
+        }
+        return null;
       },
-      itemCount: value.length,
+      [currentIndex],
+    );
+
+    return ScaleTransition(
+      scale: animation,
+      child: CachedNetworkImage(
+        imageUrl: image,
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

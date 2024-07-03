@@ -21,6 +21,7 @@
     "appButtonsDelete": "Delete",
     "appButtonsAddPet": "Add pet",
     "appButtonsEditProfile": "Edit profile",
+    "appButtonsViewPet": "View pet",
 
 
     "textFieldHints_": "",

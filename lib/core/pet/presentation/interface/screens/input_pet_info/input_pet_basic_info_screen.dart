@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -54,6 +55,7 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         breed: breed.value!.id,
         weight: {DateTime.now(): double.parse(weigthController.text)},
         dob: dob.value!,
+        owner: FirebaseAuth.instance.currentUser!.uid,
       );
 
       try {
