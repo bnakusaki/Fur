@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
-import 'package:fur/src/home/presentation/interface/widgets/pets_carousel.dart';
+import 'package:fur/src/home/presentation/interface/widgets/no_pets_carousel.dart';
 import 'package:lottie/lottie.dart';
 
 class HomeScreen extends HookWidget {
@@ -46,7 +47,11 @@ class HomeScreen extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10),
-            PetsCarousel(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+              child: NoPetsCarousel(),
+            )
+            // PetsCarousel(),
           ],
         ),
       ),

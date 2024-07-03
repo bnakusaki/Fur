@@ -121,6 +121,15 @@ class AppTheme {
     ));
   }
 
+  ListTileThemeData _listTileTheme() {
+    return ListTileThemeData(
+      tileColor: Colors.white,
+      shape: ContinuousRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    );
+  }
+
   ThemeData theme() {
     return ThemeData(
       useMaterial3: true,
@@ -138,6 +147,7 @@ class AppTheme {
       snackBarTheme: _snackBarTheme(),
       cardTheme: _cardTheme(),
       textButtonTheme: _textButtonTheme(),
+      listTileTheme: _listTileTheme(),
     );
   }
 }

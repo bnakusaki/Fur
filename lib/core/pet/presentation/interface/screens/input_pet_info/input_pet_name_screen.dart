@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/select_pet_species_screen.dart';
+import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -38,15 +39,8 @@ class InputPetNameScreen extends HookConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading: const Row(
-            children: [
-              AppBackButton(),
-            ],
-          ),
-          title: Text(
-            localizations.appPageTitlesBasicInformation,
-            style: textStyles.h2,
-          ),
+          leading: const BackButton(),
+          title: Text(localizations.appPageTitlesBasicInformation),
         ),
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
@@ -55,7 +49,7 @@ class InputPetNameScreen extends HookConsumerWidget {
             children: [
               const SizedBox(height: 20),
               Text(
-                localizations.appQuestionsPetName,
+                'Pet name',
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: 10),
@@ -63,11 +57,49 @@ class InputPetNameScreen extends HookConsumerWidget {
                 controller: controller,
                 hintText: localizations.appTextFieldHintsPetName,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               Text(
-                localizations.appCaptionsInputPetName,
-                style: textStyles.caption,
-              )
+                'Species',
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                onTap: () {},
+                title: const Text('Select species'),
+                trailing: SvgPicture.asset(AppIcons.angleSmallRight),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Breed',
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                onTap: () {},
+                title: const Text('Select breed'),
+                trailing: SvgPicture.asset(AppIcons.angleSmallRight),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Weight',
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: 10),
+              AppTextFormField(
+                controller: controller,
+                hintText: localizations.appTextFieldHintsEnterWeight,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Birth date',
+                style: theme.textTheme.titleMedium,
+              ),
+              const SizedBox(height: 10),
+              ListTile(
+                onTap: () {},
+                title: const Text('Pick date'),
+                trailing: SvgPicture.asset(AppIcons.calendarPlus),
+              ),
             ],
           ),
         ),

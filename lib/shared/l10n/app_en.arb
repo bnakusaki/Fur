@@ -81,7 +81,7 @@
     "petOwners": "- Pet owners",
     "petSitters": "- Pet sitters",
     "veterinarians": "- Veterinarians",
-    "youHaveNoPets": "You have no pets.",
+    "youHaveNoPets": "You have no pets",
     "tapToAddYourFirstPet": "Tap to add your first pet.",
     "years": "{count, plural, =0{{count} years} =1{{count} year} other{{count} years}}",
     "@years": {"placeholders": {"count": {}}},
