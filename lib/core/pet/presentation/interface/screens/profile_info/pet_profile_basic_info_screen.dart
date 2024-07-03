@@ -202,7 +202,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
               },
               leading: SvgPicture.asset(AppIcons.gym),
               title: Text(
-                localizations.weight,
+                localizations.weightInKilograms,
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),

@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_name_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_basic_info_screen.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/src/home/presentation/interface/widgets/log_out_dialog.dart';
 import 'package:fur/src/profile/presentation/interface/screens/profile_screen.dart';
@@ -85,7 +85,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const InputPetNameScreen(),
+                    builder: (context) => InputPetBasicInfoScreen(),
                   ),
                 );
               },

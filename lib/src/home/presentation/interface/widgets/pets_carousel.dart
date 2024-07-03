@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
-import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_name_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_basic_info_screen.dart';
 import 'package:fur/core/pet/presentation/interface/screens/pet_screen.dart';
 import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/core/pet/presentation/providers/list_pets.dart';
@@ -49,7 +49,7 @@ class PetsCarousel extends HookConsumerWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const InputPetNameScreen(),
+                              builder: (context) => InputPetBasicInfoScreen(),
                             ),
                           );
                         },
@@ -75,7 +75,7 @@ class PetsCarousel extends HookConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const InputPetNameScreen(),
+                      builder: (context) => InputPetBasicInfoScreen(),
                     ),
                   );
                 },

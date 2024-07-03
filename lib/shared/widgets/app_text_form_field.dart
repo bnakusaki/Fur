@@ -51,6 +51,8 @@ class AppTextFormField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         labelText: labelText,
         labelStyle: const TextStyle(fontSize: 13),
+        filled: true,
+        fillColor: Colors.white,
       ),
       focusNode: focusNode,
       inputFormatters: inputFormatters,

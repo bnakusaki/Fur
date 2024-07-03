@@ -72,6 +72,15 @@
     "dialogTitles_": "",
     "appDialogTitlesSignOut": "Sign out",
 
+    "validationMessages_": "",
+    "appValidationMessagesPetName": "Please enter your pet's name.",
+    "appValidationMessagesPetWeight": "Please enter your pet's weight.",
+    "appValidationMessagesInvalidPetWeight": "Please enter a valid weight.",
+    "appValidationMessagesSelectSpeciesBeforeBreed": "Select species first.",
+    "appValidationMessagesPetSpecies": "Please select species.",
+    "appValidationMessagesPetBreed": "Please select breed.",
+    "appValidationMessagesPetDob": "Please select date of birth.",
+
 
     "male": "Male",
     "female": "Female",
@@ -96,7 +105,7 @@
     "name": "Name",
     "species": "Species",
     "breed": "Breed",
-    "weight": "Weight",
+    "weightInKilograms": "Weight (kg)",
     "weightInKg": "{value} kg",
     "@weightInKg": {"placeholders": {"value": {}}},
     "color": "Color",
@@ -116,6 +125,13 @@
     "ownersContactInformation": "Owner's contant information",
     "veterinariansContactInformation": "Veterinarian's contact information",
     "notAvailableShort": "N/A",
+    "petName": "Pet name",
+    "birthDate": "Birth date",
+    "selectSpecies": "Select species",
+    "selectBreed": "Select breed",
+    "pickDate": "Pick date",
+    "selectPetSpecies": "Select pet species",
+    "selectPetBreed": "Select pet breed",
 
 
 

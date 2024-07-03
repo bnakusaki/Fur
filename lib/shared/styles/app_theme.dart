@@ -7,6 +7,7 @@ class AppTheme {
       seedColor: const Color(0xFFF85E00),
       primary: const Color(0xFFF85E00),
       scrim: const Color(0xFF0C0F0A),
+      error: Colors.red,
     );
   }
 
@@ -54,6 +55,21 @@ class AppTheme {
         borderSide: BorderSide(
           width: 2,
           color: Colors.grey.shade300,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          width: 2,
+          color: Colors.grey.shade500,
+        ),
+      ),
+      errorStyle: const TextStyle(fontWeight: FontWeight.w500),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          width: 2,
+          color: _colorScheme().error,
         ),
       ),
     );

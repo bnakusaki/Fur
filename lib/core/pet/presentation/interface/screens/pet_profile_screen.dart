@@ -27,7 +27,7 @@ class PetProfileScreen extends StatelessWidget {
           localizations.breed,
           localizations.sex,
           localizations.age,
-          localizations.weight,
+          localizations.weightInKilograms,
         ],
         onTap: () {
           Navigator.push(

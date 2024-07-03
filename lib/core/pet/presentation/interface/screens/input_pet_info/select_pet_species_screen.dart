@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/species.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
-import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/select_pet_breed_screen.dart';
 import 'package:fur/core/pet/presentation/providers/list_species.dart';
 import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
@@ -19,10 +16,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:lottie/lottie.dart';
 
-class SelectPetspeciescreen extends HookConsumerWidget with PetsMixin {
-  SelectPetspeciescreen({super.key, required this.pet});
+class SelectPetspeciesScreen extends HookConsumerWidget with PetsMixin {
+  SelectPetspeciesScreen({super.key, required this.onSelect});
 
-  final Pet pet;
+  final void Function(Species species) onSelect;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,19 +38,6 @@ class SelectPetspeciescreen extends HookConsumerWidget with PetsMixin {
     final species = ref.watch(listSpeciesProvider(Localizations.localeOf(context).languageCode));
 
     final randInt = useState(Random().nextInt(sadPets.length));
-
-    void handleContinue() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return SelectPetBreedScreen(
-              pet: pet.copyWith(species: selectedSpecies.value!.id),
-            );
-          },
-        ),
-      );
-    }
 
     return GestureDetector(
       onTap: () {
@@ -79,7 +63,7 @@ class SelectPetspeciescreen extends HookConsumerWidget with PetsMixin {
             children: [
               const SizedBox(height: 20),
               Text(
-                localizations.appQuestionsSelectPetSpecies(pet.name.capitalize()),
+                localizations.selectPetSpecies,
                 style: theme.textTheme.titleMedium,
               ),
               const SizedBox(height: 10),
@@ -245,9 +229,11 @@ class SelectPetspeciescreen extends HookConsumerWidget with PetsMixin {
                   right: 20,
                 ),
                 child: ElevatedButton(
-                  onPressed: handleContinue,
+                  onPressed: () {
+                    onSelect(selectedSpecies.value!);
+                  },
                   child: Text(localizations.appButtonsContinue),
-                ).animate().fadeIn().slideY(begin: 0.1),
+                ),
               )
             : null,
       ),

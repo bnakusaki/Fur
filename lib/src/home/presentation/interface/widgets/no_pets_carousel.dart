@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_name_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/input_pet_basic_info_screen.dart';
 import 'package:fur/shared/assets/app_images.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -74,7 +74,7 @@ class NoPetsCarousel extends HookWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const InputPetNameScreen(),
+                    builder: (context) => InputPetBasicInfoScreen(),
                   ),
                 );
               },
