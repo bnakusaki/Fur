@@ -85,9 +85,9 @@ class PetsCarousel extends HookConsumerWidget {
                 ref.watch(petNotifierProvider.notifier).set(pets[page.value]);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => PetScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) {
+                    return PetScreen();
+                  }),
                 );
               },
               style: TextButton.styleFrom(

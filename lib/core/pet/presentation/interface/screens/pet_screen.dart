@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,15 +8,11 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
-import 'package:fur/core/pet/presentation/interface/screens/pet_profile_screen.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
-import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/assets/app_images.dart';
 import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PetScreen extends HookConsumerWidget with PetsMixin {
@@ -43,84 +40,85 @@ class PetScreen extends HookConsumerWidget with PetsMixin {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _AppBar(pet: pet, textStyles: textStyles),
+          _AppBar(pet: pet),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            pet.name.capitalize(),
-                            style: textStyles.h1,
-                          ),
-                          const SizedBox(height: 5),
-                          switch (breed) {
-                            AsyncData(:final value) => Text(value.name.capitalize(),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                )).animate().fadeIn(),
-                            _ => const Text(''),
-                          }
-                        ],
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PetProfileScreen(),
-                            ),
-                          );
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: theme.primaryColor.withOpacity(0.1),
-                        ),
-                        child: Text(localizations.appButtonsViewProfile),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-                  child: SizedBox(
-                    height: 65,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: _InfoCard(
-                            color: color,
-                            title: localizations.sex,
-                            value: switch (pet.sex) {
-                              Sex.male => localizations.male,
-                              Sex.female => localizations.female,
-                            },
-                            icon: switch (pet.sex) {
-                              Sex.male => AppIcons.male,
-                              Sex.female => AppIcons.female,
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: _InfoCard(
-                            color: color,
-                            title: localizations.age,
-                            value: parseAge(pet.dob, localizations),
-                            icon: AppIcons.clock,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // const SizedBox(height: 20),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //     children: [
+                //       Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text(
+                //             pet.name.capitalize(),
+                //             style: textStyles.h1,
+                //           ),
+                //           const SizedBox(height: 5),
+                //           switch (breed) {
+                //             AsyncData(:final value) => Text(value.name.capitalize(),
+                //                 style: const TextStyle(
+                //                   fontWeight: FontWeight.w500,
+                //                 )).animate().fadeIn(),
+                //             _ => const Text(''),
+                //           }
+                //         ],
+                //       ),
+                //       TextButton(
+                //         onPressed: () {
+                //           Navigator.push(
+                //             context,
+                //             MaterialPageRoute(
+                //               builder: (context) => const PetProfileScreen(),
+                //             ),
+                //           );
+                //         },
+                //         style: TextButton.styleFrom(
+                //           backgroundColor: theme.primaryColor.withOpacity(0.1),
+                //         ),
+                //         child: Text(localizations.appButtonsViewProfile),
+                //       )
+                //     ],
+                //   ),
+                // ),
+                // const SizedBox(height: 20),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+                //   child: SizedBox(
+                //     height: 65,
+                //     child: Row(
+                //       children: [
+                //         Expanded(
+                //           child: _InfoCard(
+                //             color: color,
+                //             title: localizations.sex,
+                //             value: switch (pet.sex) {
+                //               Sex.male => localizations.male,
+                //               Sex.female => localizations.female,
+                //             },
+                //             icon: switch (pet.sex) {
+                //               Sex.male => AppIcons.male,
+                //               Sex.female => AppIcons.female,
+                //             },
+                //           ),
+                //         ),
+                //         const SizedBox(width: 10),
+                //         Expanded(
+                //           child: _InfoCard(
+                //             color: color,
+                //             title: localizations.age,
+                //             value: parseAge(pet.dob, localizations),
+                //             icon: AppIcons.clock,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                const SizedBox(height: 3000),
               ],
             ),
           )
@@ -203,27 +201,20 @@ class _InfoCard extends StatelessWidget {
 class _AppBar extends StatelessWidget {
   const _AppBar({
     required this.pet,
-    required this.textStyles,
   });
 
   final Pet pet;
-  final TextStyles textStyles;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
       backgroundColor: Colors.white,
       stretch: true,
-      expandedHeight: 300,
+      expandedHeight:
+          (MediaQuery.sizeOf(context).width - AppSizes.screenHorizontalPadding * 2) * (1 / 0.9) +
+              MediaQuery.of(context).padding.top,
       pinned: true,
-      leading: const Row(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: AppBackButton(),
-          ),
-        ],
-      ),
+      leading: const BackButton(),
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           var isCollapsed =
@@ -233,12 +224,64 @@ class _AppBar extends StatelessWidget {
             title: isCollapsed
                 ? Text(
                     pet.name.capitalize(),
-                    style: textStyles.h2,
+                    // style: textStyles.h2,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ).animate().fadeIn()
                 : null,
-            background: Image.asset(
-              AppImages.authenticationScreenBg,
-              fit: BoxFit.cover,
+            background: SafeArea(
+              minimum: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+                child: AspectRatio(
+                  aspectRatio: 0.9,
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: CachedNetworkImage(
+                          width: double.maxFinite,
+                          height: double.maxFinite,
+                          imageUrl: pet.image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.1),
+                              Colors.black.withOpacity(0.5),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 10,
+                        left: 10,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              pet.name,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           );
         },
