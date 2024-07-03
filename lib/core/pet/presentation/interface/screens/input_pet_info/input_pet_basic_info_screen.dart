@@ -11,6 +11,7 @@ import 'package:fur/core/pet/domain/entities/species.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/select_pet_breed_screen.dart';
 import 'package:fur/core/pet/presentation/interface/screens/input_pet_info/select_pet_species_screen.dart';
+import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
@@ -60,6 +61,7 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
 
       try {
         await createPet(pet);
+        ref.watch(cachedPetsProvider).add(pet);
         if (context.mounted) {
           Navigator.pop(context);
         }

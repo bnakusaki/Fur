@@ -47,32 +47,33 @@ class PetsCarousel extends HookConsumerWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
             ),
-            child: PageView.builder(
+            child: PageView(
               controller: controller,
               onPageChanged: (index) {
                 page.value = index;
               },
-              itemBuilder: (context, index) {
-                final pet = pets[index % pets.length];
-
+              children: List.generate(pets.length, (index) {
+                final pet = pets[index];
                 return _Image(
                   image: pet.image,
                   index: index,
                   currentIndex: page.value,
                 );
-              },
+              }),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(0.1),
-                  Colors.black.withOpacity(0.5),
-                ],
+          IgnorePointer(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.1),
+                    Colors.black.withOpacity(0.5),
+                  ],
+                ),
               ),
             ),
           ),
