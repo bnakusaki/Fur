@@ -8,6 +8,7 @@ import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/interface/screens/pet_profile_screen.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/shared/extensions/string.dart';
@@ -207,6 +208,9 @@ class _AppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
+
     return SliverAppBar(
       backgroundColor: Colors.white,
       stretch: true,
@@ -263,6 +267,30 @@ class _AppBar extends StatelessWidget {
                       ),
                       Positioned(
                         bottom: 10,
+                        right: 10,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return const PetProfileScreen();
+                              }),
+                            );
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: theme.primaryColor.withOpacity(0.5),
+                          ),
+                          child: const Text(
+                            'View profile',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 15,
                         left: 10,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
