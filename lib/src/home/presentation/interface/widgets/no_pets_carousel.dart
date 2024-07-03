@@ -6,9 +6,7 @@ import 'package:fur/shared/assets/app_images.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class NoPetsCarousel extends HookWidget {
-  const NoPetsCarousel({
-    super.key,
-  });
+  const NoPetsCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {

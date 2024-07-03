@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/core/pet/presentation/providers/list_pets.dart';
 import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
 import 'package:fur/src/home/presentation/interface/widgets/no_pets_carousel.dart';
 import 'package:fur/src/home/presentation/interface/widgets/pets_carousel.dart';
+import 'package:fur/src/home/presentation/interface/widgets/pets_carousel_empty_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -66,8 +69,20 @@ class HomeScreen extends HookConsumerWidget {
                         return const PetsCarousel();
                       },
                     ),
-                  AsyncError(:final error) => Text(error.toString()),
-                  _ => const CircularProgressIndicator(),
+                  AsyncError(:final error as Failure) => PetsCarouselEmptyState(error: error),
+                  _ => AspectRatio(
+                      aspectRatio: 0.9,
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
                 })
             // PetsCarousel(),
           ],

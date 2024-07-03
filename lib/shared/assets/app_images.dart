@@ -12,4 +12,5 @@ class AppImages {
   static const dog2 = '$_path/dog2.jpg';
   static const rabbit = '$_path/rabbit.jpg';
   static const guineaPig = '$_path/guinea-pig.jpg';
+  static const pet = '$_path/pet.jpg';
 }
