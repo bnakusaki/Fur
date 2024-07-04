@@ -47,7 +47,6 @@ class InputPetSexScreen extends HookWidget {
         ]),
         title: Text(
           localizations.appPageTitlesBasicInformation,
-          style: textStyles.h2,
         ),
       ),
       body: SafeArea(

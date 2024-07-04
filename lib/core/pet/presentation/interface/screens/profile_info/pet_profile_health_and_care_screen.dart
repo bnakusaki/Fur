@@ -3,16 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PetProfileHealthAndCareScreen extends HookConsumerWidget with PetsMixin {
-  PetProfileHealthAndCareScreen({super.key, required this.pet});
-
-  final ValueNotifier<Pet> pet;
+  PetProfileHealthAndCareScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,65 +18,58 @@ class PetProfileHealthAndCareScreen extends HookConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
-    // final name = useState(pet.value.name);
-    // final weight = useState(pet.value.weight);
+    final pet = ref.watch(petNotifierProvider)!;
+
+    // final name = useState(pet.name);
+    // final weight = useState(pet.weight);
 
     // useEffect(() {
-    //   name.value = pet.value.name;
+    //   name.value = pet.name;
     //   return null;
-    // }, [pet.value.name]);
+    // }, [pet.name]);
 
     // useEffect(() {
-    //   weight.value = pet.value.weight;
+    //   weight.value = pet.weight;
     //   return null;
-    // }, [pet.value.weight]);
+    // }, [pet.weight]);
 
     var infos = <_InfoData>[
       _InfoData(
         title: 'Vaccination status',
         icon: AppIcons.syringe,
         onEdit: (pet) {},
-        value: pet.value.color,
+        value: pet.color,
       ),
       _InfoData(
         title: 'Medical history',
         icon: AppIcons.fileMedicalAlt,
         onEdit: (pet) {},
-        value: pet.value.markings,
+        value: pet.markings,
       ),
       _InfoData(
         title: 'Allergies',
         icon: AppIcons.wheatSlash,
         onEdit: (pet) {},
-        value: pet.value.size?.toString(),
+        value: pet.size?.toString(),
       ),
       _InfoData(
         title: 'Dietary preferences',
         icon: AppIcons.salad,
         onEdit: (pet) {},
-        value: pet.value.size?.toString(),
+        value: pet.size?.toString(),
       ),
       _InfoData(
         title: 'Medications',
         icon: AppIcons.medicine,
         onEdit: (pet) {},
-        value: pet.value.size?.toString(),
+        value: pet.size?.toString(),
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: AppBackButton(),
-            )
-          ],
-        ),
         title: Text(
           'Health and care',
-          style: textStyles.h2,
         ),
       ),
       body: SafeArea(
@@ -134,7 +125,7 @@ class PetProfileHealthAndCareScreen extends HookConsumerWidget with PetsMixin {
 class _InfoData {
   final String title;
   final String? value;
-  final Function(ValueNotifier<Pet> param) onEdit;
+  final Function(Pet param) onEdit;
   final String icon;
 
   _InfoData({

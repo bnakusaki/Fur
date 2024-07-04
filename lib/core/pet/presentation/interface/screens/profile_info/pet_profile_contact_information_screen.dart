@@ -3,16 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PetProfileContactInformationScreen extends HookConsumerWidget with PetsMixin {
-  PetProfileContactInformationScreen({super.key, required this.pet});
-
-  final ValueNotifier<Pet> pet;
+  PetProfileContactInformationScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,39 +18,32 @@ class PetProfileContactInformationScreen extends HookConsumerWidget with PetsMix
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
+    final pet = ref.watch(petNotifierProvider)!;
+
     var infos = <_InfoData>[
       _InfoData(
         title: 'Owner\'s name',
         onEdit: (pet) {},
-        value: pet.value.color,
+        value: pet.color,
       ),
       _InfoData(
         title: 'Owner\'s contact information',
         icon: AppIcons.houseUser,
         onEdit: (pet) {},
-        value: pet.value.markings,
+        value: pet.markings,
       ),
       _InfoData(
         title: 'Veterinarians\'s contact information',
         icon: AppIcons.userMd,
         onEdit: (pet) {},
-        value: pet.value.markings,
+        value: pet.markings,
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: AppBackButton(),
-            )
-          ],
-        ),
         title: Text(
           'Contact information',
-          style: textStyles.h2,
         ),
       ),
       body: SafeArea(
@@ -67,7 +58,7 @@ class PetProfileContactInformationScreen extends HookConsumerWidget with PetsMix
                 final info = infos[index];
 
                 return ListTile(
-                  onTap: () => info.onEdit(pet),
+                  // onTap: () => info.onEdit(pet),
                   leading: info.icon != null ? SvgPicture.asset(info.icon!) : null,
                   title: Text(
                     info.title,

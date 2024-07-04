@@ -47,7 +47,8 @@
     "appPageTitlesHealthAndCare": "Health and care",
     "appPageTitlesBehavorialInformation": "Behavorial information",
     "appPageTitlesContactInformation": "Contact information",
-    "appPageTitlesPetProfile": "Pet profile",
+    "appPageTitlesPetProfile": "{value}'s profile",
+    "@appPageTitlesPetProfile": {"placeholders": {"value": {}}},
 
 
     "questions_": "",

@@ -95,7 +95,6 @@ class InputPetAgeScreen extends HookWidget {
           ]),
           title: Text(
             localizations.appPageTitlesBasicInformation,
-            style: textStyles.h2,
           ),
         ),
         body: GestureDetector(

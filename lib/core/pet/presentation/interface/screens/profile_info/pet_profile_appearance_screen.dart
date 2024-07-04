@@ -1,18 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
+import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_markings_dialog.dart';
+import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
-  PetProfileAppearanceScreen({super.key, required this.pet});
-
-  final ValueNotifier<Pet> pet;
+  PetProfileAppearanceScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,40 +19,40 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
 
+    final pet = ref.watch(petNotifierProvider)!;
+
     var infos = <_InfoData>[
       _InfoData(
         title: localizations.color,
         icon: AppIcons.palette,
-        onEdit: (pet) {},
-        value: pet.value.color,
+        onEdit: () {},
+        value: pet.color,
       ),
       _InfoData(
         title: localizations.markings,
         icon: AppIcons.clawMarks,
-        onEdit: (pet) {},
-        value: pet.value.markings,
+        onEdit: () {
+          showCupertinoModalPopup(
+            context: context,
+            builder: (context) {
+              return EditPetMarkingsDialog();
+            },
+          );
+        },
+        value: pet.markings,
       ),
       _InfoData(
         title: localizations.size,
         icon: AppIcons.sortSizeUp,
-        onEdit: (pet) {},
-        value: pet.value.size?.toString(),
+        onEdit: () {},
+        value: pet.size?.toString(),
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: AppBackButton(),
-            )
-          ],
-        ),
         title: Text(
           localizations.appPageTitlesAppearance,
-          style: textStyles.h2,
         ),
       ),
       body: SafeArea(
@@ -68,7 +67,7 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
                 final info = infos[index];
 
                 return ListTile(
-                  onTap: () => info.onEdit(pet),
+                  onTap: info.onEdit,
                   leading: SvgPicture.asset(info.icon),
                   title: Text(
                     info.title,
@@ -109,7 +108,7 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
 class _InfoData {
   final String title;
   final String? value;
-  final Function(ValueNotifier<Pet> param) onEdit;
+  final Function() onEdit;
   final String icon;
 
   _InfoData({

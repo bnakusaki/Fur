@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 
@@ -11,14 +9,19 @@ class Pet with _$Pet {
   @JsonSerializable(explicitToJson: true)
   const factory Pet({
     required String id,
-    required String name,
     required String owner,
-    required Sex sex,
-    required String breed,
-    required String image,
+    required String name,
     required String species,
-    required Map<DateTime, double> weight,
+    required String breed,
+    required Sex sex,
     required DateTime dob,
+    required Map<DateTime, double> weight,
+    // Appearance
+
+    ///
+
+    ///
+    required String image,
     required String? color,
     required String? markings,
     required double? size,
@@ -31,14 +34,17 @@ class Pet with _$Pet {
   factory Pet.empty() {
     return Pet(
       id: '',
-      name: '',
       owner: '',
-      sex: Sex.male,
-      breed: '',
-      image: '',
+      name: '',
       species: '',
-      weight: {},
+      breed: '',
+      sex: Sex.male,
+      image: '',
       dob: DateTime.now(),
+      weight: {},
+
+      ///
+      ///
       color: null,
       markings: null,
       size: null,

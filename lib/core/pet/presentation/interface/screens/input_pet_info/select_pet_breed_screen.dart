@@ -52,7 +52,6 @@ class SelectPetBreedScreen extends HookConsumerWidget with PetsMixin {
           ]),
           title: Text(
             localizations.appPageTitlesBasicInformation,
-            style: textStyles.h2,
           ),
         ),
         body: SafeArea(

@@ -33,7 +33,6 @@ class PetWeightScreen extends HookConsumerWidget with PetsMixin {
           ]),
           title: Text(
             localizations.appPageTitlesPetWeight(pet.value.name),
-            style: textStyles.h2,
           ),
         ),
         body: const SafeArea(

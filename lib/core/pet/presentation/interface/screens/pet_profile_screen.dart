@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
+import 'package:fur/core/pet/presentation/interface/screens/profile_info/pet_profile_appearance_screen.dart';
 import 'package:fur/core/pet/presentation/interface/screens/profile_info/pet_profile_basic_info_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/profile_info/pet_profile_behavorial_information_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/profile_info/pet_profile_contact_information_screen.dart';
+import 'package:fur/core/pet/presentation/interface/screens/profile_info/pet_profile_health_and_care_screen.dart';
+import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class PetProfileScreen extends StatelessWidget {
+class PetProfileScreen extends ConsumerWidget {
   const PetProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
+
+    final pet = ref.watch(petNotifierProvider)!;
 
     final profileSections = <_ProfileSection>[
       _ProfileSection(
@@ -47,12 +54,12 @@ class PetProfileScreen extends StatelessWidget {
           localizations.size,
         ],
         onTap: () {
-          // Navigator.push(
-          //   context,
-          // MaterialPageRoute(
-          //   builder: (context) => PetProfileAppearanceScreen(),
-          // ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PetProfileAppearanceScreen(),
+            ),
+          );
         },
       ),
       _ProfileSection(
@@ -66,12 +73,12 @@ class PetProfileScreen extends StatelessWidget {
           localizations.medications,
         ],
         onTap: () {
-          // Navigator.push(
-          //   context,
-          // MaterialPageRoute(
-          //   builder: (context) => PetProfileHealthAndCareScreen(),
-          // ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PetProfileHealthAndCareScreen(),
+            ),
+          );
         },
       ),
       _ProfileSection(
@@ -85,12 +92,12 @@ class PetProfileScreen extends StatelessWidget {
           localizations.behavorialIssues,
         ],
         onTap: () {
-          // Navigator.push(
-          //   context,
-          // MaterialPageRoute(
-          //   builder: (context) => PetProfileBehavorialInformationScreen(),
-          // ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PetProfileBehavorialInformationScreen(),
+            ),
+          );
         },
       ),
       _ProfileSection(
@@ -102,30 +109,19 @@ class PetProfileScreen extends StatelessWidget {
           localizations.veterinariansContactInformation,
         ],
         onTap: () {
-          // Navigator.push(
-          //   context,
-          // MaterialPageRoute(
-          //   builder: (context) => PetProfileContactInformationScreen(),
-          // ),
-          // );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PetProfileContactInformationScreen(),
+            ),
+          );
         },
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: AppBackButton(),
-            )
-          ],
-        ),
-        title: Text(
-          localizations.appPageTitlesPetProfile,
-          style: textStyles.h2,
-        ),
+        title: Text(localizations.appPageTitlesPetProfile(pet.name)),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),

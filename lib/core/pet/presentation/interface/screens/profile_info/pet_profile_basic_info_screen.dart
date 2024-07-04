@@ -14,7 +14,6 @@ import 'package:fur/core/pet/presentation/providers/retrieve_species.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
@@ -96,18 +95,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Row(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 8),
-              child: AppBackButton(),
-            )
-          ],
-        ),
-        title: Text(
-          localizations.appPageTitlesBasicInformation,
-          style: textStyles.h2,
-        ),
+        title: Text(localizations.appPageTitlesBasicInformation),
       ),
       body: SafeArea(
         minimum: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
@@ -207,11 +195,28 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              subtitle: Text(
-                localizations.weightInKg(weight.value),
-                style: textStyles.caption,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              subtitle: Builder(
+                builder: (context) {
+                  // Get latest weight
+                  Map<DateTime, double>? latestWeight;
+
+                  weight.value.forEach((key, value) {
+                    if (latestWeight == null) {
+                      latestWeight = {key: value};
+                    } else {
+                      if (key.isAfter(latestWeight!.keys.first)) {
+                        latestWeight = {key: value};
+                      }
+                    }
+                  });
+
+                  return Text(
+                    localizations.weightInKg(latestWeight?.values.first ?? 0.0),
+                    style: textStyles.caption,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  );
+                },
               ),
               tileColor: Colors.white,
               shape: RoundedRectangleBorder(

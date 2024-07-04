@@ -21,23 +21,6 @@ class PetsCarousel extends HookConsumerWidget {
 
     final pets = ref.watch(cachedPetsProvider);
 
-    useEffect(() {
-      Future.microtask(() async {
-        while (true) {
-          await Future.delayed(const Duration(seconds: 10));
-          if (controller.hasClients) {
-            final nextPage = (controller.page!.round() + 1) % pets.length;
-            controller.animateToPage(
-              nextPage,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeIn,
-            );
-          }
-        }
-      });
-      return;
-    }, []);
-
     return AspectRatio(
       aspectRatio: 0.9,
       child: Stack(

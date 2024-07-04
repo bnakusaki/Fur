@@ -52,7 +52,6 @@ class InputPetWeightScreen extends HookConsumerWidget {
           ]),
           title: Text(
             localizations.appPageTitlesBasicInformation,
-            style: textStyles.h2,
           ),
         ),
         body: SafeArea(
