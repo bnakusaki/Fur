@@ -1,7 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
@@ -15,11 +22,15 @@ import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/extensions/elevated_button.dart';
+import 'package:fur/shared/extensions/string.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:logger/logger.dart';
 
 class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
   InputPetBasicInfoScreen({super.key});
@@ -28,15 +39,17 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-
     final formKey = useMemoized(() => GlobalKey<FormState>());
     final nameController = useTextEditingController();
     final weigthController = useTextEditingController();
     final species = useState<Species?>(null);
     final breed = useState<Breed?>(null);
     final dob = useState<DateTime?>(null);
+    final image = useState<XFile?>(null);
+    final analyzingImage = useState(false);
+    final analysis = useState<Map<String, String>?>(null);
 
-    Future<void> handleContinue() async {
+    Future<void> handleDone() async {
       if (formKey.currentState!.validate()) {
         if (species.value == null) {
           AppSnackBar.warning(context, localizations.appValidationMessagesPetSpecies);
@@ -72,6 +85,45 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
       }
     }
 
+    Future<Map<String, String>> analyzeImage(XFile image) async {
+      final unit8ListImage = await image.readAsBytes();
+      final analysisResult = await Gemini.instance.textAndImage(
+        text: '''
+                    Analyze the image and provide the following information about the animal:
+                    {
+                      "species": "<species>",
+                      "breed": "<breed>",
+                      "color": "<color>"
+                    }
+                    If any of the information is unknown, use "unknown". If the image is not a pet, return {}.
+                    ''',
+        images: [unit8ListImage],
+      );
+
+      final json = jsonDecode(analysisResult?.content?.parts?[0].text ?? '{}');
+      return {
+        'species': json['species'] ?? 'unknown',
+        'breed': json['breed'] ?? 'unknown',
+        'color': json['color'] ?? 'unknown',
+      };
+    }
+
+    useMemoized(
+      () async {
+        if (image.value != null) {
+          try {
+            analyzingImage.value = true;
+            analysis.value = await analyzeImage(image.value!);
+          } catch (e) {
+            if (kDebugMode) Logger().e(e);
+          } finally {
+            analyzingImage.value = false;
+          }
+        }
+      },
+      [image.value],
+    );
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -106,6 +158,165 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 40,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Pet image',
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        const Spacer(),
+                        if (image.value != null)
+                          TextButton(
+                            onPressed: () {
+                              image.value = null;
+                            },
+                            child: Text(
+                              'Remove',
+                              style: TextStyle(
+                                color: theme.primaryColor,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  image.value == null
+                      ? Column(
+                          children: [
+                            TextButton.icon(
+                              onPressed: () async {
+                                image.value =
+                                    await ImagePicker().pickImage(source: ImageSource.gallery);
+                              },
+                              icon: SvgPicture.asset(
+                                AppIcons.gallery,
+                                color: theme.primaryColor,
+                              ),
+                              style: TextButton.styleFrom(
+                                fixedSize: const Size.fromWidth(double.maxFinite),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              label: const Text('Pick from gallery'),
+                            ),
+                            TextButton.icon(
+                              onPressed: () async {
+                                image.value =
+                                    await ImagePicker().pickImage(source: ImageSource.camera);
+                              },
+                              icon: SvgPicture.asset(
+                                AppIcons.camera,
+                                color: theme.primaryColor,
+                              ),
+                              style: TextButton.styleFrom(
+                                fixedSize: const Size.fromWidth(double.maxFinite),
+                                alignment: Alignment.centerLeft,
+                              ),
+                              label: const Text('Use camera'),
+                            ),
+                          ],
+                        )
+                      : AspectRatio(
+                          aspectRatio: 1,
+                          child: Stack(
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 1,
+                                child: Card(
+                                  margin: EdgeInsets.zero,
+                                  child: Image.file(
+                                    File(image.value!.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              if (analyzingImage.value)
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.black.withOpacity(0.1),
+                                        Colors.black.withOpacity(0.5),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              if (analyzingImage.value)
+                                const Center(
+                                  child: SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: LoadingIndicator(
+                                      indicatorType: Indicator.circleStrokeSpin,
+                                      colors: [Colors.white],
+                                    ),
+                                  ),
+                                ),
+                              if (analysis.value != null &&
+                                  analysis.value!.isNotEmpty &&
+                                  !analyzingImage.value)
+                                Positioned(
+                                  bottom: 10,
+                                  right: 10,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black45,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Builder(builder: (context) {
+                                          // remove unknown values from the analysis
+                                          analysis.value!
+                                              .removeWhere((key, value) => value == 'unknown');
+
+                                          analysis.value = analysis.value;
+
+                                          String text = '';
+
+                                          if (analysis.value!.isEmpty) {
+                                            text = 'Not a pet';
+                                          }
+
+                                          if (analysis.value!['species'] != null) {
+                                            text =
+                                                analysis.value!['species'].toString().capitalize();
+                                          }
+
+                                          if (analysis.value!['breed'] != null) {
+                                            text +=
+                                                '\n${analysis.value!['breed'].toString().capitalize()}';
+                                          }
+
+                                          if (analysis.value!['color'] != null) {
+                                            text +=
+                                                '\n${analysis.value!['color'].toString().capitalize()}';
+                                          }
+
+                                          return Text(
+                                            text,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            textAlign: TextAlign.end,
+                                          );
+                                        }),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
+                        ).animate().fadeIn(),
                   const SizedBox(height: 20),
                   Text(
                     localizations.species,
@@ -205,6 +416,7 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                         : Text(DateFormat('MMMM dd, yyyy').format(dob.value!)),
                     trailing: SvgPicture.asset(AppIcons.calendarPlus),
                   ),
+                  const SizedBox(height: 50),
                 ],
               ),
             ),
@@ -216,10 +428,10 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
             left: 20,
             right: 20,
           ),
-          child: ElevatedButton(
+          child: const ElevatedButton(
             onPressed: null,
-            child: Text(localizations.appButtonsContinue),
-          ).withLoadingState(onPressed: handleContinue).animate().fadeIn().slideY(begin: 0.1),
+            child: Text('Done'),
+          ).withLoadingState(onPressed: handleDone),
         ),
       ),
     );

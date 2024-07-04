@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fur/core/pet/domain/entities/pet_appearance.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 
 part 'pet.freezed.dart';
@@ -16,15 +17,9 @@ class Pet with _$Pet {
     required Sex sex,
     required DateTime dob,
     required Map<DateTime, double> weight,
-    // Appearance
-
-    ///
-
-    ///
+    required String? story,
+    required PetAppearance appearance,
     required String image,
-    required String? color,
-    required String? markings,
-    required double? size,
     required DateTime createdOn,
     required DateTime updatedOn,
   }) = _Pet;
@@ -38,16 +33,12 @@ class Pet with _$Pet {
       name: '',
       species: '',
       breed: '',
+      story: null,
       sex: Sex.male,
+      appearance: PetAppearance.empty(),
       image: '',
       dob: DateTime.now(),
       weight: {},
-
-      ///
-      ///
-      color: null,
-      markings: null,
-      size: null,
       createdOn: DateTime.now(),
       updatedOn: DateTime.now(),
     );

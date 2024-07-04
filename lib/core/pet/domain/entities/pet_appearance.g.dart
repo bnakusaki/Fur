@@ -9,13 +9,13 @@ part of 'pet_appearance.dart';
 _$PetAppearanceImpl _$$PetAppearanceImplFromJson(Map<String, dynamic> json) =>
     _$PetAppearanceImpl(
       color: json['color'] as String,
-      markings: json['markings'] as String,
-      size: json['size'] as String,
+      markings: json['markings'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$$PetAppearanceImplToJson(_$PetAppearanceImpl instance) =>
     <String, dynamic>{
       'color': instance.color,
       'markings': instance.markings,
-      'size': instance.size,
+      'description': instance.description,
     };

@@ -17,10 +17,10 @@ _$PetImpl _$$PetImplFromJson(Map<String, dynamic> json) => _$PetImpl(
       weight: (json['weight'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(DateTime.parse(k), (e as num).toDouble()),
       ),
+      story: json['story'] as String?,
+      appearance:
+          PetAppearance.fromJson(json['appearance'] as Map<String, dynamic>),
       image: json['image'] as String,
-      color: json['color'] as String?,
-      markings: json['markings'] as String?,
-      size: (json['size'] as num?)?.toDouble(),
       createdOn: DateTime.parse(json['createdOn'] as String),
       updatedOn: DateTime.parse(json['updatedOn'] as String),
     );
@@ -34,10 +34,9 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'sex': _$SexEnumMap[instance.sex]!,
       'dob': instance.dob.toIso8601String(),
       'weight': instance.weight.map((k, e) => MapEntry(k.toIso8601String(), e)),
+      'story': instance.story,
+      'appearance': instance.appearance.toJson(),
       'image': instance.image,
-      'color': instance.color,
-      'markings': instance.markings,
-      'size': instance.size,
       'createdOn': instance.createdOn.toIso8601String(),
       'updatedOn': instance.updatedOn.toIso8601String(),
     };

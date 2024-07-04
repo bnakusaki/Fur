@@ -27,14 +27,10 @@ mixin _$Pet {
   String get breed => throw _privateConstructorUsedError;
   Sex get sex => throw _privateConstructorUsedError;
   DateTime get dob => throw _privateConstructorUsedError;
-  Map<DateTime, double> get weight =>
-      throw _privateConstructorUsedError; // Appearance
-  ///
-  ///
+  Map<DateTime, double> get weight => throw _privateConstructorUsedError;
+  String? get story => throw _privateConstructorUsedError;
+  PetAppearance get appearance => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
-  String? get color => throw _privateConstructorUsedError;
-  String? get markings => throw _privateConstructorUsedError;
-  double? get size => throw _privateConstructorUsedError;
   DateTime get createdOn => throw _privateConstructorUsedError;
   DateTime get updatedOn => throw _privateConstructorUsedError;
 
@@ -57,12 +53,13 @@ abstract class $PetCopyWith<$Res> {
       Sex sex,
       DateTime dob,
       Map<DateTime, double> weight,
+      String? story,
+      PetAppearance appearance,
       String image,
-      String? color,
-      String? markings,
-      double? size,
       DateTime createdOn,
       DateTime updatedOn});
+
+  $PetAppearanceCopyWith<$Res> get appearance;
 }
 
 /// @nodoc
@@ -85,10 +82,9 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
     Object? sex = null,
     Object? dob = null,
     Object? weight = null,
+    Object? story = freezed,
+    Object? appearance = null,
     Object? image = null,
-    Object? color = freezed,
-    Object? markings = freezed,
-    Object? size = freezed,
     Object? createdOn = null,
     Object? updatedOn = null,
   }) {
@@ -125,22 +121,18 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as Map<DateTime, double>,
+      story: freezed == story
+          ? _value.story
+          : story // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appearance: null == appearance
+          ? _value.appearance
+          : appearance // ignore: cast_nullable_to_non_nullable
+              as PetAppearance,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      color: freezed == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as String?,
-      markings: freezed == markings
-          ? _value.markings
-          : markings // ignore: cast_nullable_to_non_nullable
-              as String?,
-      size: freezed == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as double?,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -150,6 +142,14 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PetAppearanceCopyWith<$Res> get appearance {
+    return $PetAppearanceCopyWith<$Res>(_value.appearance, (value) {
+      return _then(_value.copyWith(appearance: value) as $Val);
+    });
   }
 }
 
@@ -168,12 +168,14 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       Sex sex,
       DateTime dob,
       Map<DateTime, double> weight,
+      String? story,
+      PetAppearance appearance,
       String image,
-      String? color,
-      String? markings,
-      double? size,
       DateTime createdOn,
       DateTime updatedOn});
+
+  @override
+  $PetAppearanceCopyWith<$Res> get appearance;
 }
 
 /// @nodoc
@@ -193,10 +195,9 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     Object? sex = null,
     Object? dob = null,
     Object? weight = null,
+    Object? story = freezed,
+    Object? appearance = null,
     Object? image = null,
-    Object? color = freezed,
-    Object? markings = freezed,
-    Object? size = freezed,
     Object? createdOn = null,
     Object? updatedOn = null,
   }) {
@@ -233,22 +234,18 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           ? _value._weight
           : weight // ignore: cast_nullable_to_non_nullable
               as Map<DateTime, double>,
+      story: freezed == story
+          ? _value.story
+          : story // ignore: cast_nullable_to_non_nullable
+              as String?,
+      appearance: null == appearance
+          ? _value.appearance
+          : appearance // ignore: cast_nullable_to_non_nullable
+              as PetAppearance,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      color: freezed == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as String?,
-      markings: freezed == markings
-          ? _value.markings
-          : markings // ignore: cast_nullable_to_non_nullable
-              as String?,
-      size: freezed == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as double?,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -274,10 +271,9 @@ class _$PetImpl implements _Pet {
       required this.sex,
       required this.dob,
       required final Map<DateTime, double> weight,
+      required this.story,
+      required this.appearance,
       required this.image,
-      required this.color,
-      required this.markings,
-      required this.size,
       required this.createdOn,
       required this.updatedOn})
       : _weight = weight;
@@ -307,17 +303,12 @@ class _$PetImpl implements _Pet {
     return EqualUnmodifiableMapView(_weight);
   }
 
-// Appearance
-  ///
-  ///
+  @override
+  final String? story;
+  @override
+  final PetAppearance appearance;
   @override
   final String image;
-  @override
-  final String? color;
-  @override
-  final String? markings;
-  @override
-  final double? size;
   @override
   final DateTime createdOn;
   @override
@@ -325,7 +316,7 @@ class _$PetImpl implements _Pet {
 
   @override
   String toString() {
-    return 'Pet(id: $id, owner: $owner, name: $name, species: $species, breed: $breed, sex: $sex, dob: $dob, weight: $weight, image: $image, color: $color, markings: $markings, size: $size, createdOn: $createdOn, updatedOn: $updatedOn)';
+    return 'Pet(id: $id, owner: $owner, name: $name, species: $species, breed: $breed, sex: $sex, dob: $dob, weight: $weight, story: $story, appearance: $appearance, image: $image, createdOn: $createdOn, updatedOn: $updatedOn)';
   }
 
   @override
@@ -341,11 +332,10 @@ class _$PetImpl implements _Pet {
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.dob, dob) || other.dob == dob) &&
             const DeepCollectionEquality().equals(other._weight, _weight) &&
+            (identical(other.story, story) || other.story == story) &&
+            (identical(other.appearance, appearance) ||
+                other.appearance == appearance) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.color, color) || other.color == color) &&
-            (identical(other.markings, markings) ||
-                other.markings == markings) &&
-            (identical(other.size, size) || other.size == size) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
             (identical(other.updatedOn, updatedOn) ||
@@ -364,10 +354,9 @@ class _$PetImpl implements _Pet {
       sex,
       dob,
       const DeepCollectionEquality().hash(_weight),
+      story,
+      appearance,
       image,
-      color,
-      markings,
-      size,
       createdOn,
       updatedOn);
 
@@ -395,10 +384,9 @@ abstract class _Pet implements Pet {
       required final Sex sex,
       required final DateTime dob,
       required final Map<DateTime, double> weight,
+      required final String? story,
+      required final PetAppearance appearance,
       required final String image,
-      required final String? color,
-      required final String? markings,
-      required final double? size,
       required final DateTime createdOn,
       required final DateTime updatedOn}) = _$PetImpl;
 
@@ -420,16 +408,12 @@ abstract class _Pet implements Pet {
   DateTime get dob;
   @override
   Map<DateTime, double> get weight;
-  @override // Appearance
-  ///
-  ///
+  @override
+  String? get story;
+  @override
+  PetAppearance get appearance;
+  @override
   String get image;
-  @override
-  String? get color;
-  @override
-  String? get markings;
-  @override
-  double? get size;
   @override
   DateTime get createdOn;
   @override

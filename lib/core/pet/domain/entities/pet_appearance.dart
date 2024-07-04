@@ -7,8 +7,8 @@ part 'pet_appearance.g.dart';
 class PetAppearance with _$PetAppearance {
   const factory PetAppearance({
     required String color,
-    required String markings,
-    required String size,
+    required String? markings,
+    required String? description,
   }) = _PetAppearance;
 
   factory PetAppearance.fromJson(Map<String, dynamic> json) => _$PetAppearanceFromJson(json);
@@ -16,8 +16,8 @@ class PetAppearance with _$PetAppearance {
   factory PetAppearance.empty() {
     return const PetAppearance(
       color: '',
-      markings: '',
-      size: '',
+      markings: null,
+      description: null,
     );
   }
 }

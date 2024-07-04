@@ -38,37 +38,37 @@ class PetProfileBehavorialInformationScreen extends HookConsumerWidget with Pets
         title: 'Temprament',
         icon: AppIcons.mehBlank,
         onEdit: (pet) {},
-        value: pet.color,
+        value: '',
       ),
       _InfoData(
         title: 'Training level',
         icon: AppIcons.careerGrowth,
         onEdit: (pet) {},
-        value: pet.markings,
+        value: '',
       ),
       _InfoData(
         title: 'Favorite activities',
         icon: AppIcons.star,
         onEdit: (pet) {},
-        value: pet.size?.toString(),
+        value: '',
       ),
       _InfoData(
         title: 'Compactibility with other pets',
         icon: AppIcons.users,
         onEdit: (pet) {},
-        value: pet.size?.toString(),
+        value: '',
       ),
       _InfoData(
         title: 'Behavorial issues',
         icon: AppIcons.thoughtBubble,
         onEdit: (pet) {},
-        value: pet.size?.toString(),
+        value: '',
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Behavorial information',
         ),
       ),

@@ -131,6 +131,7 @@ class AppTheme {
   TextButtonThemeData _textButtonTheme() {
     return TextButtonThemeData(
         style: TextButton.styleFrom(
+      backgroundColor: _colorScheme().primary.withOpacity(0.1),
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),

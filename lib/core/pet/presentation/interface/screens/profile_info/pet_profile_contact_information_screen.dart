@@ -24,25 +24,25 @@ class PetProfileContactInformationScreen extends HookConsumerWidget with PetsMix
       _InfoData(
         title: 'Owner\'s name',
         onEdit: (pet) {},
-        value: pet.color,
+        value: '',
       ),
       _InfoData(
         title: 'Owner\'s contact information',
         icon: AppIcons.houseUser,
         onEdit: (pet) {},
-        value: pet.markings,
+        value: '',
       ),
       _InfoData(
         title: 'Veterinarians\'s contact information',
         icon: AppIcons.userMd,
         onEdit: (pet) {},
-        value: pet.markings,
+        value: '',
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Contact information',
         ),
       ),

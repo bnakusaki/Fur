@@ -26,7 +26,7 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
         title: localizations.color,
         icon: AppIcons.palette,
         onEdit: () {},
-        value: pet.color,
+        value: pet.appearance.color,
       ),
       _InfoData(
         title: localizations.markings,
@@ -39,14 +39,14 @@ class PetProfileAppearanceScreen extends HookConsumerWidget with PetsMixin {
             },
           );
         },
-        value: pet.markings,
+        value: pet.appearance.markings,
       ),
-      _InfoData(
-        title: localizations.size,
-        icon: AppIcons.sortSizeUp,
-        onEdit: () {},
-        value: pet.size?.toString(),
-      ),
+      // _InfoData(
+      //   title: localizations.size,
+      //   icon: AppIcons.sortSizeUp,
+      //   onEdit: () {},
+      //   value: pet.size?.toString(),
+      // ),
     ];
 
     return Scaffold(

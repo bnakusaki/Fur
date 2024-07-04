@@ -21,8 +21,8 @@ PetAppearance _$PetAppearanceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PetAppearance {
   String get color => throw _privateConstructorUsedError;
-  String get markings => throw _privateConstructorUsedError;
-  String get size => throw _privateConstructorUsedError;
+  String? get markings => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $PetAppearanceCopyWith<$Res> {
           PetAppearance value, $Res Function(PetAppearance) then) =
       _$PetAppearanceCopyWithImpl<$Res, PetAppearance>;
   @useResult
-  $Res call({String color, String markings, String size});
+  $Res call({String color, String? markings, String? description});
 }
 
 /// @nodoc
@@ -53,22 +53,22 @@ class _$PetAppearanceCopyWithImpl<$Res, $Val extends PetAppearance>
   @override
   $Res call({
     Object? color = null,
-    Object? markings = null,
-    Object? size = null,
+    Object? markings = freezed,
+    Object? description = freezed,
   }) {
     return _then(_value.copyWith(
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String,
-      markings: null == markings
+      markings: freezed == markings
           ? _value.markings
           : markings // ignore: cast_nullable_to_non_nullable
-              as String,
-      size: null == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +81,7 @@ abstract class _$$PetAppearanceImplCopyWith<$Res>
       __$$PetAppearanceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String color, String markings, String size});
+  $Res call({String color, String? markings, String? description});
 }
 
 /// @nodoc
@@ -96,22 +96,22 @@ class __$$PetAppearanceImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? color = null,
-    Object? markings = null,
-    Object? size = null,
+    Object? markings = freezed,
+    Object? description = freezed,
   }) {
     return _then(_$PetAppearanceImpl(
       color: null == color
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as String,
-      markings: null == markings
+      markings: freezed == markings
           ? _value.markings
           : markings // ignore: cast_nullable_to_non_nullable
-              as String,
-      size: null == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -120,7 +120,7 @@ class __$$PetAppearanceImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PetAppearanceImpl implements _PetAppearance {
   const _$PetAppearanceImpl(
-      {required this.color, required this.markings, required this.size});
+      {required this.color, required this.markings, required this.description});
 
   factory _$PetAppearanceImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetAppearanceImplFromJson(json);
@@ -128,13 +128,13 @@ class _$PetAppearanceImpl implements _PetAppearance {
   @override
   final String color;
   @override
-  final String markings;
+  final String? markings;
   @override
-  final String size;
+  final String? description;
 
   @override
   String toString() {
-    return 'PetAppearance(color: $color, markings: $markings, size: $size)';
+    return 'PetAppearance(color: $color, markings: $markings, description: $description)';
   }
 
   @override
@@ -145,12 +145,13 @@ class _$PetAppearanceImpl implements _PetAppearance {
             (identical(other.color, color) || other.color == color) &&
             (identical(other.markings, markings) ||
                 other.markings == markings) &&
-            (identical(other.size, size) || other.size == size));
+            (identical(other.description, description) ||
+                other.description == description));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, color, markings, size);
+  int get hashCode => Object.hash(runtimeType, color, markings, description);
 
   @JsonKey(ignore: true)
   @override
@@ -169,8 +170,8 @@ class _$PetAppearanceImpl implements _PetAppearance {
 abstract class _PetAppearance implements PetAppearance {
   const factory _PetAppearance(
       {required final String color,
-      required final String markings,
-      required final String size}) = _$PetAppearanceImpl;
+      required final String? markings,
+      required final String? description}) = _$PetAppearanceImpl;
 
   factory _PetAppearance.fromJson(Map<String, dynamic> json) =
       _$PetAppearanceImpl.fromJson;
@@ -178,9 +179,9 @@ abstract class _PetAppearance implements PetAppearance {
   @override
   String get color;
   @override
-  String get markings;
+  String? get markings;
   @override
-  String get size;
+  String? get description;
   @override
   @JsonKey(ignore: true)
   _$$PetAppearanceImplCopyWith<_$PetAppearanceImpl> get copyWith =>

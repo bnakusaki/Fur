@@ -13,6 +13,7 @@ import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
 import 'package:fur/src/authentication/presentation/bloc/authentication_mixin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../common_libs.dart';
 
@@ -26,6 +27,7 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
     final textStyles = theme.extension<TextStyles>()!;
 
     final authenticationOptions = <_AutneticationOptionData>[
+      // TODO: implement
       if (Platform.isIOS)
         _AutneticationOptionData(
           label: localizations.appButtonsContinueWithApple,
@@ -164,7 +166,9 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
         ),
         child: InkWell(
           borderRadius: BorderRadius.circular(5),
-          onTap: () {},
+          onTap: () async {
+            await launchUrl(Uri.parse('https://www.google.com'));
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

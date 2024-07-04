@@ -52,6 +52,7 @@ class AppIcons {
   static const venusMars = '$_path/venus-mars.svg';
   static const clockThree = '$_path/clock-three.svg';
   static const calendarClock = '$_path/calendar-clock.svg';
+  static const gallery = '$_path/gallery.svg';
 }
 
 class AppAnimatedIcons {

@@ -38,37 +38,37 @@ class PetProfileHealthAndCareScreen extends HookConsumerWidget with PetsMixin {
         title: 'Vaccination status',
         icon: AppIcons.syringe,
         onEdit: (pet) {},
-        value: pet.color,
+        value: '',
       ),
       _InfoData(
         title: 'Medical history',
         icon: AppIcons.fileMedicalAlt,
         onEdit: (pet) {},
-        value: pet.markings,
+        value: '',
       ),
       _InfoData(
         title: 'Allergies',
         icon: AppIcons.wheatSlash,
         onEdit: (pet) {},
-        value: pet.size?.toString(),
+        value: '',
       ),
       _InfoData(
         title: 'Dietary preferences',
         icon: AppIcons.salad,
         onEdit: (pet) {},
-        value: pet.size?.toString(),
+        value: '',
       ),
       _InfoData(
         title: 'Medications',
         icon: AppIcons.medicine,
         onEdit: (pet) {},
-        value: pet.size?.toString(),
+        value: '',
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Health and care',
         ),
       ),
