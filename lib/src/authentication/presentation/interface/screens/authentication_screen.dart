@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/shared/assets/app_icons.dart';
@@ -114,48 +113,20 @@ class AuthenticationScreen extends HookWidget with AuthenticationMixin {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                ...[
-                  Text(
-                    localizations.appTitle,
-                    style: TextStyle(
-                      color: theme.primaryColor,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w600,
-                    ),
+                const Spacer(),
+                Text(
+                  localizations.appTitle,
+                  style: textStyles.h1,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  localizations.appMessagesOnboarding,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
                   ),
-                  Text(
-                    localizations.petcareMadeEasy,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    localizations.petOwners,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    localizations.petSitters,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    localizations.veterinarians,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ].animate(interval: 500.milliseconds).fadeIn().fadeOut(delay: 8000.milliseconds),
+                ),
                 const Spacer(),
                 ListView.separated(
                   shrinkWrap: true,

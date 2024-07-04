@@ -2,6 +2,9 @@
     "@@locale": "en",
     "appTitle": "Fur",
 
+    "messages_": "",
+    "appMessagesOnboarding": "Hi pet lover!\nHappy paws in one app.",
+
 
     "buttonLabels_": "",
     "appButtonsContinue": "Continue",
