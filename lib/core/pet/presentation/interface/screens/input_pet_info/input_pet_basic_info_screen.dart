@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,12 +41,14 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final formKey = useMemoized(() => GlobalKey<FormState>());
+
     final nameController = useTextEditingController();
+    final image = useState<XFile?>(null);
+
     final weigthController = useTextEditingController();
     final species = useState<Species?>(null);
     final breed = useState<Breed?>(null);
     final dob = useState<DateTime?>(null);
-    final image = useState<XFile?>(null);
     final analyzingImage = useState(false);
     final analysis = useState<Map<String, String>?>(null);
 
@@ -159,164 +162,117 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                     },
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        Text(
-                          'Pet image',
-                          style: theme.textTheme.titleMedium,
-                        ),
-                        const Spacer(),
-                        if (image.value != null)
-                          TextButton(
-                            onPressed: () {
-                              image.value = null;
-                            },
-                            child: Text(
-                              'Remove',
-                              style: TextStyle(
-                                color: theme.primaryColor,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Pet image',
+                        style: theme.textTheme.titleMedium,
+                      ),
+                      image.value == null
+                          ? _AddPetImageButton(image: image, theme: theme)
+                          : _RemovePetImageButton(image: image, theme: theme),
+                    ],
                   ),
                   const SizedBox(height: 10),
-                  image.value == null
-                      ? Column(
-                          children: [
-                            TextButton.icon(
-                              onPressed: () async {
-                                image.value =
-                                    await ImagePicker().pickImage(source: ImageSource.gallery);
-                              },
-                              icon: SvgPicture.asset(
-                                AppIcons.gallery,
-                                color: theme.primaryColor,
+                  if (image.value != null)
+                    AspectRatio(
+                      aspectRatio: 1,
+                      child: Stack(
+                        children: [
+                          AspectRatio(
+                            aspectRatio: 1,
+                            child: Card(
+                              margin: EdgeInsets.zero,
+                              child: Image.file(
+                                File(image.value!.path),
+                                fit: BoxFit.cover,
                               ),
-                              style: TextButton.styleFrom(
-                                fixedSize: const Size.fromWidth(double.maxFinite),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              label: const Text('Pick from gallery'),
                             ),
-                            TextButton.icon(
-                              onPressed: () async {
-                                image.value =
-                                    await ImagePicker().pickImage(source: ImageSource.camera);
-                              },
-                              icon: SvgPicture.asset(
-                                AppIcons.camera,
-                                color: theme.primaryColor,
-                              ),
-                              style: TextButton.styleFrom(
-                                fixedSize: const Size.fromWidth(double.maxFinite),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              label: const Text('Use camera'),
-                            ),
-                          ],
-                        )
-                      : AspectRatio(
-                          aspectRatio: 1,
-                          child: Stack(
-                            children: [
-                              AspectRatio(
-                                aspectRatio: 1,
-                                child: Card(
-                                  margin: EdgeInsets.zero,
-                                  child: Image.file(
-                                    File(image.value!.path),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              if (analyzingImage.value)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.black.withOpacity(0.1),
-                                        Colors.black.withOpacity(0.5),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              if (analyzingImage.value)
-                                const Center(
-                                  child: SizedBox(
-                                    height: 30,
-                                    width: 30,
-                                    child: LoadingIndicator(
-                                      indicatorType: Indicator.circleStrokeSpin,
-                                      colors: [Colors.white],
-                                    ),
-                                  ),
-                                ),
-                              if (analysis.value != null &&
-                                  analysis.value!.isNotEmpty &&
-                                  !analyzingImage.value)
-                                Positioned(
-                                  bottom: 10,
-                                  right: 10,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.black45,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Builder(builder: (context) {
-                                          // remove unknown values from the analysis
-                                          analysis.value!
-                                              .removeWhere((key, value) => value == 'unknown');
-
-                                          analysis.value = analysis.value;
-
-                                          String text = '';
-
-                                          if (analysis.value!.isEmpty) {
-                                            text = 'Not a pet';
-                                          }
-
-                                          if (analysis.value!['species'] != null) {
-                                            text =
-                                                analysis.value!['species'].toString().capitalize();
-                                          }
-
-                                          if (analysis.value!['breed'] != null) {
-                                            text +=
-                                                '\n${analysis.value!['breed'].toString().capitalize()}';
-                                          }
-
-                                          if (analysis.value!['color'] != null) {
-                                            text +=
-                                                '\n${analysis.value!['color'].toString().capitalize()}';
-                                          }
-
-                                          return Text(
-                                            text,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                            textAlign: TextAlign.end,
-                                          );
-                                        }),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                            ],
                           ),
-                        ).animate().fadeIn(),
+                          if (analyzingImage.value)
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Colors.black.withOpacity(0.1),
+                                    Colors.black.withOpacity(0.5),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          if (analyzingImage.value)
+                            const Center(
+                              child: SizedBox(
+                                height: 30,
+                                width: 30,
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.circleStrokeSpin,
+                                  colors: [Colors.white],
+                                ),
+                              ),
+                            ),
+                          if (analysis.value != null &&
+                              analysis.value!.isNotEmpty &&
+                              !analyzingImage.value)
+                            Positioned(
+                              bottom: 10,
+                              right: 10,
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: Colors.black45,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Builder(builder: (context) {
+                                      // remove unknown values from the analysis
+                                      analysis.value!
+                                          .removeWhere((key, value) => value == 'unknown');
+
+                                      analysis.value = analysis.value;
+
+                                      String text = '';
+
+                                      if (analysis.value!.isEmpty) {
+                                        text = 'Not a pet';
+                                      }
+
+                                      if (analysis.value!['species'] != null) {
+                                        text = analysis.value!['species'].toString().capitalize();
+                                      }
+
+                                      if (analysis.value!['breed'] != null) {
+                                        text +=
+                                            '\n${analysis.value!['breed'].toString().capitalize()}';
+                                      }
+
+                                      if (analysis.value!['color'] != null) {
+                                        text +=
+                                            '\n${analysis.value!['color'].toString().capitalize()}';
+                                      }
+
+                                      return Text(
+                                        text,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        textAlign: TextAlign.end,
+                                      );
+                                    }),
+                                  ],
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                    ).animate().fadeIn(),
                   const SizedBox(height: 20),
                   Text(
                     localizations.species,
@@ -432,6 +388,121 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
             onPressed: null,
             child: Text('Done'),
           ).withLoadingState(onPressed: handleDone),
+        ),
+      ),
+    );
+  }
+}
+
+class _AddPetImageButton extends StatelessWidget {
+  const _AddPetImageButton({
+    required this.image,
+    required this.theme,
+  });
+
+  final ValueNotifier<XFile?> image;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return TextButton(
+      onPressed: () {
+        showCupertinoModalPopup(
+          context: context,
+          builder: (context) {
+            return SafeArea(
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                    margin: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    width: double.maxFinite,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Pick image from',
+                          style: theme.textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 10),
+                        TextButton.icon(
+                          onPressed: () async {
+                            image.value =
+                                await ImagePicker().pickImage(source: ImageSource.gallery);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          icon: SvgPicture.asset(
+                            AppIcons.gallery,
+                            color: theme.primaryColor,
+                          ),
+                          style: TextButton.styleFrom(
+                            fixedSize: const Size.fromWidth(double.maxFinite),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          label: const Text('Gallery'),
+                        ),
+                        TextButton.icon(
+                          onPressed: () async {
+                            image.value = await ImagePicker().pickImage(source: ImageSource.camera);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          icon: SvgPicture.asset(
+                            AppIcons.camera,
+                            color: theme.primaryColor,
+                          ),
+                          style: TextButton.styleFrom(
+                            fixedSize: const Size.fromWidth(double.maxFinite),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          label: const Text('Camera'),
+                        ),
+                      ],
+                    )),
+              ),
+            );
+          },
+        );
+      },
+      child: Text(
+        'Add',
+        style: TextStyle(
+          color: theme.primaryColor,
+        ),
+      ),
+    );
+  }
+}
+
+class _RemovePetImageButton extends StatelessWidget {
+  const _RemovePetImageButton({
+    required this.image,
+    required this.theme,
+  });
+
+  final ValueNotifier<XFile?> image;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        image.value = null;
+      },
+      child: Text(
+        'Remove',
+        style: TextStyle(
+          color: theme.primaryColor,
         ),
       ),
     );

@@ -11,7 +11,6 @@ import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/shared/widgets/app_text_form_field.dart';
-import 'package:fur/shared/widgets/image_and_label.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:lottie/lottie.dart';
@@ -145,34 +144,29 @@ class SelectPetspeciesScreen extends HookConsumerWidget with PetsMixin {
                             : Scrollbar(
                                 child: ListView.separated(
                                   itemBuilder: (context, index) {
-                                    late List<Species> row;
-                                    try {
-                                      row = filteredspecies.sublist(index * 2, (index * 2) + 2);
-                                    } catch (e) {
-                                      row = [filteredspecies[index * 2], Species.empty()];
-                                    }
-                                    return Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: row
-                                          .map((species) => Expanded(
-                                                child: species == Species.empty()
-                                                    ? const SizedBox()
-                                                    : ImageAndLabel(
-                                                        imageUrl: species.imageUrl,
-                                                        label: species.name,
-                                                        selected: selectedSpecies.value == species,
-                                                        onTap: () {
-                                                          selectedSpecies.value = species;
-                                                        },
-                                                      ),
-                                              ))
-                                          .toList(),
+                                    final species0 = value[index];
+                                    final selected = selectedSpecies.value == species0;
+
+                                    return ListTile(
+                                      tileColor: Colors.white,
+                                      title: Text(
+                                        species0.name,
+                                        style: TextStyle(
+                                            fontWeight: selected ? FontWeight.w600 : null),
+                                      ),
+                                      selected: selected,
+                                      shape: ContinuousRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)),
+                                      onTap: () {
+                                        selectedSpecies.value = species0;
+                                      },
+                                      selectedTileColor: theme.primaryColor.withOpacity(0.2),
                                     );
                                   },
                                   separatorBuilder: (context, index) {
                                     return const SizedBox(height: 10);
                                   },
-                                  itemCount: (filteredspecies.length / 2).ceil(),
+                                  itemCount: filteredspecies.length,
                                 ),
                               );
                       },
