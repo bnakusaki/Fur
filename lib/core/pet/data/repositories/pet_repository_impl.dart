@@ -141,6 +141,7 @@ class PetsRepositoryImpl implements PetsRepository {
     } on Failure catch (e) {
       return Left(e);
     } catch (e) {
+      Logger().e(e);
       return Left(Failure(ErrorCodes.unknownError));
     }
   }

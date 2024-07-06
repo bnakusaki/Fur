@@ -72,8 +72,8 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         );
 
         try {
-          await createPet(pet);
-          final imageUrl = await savePetImage(pet.id, File(image.value!.path));
+          final petId = (await createPet(pet)).id;
+          final imageUrl = await savePetImage(petId, File(image.value!.path));
 
           ref.watch(cachedPetsProvider).add(pet.copyWith(image: imageUrl));
 
