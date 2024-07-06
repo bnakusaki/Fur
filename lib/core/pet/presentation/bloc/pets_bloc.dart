@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
@@ -8,6 +10,7 @@ import 'package:fur/core/pet/domain/usecases/list_breeds.dart';
 import 'package:fur/core/pet/domain/usecases/list_species.dart';
 import 'package:fur/core/pet/domain/usecases/retrieve_breed.dart';
 import 'package:fur/core/pet/domain/usecases/retrieve_species.dart';
+import 'package:fur/core/pet/domain/usecases/save_pet_image.dart';
 import 'package:fur/core/pet/domain/usecases/update.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:fur/shared/usecase/usecase.dart';
@@ -20,6 +23,7 @@ class PetsBloc {
   final ListBreeds _listBreeds;
   final RetrieveBreed _retrieveBreed;
   final UpdatePet _updatePet;
+  final SavePetImage _savePetImage;
 
   PetsBloc(
     this._retrieveSpecies,
@@ -29,6 +33,7 @@ class PetsBloc {
     this._listSpecies,
     this._retrieveBreed,
     this._updatePet,
+    this._savePetImage,
   );
 
   Future<Either<Failure, Species>> retrieveSpecies(String languageCode, String speciesId) async {
@@ -72,5 +77,10 @@ class PetsBloc {
   Future<Either<Failure, Pet>> updatePet(Pet pet) async {
     final params = ObjectParams(pet);
     return await _updatePet(params);
+  }
+
+  Future<Either<Failure, String>> savePetImage(String petId, File image) async {
+    final params = ObjectParams(SavePetImageParams(petId: petId, image: image));
+    return await _savePetImage(params);
   }
 }

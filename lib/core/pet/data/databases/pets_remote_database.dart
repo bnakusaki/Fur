@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/species.dart';
@@ -6,7 +9,7 @@ import 'package:fur/shared/firebase_collection_references.dart';
 import 'package:logger/logger.dart';
 
 abstract class PetsRemoteDatabase {
-  Future<void> savePetImage(String petId, String path);
+  Future<String> savePetImage(String petId, File image);
   Future<Pet> create(Pet pet);
   Future<Pet> update(Pet pet);
   Future<List<Pet>> list(String uid);
@@ -18,8 +21,18 @@ abstract class PetsRemoteDatabase {
 
 class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
   @override
-  Future<void> savePetImage(String petId, String path) async {
-    throw UnimplementedError();
+  Future<String> savePetImage(String petId, File image) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final childRef = storageRef.child(FirebaseCollectionReferences.petImages).child(petId);
+    await childRef.putFile(image);
+
+    final downloadUrl = await childRef.getDownloadURL();
+    FirebaseFirestore.instance
+        .collection(FirebaseCollectionReferences.pets)
+        .doc(petId)
+        .update({'image': downloadUrl});
+
+    return downloadUrl;
   }
 
   @override

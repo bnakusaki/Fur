@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_bloc.dart';
@@ -49,5 +51,14 @@ mixin PetsMixin {
     } else {
       return localizations.days(days);
     }
+  }
+
+  Future<String> savePetImage(String petId, File image) async {
+    final response = await bloc.savePetImage(petId, image);
+
+    return response.fold(
+      (failure) => throw failure,
+      (url) => url,
+    );
   }
 }

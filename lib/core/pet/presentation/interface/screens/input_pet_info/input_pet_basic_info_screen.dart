@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,8 +48,6 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
     final species = useState<Species?>(null);
     final breed = useState<Breed?>(null);
     final dob = useState<DateTime?>(null);
-    final analyzingImage = useState(false);
-    final analysis = useState<Map<String, String>?>(null);
 
     Future<void> handleDone() async {
       if (formKey.currentState!.validate()) {
@@ -64,68 +61,32 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
           AppSnackBar.warning(context, localizations.appValidationMessagesPetDob);
           return;
         }
-      }
 
-      final pet = Pet.empty().copyWith(
-        name: nameController.text,
-        species: species.value!.id,
-        breed: breed.value!.id,
-        weight: {DateTime.now(): double.parse(weigthController.text)},
-        dob: dob.value!,
-        owner: FirebaseAuth.instance.currentUser!.uid,
-      );
+        final pet = Pet.empty().copyWith(
+          name: nameController.text,
+          species: species.value!.id,
+          breed: breed.value!.id,
+          weight: {DateTime.now(): double.parse(weigthController.text)},
+          dob: dob.value!,
+          owner: FirebaseAuth.instance.currentUser!.uid,
+        );
 
-      try {
-        await createPet(pet);
-        ref.watch(cachedPetsProvider).add(pet);
-        if (context.mounted) {
-          Navigator.pop(context);
-        }
-      } on Failure catch (e) {
-        if (context.mounted) {
-          AppSnackBar.error(context, e.code);
-        }
-      }
-    }
+        try {
+          await createPet(pet);
+          final imageUrl = await savePetImage(pet.id, File(image.value!.path));
 
-    Future<Map<String, String>> analyzeImage(XFile image) async {
-      final unit8ListImage = await image.readAsBytes();
-      final analysisResult = await Gemini.instance.textAndImage(
-        text: '''
-                    Analyze the image and provide the following information about the animal:
-                    {
-                      "species": "<species>",
-                      "breed": "<breed>",
-                      "color": "<color>"
-                    }
-                    If any of the information is unknown, use "unknown". If the image is not a pet, return {}.
-                    ''',
-        images: [unit8ListImage],
-      );
+          ref.watch(cachedPetsProvider).add(pet.copyWith(image: imageUrl));
 
-      final json = jsonDecode(analysisResult?.content?.parts?[0].text ?? '{}');
-      return {
-        'species': json['species'] ?? 'unknown',
-        'breed': json['breed'] ?? 'unknown',
-        'color': json['color'] ?? 'unknown',
-      };
-    }
-
-    useMemoized(
-      () async {
-        if (image.value != null) {
-          try {
-            analyzingImage.value = true;
-            analysis.value = await analyzeImage(image.value!);
-          } catch (e) {
-            if (kDebugMode) Logger().e(e);
-          } finally {
-            analyzingImage.value = false;
+          if (context.mounted) {
+            Navigator.pop(context);
+          }
+        } on Failure catch (e) {
+          if (context.mounted) {
+            AppSnackBar.error(context, e.code);
           }
         }
-      },
-      [image.value],
-    );
+      }
+    }
 
     return GestureDetector(
       onTap: () {
@@ -175,104 +136,7 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  if (image.value != null)
-                    AspectRatio(
-                      aspectRatio: 1,
-                      child: Stack(
-                        children: [
-                          AspectRatio(
-                            aspectRatio: 1,
-                            child: Card(
-                              margin: EdgeInsets.zero,
-                              child: Image.file(
-                                File(image.value!.path),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          if (analyzingImage.value)
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Colors.black.withOpacity(0.1),
-                                    Colors.black.withOpacity(0.5),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          if (analyzingImage.value)
-                            const Center(
-                              child: SizedBox(
-                                height: 30,
-                                width: 30,
-                                child: LoadingIndicator(
-                                  indicatorType: Indicator.circleStrokeSpin,
-                                  colors: [Colors.white],
-                                ),
-                              ),
-                            ),
-                          if (analysis.value != null &&
-                              analysis.value!.isNotEmpty &&
-                              !analyzingImage.value)
-                            Positioned(
-                              bottom: 10,
-                              right: 10,
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.black45,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Builder(builder: (context) {
-                                      // remove unknown values from the analysis
-                                      analysis.value!
-                                          .removeWhere((key, value) => value == 'unknown');
-
-                                      analysis.value = analysis.value;
-
-                                      String text = '';
-
-                                      if (analysis.value!.isEmpty) {
-                                        text = 'Not a pet';
-                                      }
-
-                                      if (analysis.value!['species'] != null) {
-                                        text = analysis.value!['species'].toString().capitalize();
-                                      }
-
-                                      if (analysis.value!['breed'] != null) {
-                                        text +=
-                                            '\n${analysis.value!['breed'].toString().capitalize()}';
-                                      }
-
-                                      if (analysis.value!['color'] != null) {
-                                        text +=
-                                            '\n${analysis.value!['color'].toString().capitalize()}';
-                                      }
-
-                                      return Text(
-                                        text,
-                                        style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                        textAlign: TextAlign.end,
-                                      );
-                                    }),
-                                  ],
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
-                    ).animate().fadeIn(),
+                  if (image.value != null) _PetImageCard(image: File(image.value!.path)),
                   const SizedBox(height: 20),
                   Text(
                     localizations.species,
@@ -360,12 +224,16 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                   const SizedBox(height: 10),
                   ListTile(
                     onTap: () async {
-                      dob.value ??= await showDatePicker(
+                      final value = await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime.now(),
                       );
+
+                      if (value != null) {
+                        dob.value = value;
+                      }
                     },
                     title: dob.value == null
                         ? Text(localizations.pickDate)
@@ -389,6 +257,148 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
             child: Text('Done'),
           ).withLoadingState(onPressed: handleDone),
         ),
+      ),
+    );
+  }
+}
+
+class _PetImageCard extends HookWidget {
+  const _PetImageCard({required this.image});
+
+  final File image;
+
+  @override
+  Widget build(BuildContext context) {
+    final analyzingImage = useState(false);
+    final analysis = useState<Map<String, String>?>(null);
+
+    Future<Map<String, String>> analyzeImage(File image) async {
+      final unit8ListImage = await image.readAsBytes();
+
+      final analysisResult = await Gemini.instance.textAndImage(
+        text: '''
+              Analyze the image and provide the following information about the animal:
+              {
+                "species": "<species>",
+                "breed": "<breed>",
+                "color": "<color>"
+              }
+              If any of the information is unknown, use "unknown". If the image is not a pet, return {}.
+              ''',
+        images: [unit8ListImage],
+      );
+
+      final json = jsonDecode(analysisResult?.content?.parts?[0].text ?? '{}');
+      return {
+        'species': json['species'] ?? 'unknown',
+        'breed': json['breed'] ?? 'unknown',
+        'color': json['color'] ?? 'unknown',
+      };
+    }
+
+    useMemoized(
+      () async {
+        try {
+          analyzingImage.value = true;
+          analysis.value = await analyzeImage(image);
+        } catch (e) {
+          if (kDebugMode) Logger().e(e);
+        } finally {
+          analyzingImage.value = false;
+        }
+      },
+    );
+
+    return AspectRatio(
+      aspectRatio: 1,
+      child: Stack(
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: Card(
+              margin: EdgeInsets.zero,
+              child: Image.file(
+                image,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          if (analyzingImage.value)
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.1),
+                    Colors.black.withOpacity(0.5),
+                  ],
+                ),
+              ),
+            ),
+          if (analyzingImage.value)
+            const Center(
+              child: SizedBox(
+                height: 30,
+                width: 30,
+                child: LoadingIndicator(
+                  indicatorType: Indicator.circleStrokeSpin,
+                  colors: [Colors.white],
+                ),
+              ),
+            ),
+          if (analysis.value != null && analysis.value!.isNotEmpty && !analyzingImage.value)
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.black45,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Builder(builder: (context) {
+                      // remove unknown values from the analysis
+                      analysis.value!.removeWhere((key, value) => value == 'unknown');
+
+                      analysis.value = analysis.value;
+
+                      String text = '';
+
+                      if (analysis.value!.isEmpty) {
+                        text = 'Not a pet';
+                      }
+
+                      if (analysis.value!['species'] != null) {
+                        text = analysis.value!['species'].toString().capitalize();
+                      }
+
+                      if (analysis.value!['breed'] != null) {
+                        text += '\n${analysis.value!['breed'].toString().capitalize()}';
+                      }
+
+                      if (analysis.value!['color'] != null) {
+                        text += '\n${analysis.value!['color'].toString().capitalize()}';
+                      }
+
+                      return Text(
+                        text,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        textAlign: TextAlign.end,
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            )
+        ],
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
@@ -8,6 +10,8 @@ abstract class PetsRepository {
   Future<Either<Failure, Pet>> create(Pet pet);
   Future<Either<Failure, List<Pet>>> list(String uid);
   Future<Either<Failure, Pet>> update(Pet pet);
+
+  Future<Either<Failure, String>> savePetImage(String petId, File image);
 
   Future<Either<Failure, List<Species>>> listSpecies(String languageCode);
   Future<Either<Failure, Species>> retrieveSpecies(

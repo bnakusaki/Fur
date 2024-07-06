@@ -22,23 +22,6 @@ class NoPetsCarousel extends HookWidget {
     final controller = usePageController();
     final page = useState(0);
 
-    useEffect(() {
-      Future.microtask(() async {
-        while (true) {
-          await Future.delayed(const Duration(seconds: 10));
-          if (controller.hasClients) {
-            final nextPage = (controller.page!.round() + 1) % images.length;
-            controller.animateToPage(
-              nextPage,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeIn,
-            );
-          }
-        }
-      });
-      return;
-    }, []);
-
     return AspectRatio(
       aspectRatio: 0.9,
       child: Stack(
@@ -60,6 +43,7 @@ class NoPetsCarousel extends HookWidget {
                   image: image,
                   index: index,
                   currentIndex: page.value,
+                  pageController: controller,
                 );
               },
             ),
@@ -120,11 +104,13 @@ class _Image extends HookWidget {
     required this.image,
     required this.index,
     required this.currentIndex,
+    required this.pageController,
   });
 
   final String image;
   final int index;
   final int currentIndex;
+  final PageController pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +119,16 @@ class _Image extends HookWidget {
       lowerBound: 1,
       upperBound: 1.2,
     );
+
+    // when animation is done, go to the next page
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      }
+    });
 
     useEffect(
       () {

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fur/core/pet/data/databases/pets_remote_database.dart';
@@ -118,6 +120,21 @@ class PetsRepositoryImpl implements PetsRepository {
     try {
       await networkInfo.hasInternet();
       final response = await remoteDatabase.update(pet);
+      return Right(response);
+    } on FirebaseException catch (e) {
+      return Left(Failure(e.code));
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (e) {
+      return Left(Failure(ErrorCodes.unknownError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> savePetImage(String petId, File image) async {
+    try {
+      await networkInfo.hasInternet();
+      final response = await remoteDatabase.savePetImage(petId, image);
       return Right(response);
     } on FirebaseException catch (e) {
       return Left(Failure(e.code));
