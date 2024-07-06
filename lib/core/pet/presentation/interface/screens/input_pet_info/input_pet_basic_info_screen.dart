@@ -62,7 +62,7 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
           return;
         }
 
-        final pet = Pet.empty().copyWith(
+        var pet = Pet.empty().copyWith(
           name: nameController.text,
           species: species.value!.id,
           breed: breed.value!.id,
@@ -72,8 +72,8 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         );
 
         try {
-          final petId = (await createPet(pet)).id;
-          final imageUrl = await savePetImage(petId, File(image.value!.path));
+          pet = await createPet(pet);
+          final imageUrl = await savePetImage(pet.id, File(image.value!.path));
 
           ref.watch(cachedPetsProvider).add(pet.copyWith(image: imageUrl));
 
