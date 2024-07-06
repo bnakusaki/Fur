@@ -25,11 +25,8 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final textStyles = theme.extension<TextStyles>()!;
-
     final languageCode = Localizations.localeOf(context).languageCode;
-
     final pet = ref.watch(petNotifierProvider)!;
-
     final name = useState(pet.name);
     final weight = useState(pet.weight);
 
@@ -185,7 +182,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const PetWeightScreen(),
+                    builder: (context) => PetWeightScreen(),
                   ),
                 );
               },
@@ -196,28 +193,11 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              subtitle: Builder(
-                builder: (context) {
-                  // Get latest weight
-                  Map<DateTime, double>? latestWeight;
-
-                  weight.value.forEach((key, value) {
-                    if (latestWeight == null) {
-                      latestWeight = {key: value};
-                    } else {
-                      if (key.isAfter(latestWeight!.keys.first)) {
-                        latestWeight = {key: value};
-                      }
-                    }
-                  });
-
-                  return Text(
-                    localizations.weightInKg(latestWeight?.values.first ?? 0.0),
-                    style: textStyles.caption,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  );
-                },
+              subtitle: Text(
+                localizations.weightInKg(sortWeightHistory(pet.weight).values.last),
+                style: textStyles.caption,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               tileColor: Colors.white,
               shape: RoundedRectangleBorder(

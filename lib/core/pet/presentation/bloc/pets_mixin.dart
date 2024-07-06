@@ -61,4 +61,9 @@ mixin PetsMixin {
       (url) => url,
     );
   }
+
+  Map<DateTime, double> sortWeightHistory(Map<DateTime, double> history) {
+    final sortedKeys = history.keys.toList()..sort();
+    return {for (var k in sortedKeys) k: history[k]!};
+  }
 }
