@@ -26,7 +26,6 @@ class PetScreenAppBar extends StatelessWidget {
     final localizations = AppLocalizations.of(context)!;
 
     return SliverAppBar(
-      backgroundColor: Colors.white,
       stretch: true,
       expandedHeight:
           (MediaQuery.sizeOf(context).width - AppSizes.screenHorizontalPadding * 2) * (0.7) +

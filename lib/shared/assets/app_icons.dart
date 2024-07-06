@@ -53,6 +53,12 @@ class AppIcons {
   static const clockThree = '$_path/clock-three.svg';
   static const calendarClock = '$_path/calendar-clock.svg';
   static const gallery = '$_path/gallery.svg';
+  static const locationCrosshairs = '$_path/location-crosshairs.svg';
+  static const timePast = '$_path/time-past.svg';
+  static const arrowTrendUp = '$_path/arrow-trend-up.svg';
+  static const arrowComparison = '$_path/arrow-comparison.svg';
+  static const scaleComparisonAlt = '$_path/scale-comparison-alt.svg';
+  static const pointerText = '$_path/pointer-text.svg';
 }
 
 class AppAnimatedIcons {
@@ -65,6 +71,7 @@ class AppAnimatedIcons {
   static const checkmark = '$_path/checkmark.json';
   static const error = '$_path/error.json';
   static const menuV2 = '$_path/menuV2.json';
+  static const lineBlink = '$_path/line-blink.json';
 }
 
 class SpeciesIcons {

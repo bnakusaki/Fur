@@ -8,6 +8,7 @@ import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/sex.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/interface/screens/edit_pet_info/edit_pet_name_dialog.dart';
+import 'package:fur/core/pet/presentation/interface/screens/pet_weight_screen.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_species.dart';
@@ -181,12 +182,12 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
             const SizedBox(height: 10),
             ListTile(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => PetWeightScreen(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PetWeightScreen(),
+                  ),
+                );
               },
               leading: SvgPicture.asset(AppIcons.gym),
               title: Text(

@@ -7,12 +7,8 @@ import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/interface/widgets/pet_screen_app_bar.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/core/pet/presentation/providers/retrieve_breed.dart';
-import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/assets/app_images.dart';
-import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
 
 class PetScreen extends HookConsumerWidget with PetsMixin {
   PetScreen({super.key});
@@ -31,116 +27,116 @@ class PetScreen extends HookConsumerWidget with PetsMixin {
       pet.species,
     ));
 
-    final services = <_PetService>[
-      _PetService(
-        title: 'Grooming',
-        image: AppImages.beautySaloon,
-        onTap: () {},
-      ),
-      _PetService(
-        title: 'Training',
-        image: AppImages.dogTraining,
-        onTap: () {},
-      ),
-      _PetService(
-        title: 'Pet sitting',
-        image: AppImages.dogAlt,
-        onTap: () {},
-      ),
-    ];
+    // final services = <_PetService>[
+    //   _PetService(
+    //     title: 'Grooming',
+    //     image: AppImages.beautySaloon,
+    //     onTap: () {},
+    //   ),
+    //   _PetService(
+    //     title: 'Training',
+    //     image: AppImages.dogTraining,
+    //     onTap: () {},
+    //   ),
+    //   _PetService(
+    //     title: 'Pet sitting',
+    //     image: AppImages.dogAlt,
+    //     onTap: () {},
+    //   ),
+    // ];
 
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           PetScreenAppBar(pet: pet),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 20),
-                      ListTile(
-                        onTap: () {},
-                        title: const Text(
-                          'Vaccination schedule',
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Text.rich(
-                          TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: 'Next: ',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Rabies (${DateFormat('MMM d').format(DateTime.now())})',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        trailing: SvgPicture.asset(AppIcons.calendarClock),
-                      ),
-                      const SizedBox(height: 20),
-                      const Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Services',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      GridView.count(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.85,
-                        children: services.map((e) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Card(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: InkWell(
-                                  onTap: e.onTap,
-                                  child: SizedBox(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(30),
-                                      child: Image.asset(
-                                        e.image,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                e.title,
-                                style: const TextStyle(fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
+          // SliverList(
+          //   delegate: SliverChildListDelegate(
+          //     [
+          //       Padding(
+          //         padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+          //         child: Column(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             const SizedBox(height: 20),
+          //             ListTile(
+          //               onTap: () {},
+          //               title: const Text(
+          //                 'Vaccination schedule',
+          //                 style: TextStyle(fontWeight: FontWeight.w600),
+          //               ),
+          //               subtitle: Text.rich(
+          //                 TextSpan(
+          //                   children: [
+          //                     const TextSpan(
+          //                       text: 'Next: ',
+          //                       style: TextStyle(
+          //                         fontWeight: FontWeight.w600,
+          //                       ),
+          //                     ),
+          //                     TextSpan(
+          //                       text: 'Rabies (${DateFormat('MMM d').format(DateTime.now())})',
+          //                       style: const TextStyle(
+          //                         fontWeight: FontWeight.w500,
+          //                       ),
+          //                     ),
+          //                   ],
+          //                 ),
+          //               ),
+          //               trailing: SvgPicture.asset(AppIcons.calendarClock),
+          //             ),
+          //             const SizedBox(height: 20),
+          //             const Align(
+          //               alignment: Alignment.centerLeft,
+          //               child: Text(
+          //                 'Services',
+          //                 style: TextStyle(
+          //                   fontWeight: FontWeight.w600,
+          //                   fontSize: 16,
+          //                 ),
+          //               ),
+          //             ),
+          //             const SizedBox(height: 10),
+          //             GridView.count(
+          //               padding: EdgeInsets.zero,
+          //               shrinkWrap: true,
+          //               physics: const NeverScrollableScrollPhysics(),
+          //               crossAxisCount: 2,
+          //               childAspectRatio: 0.85,
+          //               children: services.map((e) {
+          //                 return Column(
+          //                   mainAxisSize: MainAxisSize.min,
+          //                   children: [
+          //                     Card(
+          //                       color: Colors.white,
+          //                       shape: RoundedRectangleBorder(
+          //                         borderRadius: BorderRadius.circular(10),
+          //                       ),
+          //                       child: InkWell(
+          //                         onTap: e.onTap,
+          //                         child: SizedBox(
+          //                           child: Padding(
+          //                             padding: const EdgeInsets.all(30),
+          //                             child: Image.asset(
+          //                               e.image,
+          //                             ),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ),
+          //                     Text(
+          //                       e.title,
+          //                       style: const TextStyle(fontWeight: FontWeight.w600),
+          //                     ),
+          //                   ],
+          //                 );
+          //               }).toList(),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );
