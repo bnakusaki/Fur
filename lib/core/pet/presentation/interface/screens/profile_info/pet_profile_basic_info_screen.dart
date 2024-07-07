@@ -194,7 +194,7 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
                 ),
               ),
               subtitle: Text(
-                localizations.weightInKg(sortWeightHistory(pet.weight).values.last),
+                localizations.weightInKg(sortWeightHistory(pet.weight.history).values.last),
                 style: textStyles.caption,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

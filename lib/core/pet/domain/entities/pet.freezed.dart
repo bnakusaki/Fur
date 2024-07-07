@@ -27,7 +27,7 @@ mixin _$Pet {
   String get breed => throw _privateConstructorUsedError;
   Sex get sex => throw _privateConstructorUsedError;
   DateTime get dob => throw _privateConstructorUsedError;
-  Map<DateTime, double> get weight => throw _privateConstructorUsedError;
+  PetWeight get weight => throw _privateConstructorUsedError;
   String? get story => throw _privateConstructorUsedError;
   PetAppearance get appearance => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
@@ -52,13 +52,14 @@ abstract class $PetCopyWith<$Res> {
       String breed,
       Sex sex,
       DateTime dob,
-      Map<DateTime, double> weight,
+      PetWeight weight,
       String? story,
       PetAppearance appearance,
       String image,
       DateTime createdOn,
       DateTime updatedOn});
 
+  $PetWeightCopyWith<$Res> get weight;
   $PetAppearanceCopyWith<$Res> get appearance;
 }
 
@@ -120,7 +121,7 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
       weight: null == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as Map<DateTime, double>,
+              as PetWeight,
       story: freezed == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
@@ -146,6 +147,14 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
 
   @override
   @pragma('vm:prefer-inline')
+  $PetWeightCopyWith<$Res> get weight {
+    return $PetWeightCopyWith<$Res>(_value.weight, (value) {
+      return _then(_value.copyWith(weight: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
   $PetAppearanceCopyWith<$Res> get appearance {
     return $PetAppearanceCopyWith<$Res>(_value.appearance, (value) {
       return _then(_value.copyWith(appearance: value) as $Val);
@@ -167,13 +176,15 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       String breed,
       Sex sex,
       DateTime dob,
-      Map<DateTime, double> weight,
+      PetWeight weight,
       String? story,
       PetAppearance appearance,
       String image,
       DateTime createdOn,
       DateTime updatedOn});
 
+  @override
+  $PetWeightCopyWith<$Res> get weight;
   @override
   $PetAppearanceCopyWith<$Res> get appearance;
 }
@@ -231,9 +242,9 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           : dob // ignore: cast_nullable_to_non_nullable
               as DateTime,
       weight: null == weight
-          ? _value._weight
+          ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
-              as Map<DateTime, double>,
+              as PetWeight,
       story: freezed == story
           ? _value.story
           : story // ignore: cast_nullable_to_non_nullable
@@ -270,13 +281,12 @@ class _$PetImpl implements _Pet {
       required this.breed,
       required this.sex,
       required this.dob,
-      required final Map<DateTime, double> weight,
+      required this.weight,
       required this.story,
       required this.appearance,
       required this.image,
       required this.createdOn,
-      required this.updatedOn})
-      : _weight = weight;
+      required this.updatedOn});
 
   factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetImplFromJson(json);
@@ -295,14 +305,8 @@ class _$PetImpl implements _Pet {
   final Sex sex;
   @override
   final DateTime dob;
-  final Map<DateTime, double> _weight;
   @override
-  Map<DateTime, double> get weight {
-    if (_weight is EqualUnmodifiableMapView) return _weight;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_weight);
-  }
-
+  final PetWeight weight;
   @override
   final String? story;
   @override
@@ -331,7 +335,7 @@ class _$PetImpl implements _Pet {
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.dob, dob) || other.dob == dob) &&
-            const DeepCollectionEquality().equals(other._weight, _weight) &&
+            (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.story, story) || other.story == story) &&
             (identical(other.appearance, appearance) ||
                 other.appearance == appearance) &&
@@ -344,21 +348,8 @@ class _$PetImpl implements _Pet {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      owner,
-      name,
-      species,
-      breed,
-      sex,
-      dob,
-      const DeepCollectionEquality().hash(_weight),
-      story,
-      appearance,
-      image,
-      createdOn,
-      updatedOn);
+  int get hashCode => Object.hash(runtimeType, id, owner, name, species, breed,
+      sex, dob, weight, story, appearance, image, createdOn, updatedOn);
 
   @JsonKey(ignore: true)
   @override
@@ -383,7 +374,7 @@ abstract class _Pet implements Pet {
       required final String breed,
       required final Sex sex,
       required final DateTime dob,
-      required final Map<DateTime, double> weight,
+      required final PetWeight weight,
       required final String? story,
       required final PetAppearance appearance,
       required final String image,
@@ -407,7 +398,7 @@ abstract class _Pet implements Pet {
   @override
   DateTime get dob;
   @override
-  Map<DateTime, double> get weight;
+  PetWeight get weight;
   @override
   String? get story;
   @override

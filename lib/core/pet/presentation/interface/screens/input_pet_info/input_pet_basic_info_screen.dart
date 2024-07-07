@@ -62,14 +62,16 @@ class InputPetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
           return;
         }
 
-        var pet = Pet.empty().copyWith(
-          name: nameController.text,
-          species: species.value!.id,
-          breed: breed.value!.id,
-          weight: {DateTime.now(): double.parse(weigthController.text)},
-          dob: dob.value!,
-          owner: FirebaseAuth.instance.currentUser!.uid,
-        );
+        var pet = Pet.empty()
+            .copyWith(
+              name: nameController.text,
+              species: species.value!.id,
+              breed: breed.value!.id,
+              dob: dob.value!,
+              owner: FirebaseAuth.instance.currentUser!.uid,
+            )
+            .copyWith
+            .weight(history: {DateTime.now(): double.parse(weigthController.text)});
 
         try {
           pet = await createPet(pet);

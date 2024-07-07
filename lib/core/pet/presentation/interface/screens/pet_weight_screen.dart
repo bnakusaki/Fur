@@ -72,6 +72,71 @@ class PetWeightScreen extends HookConsumerWidget with PetsMixin {
               crossAxisCount: 2,
               children: [
                 _PetWeightCard(),
+                Card(
+                  color: pet.weight.target != null ? Colors.white : Colors.blue.shade50,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppIcons.locationCrosshairs,
+                              height: 20,
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                'Target',
+                                style: theme.textTheme.titleMedium!
+                                    .copyWith(fontWeight: FontWeight.w600),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Center(
+                            child: Builder(builder: (context) {
+                              final target = pet.weight.target;
+
+                              if (target != null) {
+                                return Text(
+                                  target.target.toString(),
+                                  style: textStyles.h1,
+                                );
+                              }
+
+                              return const Text(
+                                'Tap to set target',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              );
+                            }),
+                          ),
+                        ),
+                        pet.weight.target != null
+                            ? Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  DateFormat('MMM d, yyy').format(DateTime.now()),
+                                  style: textStyles.caption,
+                                ),
+                              )
+                            : Text(
+                                '',
+                                style: textStyles.caption,
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
             // const SizedBox(height: 20),
@@ -110,7 +175,7 @@ class _PetWeightCard extends ConsumerWidget with PetsMixin {
 
     final pet = ref.watch(petNotifierProvider)!;
 
-    final sortedWeightHistory = sortWeightHistory(pet.weight);
+    final sortedWeightHistory = sortWeightHistory(pet.weight.history);
 
     return Card(
       color: Colors.white,
