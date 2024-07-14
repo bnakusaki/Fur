@@ -57,6 +57,9 @@ class AppDrawer extends StatelessWidget {
                 decoration: const BoxDecoration(shape: BoxShape.circle),
                 child: CachedNetworkImage(
                   imageUrl: user.photoURL!,
+                  errorWidget: (context, url, error) => CircleAvatar(
+                    child: SvgPicture.asset(AppIcons.user),
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),

@@ -59,6 +59,12 @@ class AppIcons {
   static const arrowComparison = '$_path/arrow-comparison.svg';
   static const scaleComparisonAlt = '$_path/scale-comparison-alt.svg';
   static const pointerText = '$_path/pointer-text.svg';
+  static const hourglassEnd = '$_path/hourglass-end.svg';
+  static const hourglassStart = '$_path/hourglass-start.svg';
+  static const durationAlt = '$_path/duration-alt.svg';
+  static const tally1 = '$_path/tally-1.svg';
+  static const penField = '$_path/pen-field.svg';
+  static const capsules = '$_path/capsules.svg';
 }
 
 class AppAnimatedIcons {

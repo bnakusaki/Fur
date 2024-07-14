@@ -17,6 +17,7 @@ class AppTextFormField extends StatelessWidget {
     this.initialValue,
     this.readOnly = false,
     this.autofocus = false,
+    this.onTap,
   });
 
   final bool obscureText;
@@ -32,6 +33,7 @@ class AppTextFormField extends StatelessWidget {
   final String? initialValue;
   final bool readOnly;
   final bool autofocus;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,7 @@ class AppTextFormField extends StatelessWidget {
       focusNode: focusNode,
       inputFormatters: inputFormatters,
       autofocus: autofocus,
+      onTap: onTap,
     );
   }
 }

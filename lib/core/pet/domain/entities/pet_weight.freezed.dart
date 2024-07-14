@@ -20,8 +20,8 @@ PetWeight _$PetWeightFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PetWeight {
-  Map<DateTime, double> get history => throw _privateConstructorUsedError;
-  PetWeightTarget? get target => throw _privateConstructorUsedError;
+  double get weight => throw _privateConstructorUsedError;
+  MassUnit get unit => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,9 +34,7 @@ abstract class $PetWeightCopyWith<$Res> {
   factory $PetWeightCopyWith(PetWeight value, $Res Function(PetWeight) then) =
       _$PetWeightCopyWithImpl<$Res, PetWeight>;
   @useResult
-  $Res call({Map<DateTime, double> history, PetWeightTarget? target});
-
-  $PetWeightTargetCopyWith<$Res>? get target;
+  $Res call({double weight, MassUnit unit});
 }
 
 /// @nodoc
@@ -52,31 +50,19 @@ class _$PetWeightCopyWithImpl<$Res, $Val extends PetWeight>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? history = null,
-    Object? target = freezed,
+    Object? weight = null,
+    Object? unit = null,
   }) {
     return _then(_value.copyWith(
-      history: null == history
-          ? _value.history
-          : history // ignore: cast_nullable_to_non_nullable
-              as Map<DateTime, double>,
-      target: freezed == target
-          ? _value.target
-          : target // ignore: cast_nullable_to_non_nullable
-              as PetWeightTarget?,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
+      unit: null == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as MassUnit,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $PetWeightTargetCopyWith<$Res>? get target {
-    if (_value.target == null) {
-      return null;
-    }
-
-    return $PetWeightTargetCopyWith<$Res>(_value.target!, (value) {
-      return _then(_value.copyWith(target: value) as $Val);
-    });
   }
 }
 
@@ -88,10 +74,7 @@ abstract class _$$PetWeightImplCopyWith<$Res>
       __$$PetWeightImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Map<DateTime, double> history, PetWeightTarget? target});
-
-  @override
-  $PetWeightTargetCopyWith<$Res>? get target;
+  $Res call({double weight, MassUnit unit});
 }
 
 /// @nodoc
@@ -105,46 +88,39 @@ class __$$PetWeightImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? history = null,
-    Object? target = freezed,
+    Object? weight = null,
+    Object? unit = null,
   }) {
     return _then(_$PetWeightImpl(
-      history: null == history
-          ? _value._history
-          : history // ignore: cast_nullable_to_non_nullable
-              as Map<DateTime, double>,
-      target: freezed == target
-          ? _value.target
-          : target // ignore: cast_nullable_to_non_nullable
-              as PetWeightTarget?,
+      weight: null == weight
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double,
+      unit: null == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as MassUnit,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$PetWeightImpl implements _PetWeight {
-  const _$PetWeightImpl(
-      {required final Map<DateTime, double> history, required this.target})
-      : _history = history;
+  const _$PetWeightImpl({required this.weight, required this.unit});
 
   factory _$PetWeightImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetWeightImplFromJson(json);
 
-  final Map<DateTime, double> _history;
   @override
-  Map<DateTime, double> get history {
-    if (_history is EqualUnmodifiableMapView) return _history;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_history);
-  }
-
+  final double weight;
   @override
-  final PetWeightTarget? target;
+  final MassUnit unit;
 
   @override
   String toString() {
-    return 'PetWeight(history: $history, target: $target)';
+    return 'PetWeight(weight: $weight, unit: $unit)';
   }
 
   @override
@@ -152,14 +128,13 @@ class _$PetWeightImpl implements _PetWeight {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PetWeightImpl &&
-            const DeepCollectionEquality().equals(other._history, _history) &&
-            (identical(other.target, target) || other.target == target));
+            (identical(other.weight, weight) || other.weight == weight) &&
+            (identical(other.unit, unit) || other.unit == unit));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_history), target);
+  int get hashCode => Object.hash(runtimeType, weight, unit);
 
   @JsonKey(ignore: true)
   @override
@@ -177,16 +152,16 @@ class _$PetWeightImpl implements _PetWeight {
 
 abstract class _PetWeight implements PetWeight {
   const factory _PetWeight(
-      {required final Map<DateTime, double> history,
-      required final PetWeightTarget? target}) = _$PetWeightImpl;
+      {required final double weight,
+      required final MassUnit unit}) = _$PetWeightImpl;
 
   factory _PetWeight.fromJson(Map<String, dynamic> json) =
       _$PetWeightImpl.fromJson;
 
   @override
-  Map<DateTime, double> get history;
+  double get weight;
   @override
-  PetWeightTarget? get target;
+  MassUnit get unit;
   @override
   @JsonKey(ignore: true)
   _$$PetWeightImplCopyWith<_$PetWeightImpl> get copyWith =>

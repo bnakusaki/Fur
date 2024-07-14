@@ -13,13 +13,7 @@ abstract class PetsRepository {
 
   Future<Either<Failure, String>> savePetImage(String petId, File image);
 
-  Future<Either<Failure, List<Species>>> listSpecies(String languageCode);
-  Future<Either<Failure, Species>> retrieveSpecies(
-    String languageCode,
-    String speciesId,
-  );
-
-  Future<Either<Failure, List<Breed>>> listBreeds(String languageCode, String speciesId);
+  Future<Either<Failure, List<String>>> listBreeds(String languageCode, String speciesId);
   Future<Either<Failure, Breed>> retrieveBreed(
     String languageCode,
     String breedId,

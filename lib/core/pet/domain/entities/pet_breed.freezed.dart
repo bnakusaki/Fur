@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'breed.dart';
+part of 'pet_breed.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,33 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Breed _$BreedFromJson(Map<String, dynamic> json) {
-  return _Breed.fromJson(json);
+PetBreed _$PetBreedFromJson(Map<String, dynamic> json) {
+  return _PetBreed.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Breed {
+mixin _$PetBreed {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get species => throw _privateConstructorUsedError;
+  String get photoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $BreedCopyWith<Breed> get copyWith => throw _privateConstructorUsedError;
+  $PetBreedCopyWith<PetBreed> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BreedCopyWith<$Res> {
-  factory $BreedCopyWith(Breed value, $Res Function(Breed) then) =
-      _$BreedCopyWithImpl<$Res, Breed>;
+abstract class $PetBreedCopyWith<$Res> {
+  factory $PetBreedCopyWith(PetBreed value, $Res Function(PetBreed) then) =
+      _$PetBreedCopyWithImpl<$Res, PetBreed>;
   @useResult
-  $Res call({String id, String name, String species});
+  $Res call({String id, String name, String photoUrl});
 }
 
 /// @nodoc
-class _$BreedCopyWithImpl<$Res, $Val extends Breed>
-    implements $BreedCopyWith<$Res> {
-  _$BreedCopyWithImpl(this._value, this._then);
+class _$PetBreedCopyWithImpl<$Res, $Val extends PetBreed>
+    implements $PetBreedCopyWith<$Res> {
+  _$PetBreedCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -52,7 +53,7 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? species = null,
+    Object? photoUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -63,30 +64,31 @@ class _$BreedCopyWithImpl<$Res, $Val extends Breed>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      species: null == species
-          ? _value.species
-          : species // ignore: cast_nullable_to_non_nullable
+      photoUrl: null == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$BreedImplCopyWith<$Res> implements $BreedCopyWith<$Res> {
-  factory _$$BreedImplCopyWith(
-          _$BreedImpl value, $Res Function(_$BreedImpl) then) =
-      __$$BreedImplCopyWithImpl<$Res>;
+abstract class _$$PetBreedImplCopyWith<$Res>
+    implements $PetBreedCopyWith<$Res> {
+  factory _$$PetBreedImplCopyWith(
+          _$PetBreedImpl value, $Res Function(_$PetBreedImpl) then) =
+      __$$PetBreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String species});
+  $Res call({String id, String name, String photoUrl});
 }
 
 /// @nodoc
-class __$$BreedImplCopyWithImpl<$Res>
-    extends _$BreedCopyWithImpl<$Res, _$BreedImpl>
-    implements _$$BreedImplCopyWith<$Res> {
-  __$$BreedImplCopyWithImpl(
-      _$BreedImpl _value, $Res Function(_$BreedImpl) _then)
+class __$$PetBreedImplCopyWithImpl<$Res>
+    extends _$PetBreedCopyWithImpl<$Res, _$PetBreedImpl>
+    implements _$$PetBreedImplCopyWith<$Res> {
+  __$$PetBreedImplCopyWithImpl(
+      _$PetBreedImpl _value, $Res Function(_$PetBreedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -94,9 +96,9 @@ class __$$BreedImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? species = null,
+    Object? photoUrl = null,
   }) {
-    return _then(_$BreedImpl(
+    return _then(_$PetBreedImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -105,9 +107,9 @@ class __$$BreedImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      species: null == species
-          ? _value.species
-          : species // ignore: cast_nullable_to_non_nullable
+      photoUrl: null == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -115,69 +117,71 @@ class __$$BreedImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$BreedImpl implements _Breed {
-  const _$BreedImpl(
-      {required this.id, required this.name, required this.species});
+class _$PetBreedImpl implements _PetBreed {
+  const _$PetBreedImpl(
+      {required this.id, required this.name, required this.photoUrl});
 
-  factory _$BreedImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BreedImplFromJson(json);
+  factory _$PetBreedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PetBreedImplFromJson(json);
 
   @override
   final String id;
   @override
   final String name;
   @override
-  final String species;
+  final String photoUrl;
 
   @override
   String toString() {
-    return 'Breed(id: $id, name: $name, species: $species)';
+    return 'PetBreed(id: $id, name: $name, photoUrl: $photoUrl)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BreedImpl &&
+            other is _$PetBreedImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.species, species) || other.species == species));
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, species);
+  int get hashCode => Object.hash(runtimeType, id, name, photoUrl);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$BreedImplCopyWith<_$BreedImpl> get copyWith =>
-      __$$BreedImplCopyWithImpl<_$BreedImpl>(this, _$identity);
+  _$$PetBreedImplCopyWith<_$PetBreedImpl> get copyWith =>
+      __$$PetBreedImplCopyWithImpl<_$PetBreedImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BreedImplToJson(
+    return _$$PetBreedImplToJson(
       this,
     );
   }
 }
 
-abstract class _Breed implements Breed {
-  const factory _Breed(
+abstract class _PetBreed implements PetBreed {
+  const factory _PetBreed(
       {required final String id,
       required final String name,
-      required final String species}) = _$BreedImpl;
+      required final String photoUrl}) = _$PetBreedImpl;
 
-  factory _Breed.fromJson(Map<String, dynamic> json) = _$BreedImpl.fromJson;
+  factory _PetBreed.fromJson(Map<String, dynamic> json) =
+      _$PetBreedImpl.fromJson;
 
   @override
   String get id;
   @override
   String get name;
   @override
-  String get species;
+  String get photoUrl;
   @override
   @JsonKey(ignore: true)
-  _$$BreedImplCopyWith<_$BreedImpl> get copyWith =>
+  _$$PetBreedImplCopyWith<_$PetBreedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

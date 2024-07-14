@@ -38,7 +38,7 @@ class PetsCarousel extends HookConsumerWidget {
               children: List.generate(pets.length, (index) {
                 final pet = pets[index];
                 return _Image(
-                  image: pet.image,
+                  image: pet.images.first,
                   index: index,
                   currentIndex: page.value,
                 );

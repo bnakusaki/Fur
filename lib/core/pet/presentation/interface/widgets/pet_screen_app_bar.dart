@@ -119,13 +119,13 @@ class PetScreenAppBar extends StatelessWidget {
                               const SizedBox(width: 5),
                               SvgPicture.asset(
                                 switch (pet.sex) {
-                                  Sex.male => AppIcons.male,
-                                  Sex.female => AppIcons.female,
+                                  PetGender.male => AppIcons.male,
+                                  PetGender.female => AppIcons.female,
                                 },
                                 height: 20,
                                 color: switch (pet.sex) {
-                                  Sex.male => Colors.blue,
-                                  Sex.female => Colors.pink,
+                                  PetGender.male => Colors.blue,
+                                  PetGender.female => Colors.pink,
                                 },
                               )
                             ],

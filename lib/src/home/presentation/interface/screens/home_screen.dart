@@ -16,6 +16,8 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+
     final menuAnimationController = useAnimationController(
       duration: const Duration(milliseconds: 1000),
     );
@@ -52,19 +54,41 @@ class HomeScreen extends HookConsumerWidget {
         ),
       ),
       body: SafeArea(
+        minimum: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
-                child: Builder(builder: (context) {
-                  if (pets.isNotEmpty) {
-                    return const PetsCarousel();
-                  }
-                  return const NoPetsCarousel();
-                }))
-            // PetsCarousel(),
+            Builder(
+              builder: (context) {
+                if (pets.isNotEmpty) {
+                  return const PetsCarousel();
+                }
+                return const NoPetsCarousel();
+              },
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Reminders',
+              style: theme.textTheme.titleMedium,
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 200,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return const AspectRatio(
+                    aspectRatio: 0.9,
+                    child: Card(
+                      color: Colors.red,
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(width: 10),
+                itemCount: 5,
+              ),
+            )
           ],
         ),
       ),

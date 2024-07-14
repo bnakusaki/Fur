@@ -23,14 +23,13 @@ mixin _$Pet {
   String get id => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get species => throw _privateConstructorUsedError;
-  String get breed => throw _privateConstructorUsedError;
-  Sex get sex => throw _privateConstructorUsedError;
+  PetBreed get breed => throw _privateConstructorUsedError;
+  PetGender get gender => throw _privateConstructorUsedError;
   DateTime get dob => throw _privateConstructorUsedError;
+  DateTime? get adoptionDate => throw _privateConstructorUsedError;
   PetWeight get weight => throw _privateConstructorUsedError;
-  String? get story => throw _privateConstructorUsedError;
   PetAppearance get appearance => throw _privateConstructorUsedError;
-  String get image => throw _privateConstructorUsedError;
+  List<String> get images => throw _privateConstructorUsedError;
   DateTime get createdOn => throw _privateConstructorUsedError;
   DateTime get updatedOn => throw _privateConstructorUsedError;
 
@@ -48,17 +47,17 @@ abstract class $PetCopyWith<$Res> {
       {String id,
       String owner,
       String name,
-      String species,
-      String breed,
-      Sex sex,
+      PetBreed breed,
+      PetGender gender,
       DateTime dob,
+      DateTime? adoptionDate,
       PetWeight weight,
-      String? story,
       PetAppearance appearance,
-      String image,
+      List<String> images,
       DateTime createdOn,
       DateTime updatedOn});
 
+  $PetBreedCopyWith<$Res> get breed;
   $PetWeightCopyWith<$Res> get weight;
   $PetAppearanceCopyWith<$Res> get appearance;
 }
@@ -78,14 +77,13 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
     Object? id = null,
     Object? owner = null,
     Object? name = null,
-    Object? species = null,
     Object? breed = null,
-    Object? sex = null,
+    Object? gender = null,
     Object? dob = null,
+    Object? adoptionDate = freezed,
     Object? weight = null,
-    Object? story = freezed,
     Object? appearance = null,
-    Object? image = null,
+    Object? images = null,
     Object? createdOn = null,
     Object? updatedOn = null,
   }) {
@@ -102,38 +100,34 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      species: null == species
-          ? _value.species
-          : species // ignore: cast_nullable_to_non_nullable
-              as String,
       breed: null == breed
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
-              as String,
-      sex: null == sex
-          ? _value.sex
-          : sex // ignore: cast_nullable_to_non_nullable
-              as Sex,
+              as PetBreed,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as PetGender,
       dob: null == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      adoptionDate: freezed == adoptionDate
+          ? _value.adoptionDate
+          : adoptionDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       weight: null == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as PetWeight,
-      story: freezed == story
-          ? _value.story
-          : story // ignore: cast_nullable_to_non_nullable
-              as String?,
       appearance: null == appearance
           ? _value.appearance
           : appearance // ignore: cast_nullable_to_non_nullable
               as PetAppearance,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String,
+      images: null == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -143,6 +137,14 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
           : updatedOn // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PetBreedCopyWith<$Res> get breed {
+    return $PetBreedCopyWith<$Res>(_value.breed, (value) {
+      return _then(_value.copyWith(breed: value) as $Val);
+    });
   }
 
   @override
@@ -172,17 +174,18 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       {String id,
       String owner,
       String name,
-      String species,
-      String breed,
-      Sex sex,
+      PetBreed breed,
+      PetGender gender,
       DateTime dob,
+      DateTime? adoptionDate,
       PetWeight weight,
-      String? story,
       PetAppearance appearance,
-      String image,
+      List<String> images,
       DateTime createdOn,
       DateTime updatedOn});
 
+  @override
+  $PetBreedCopyWith<$Res> get breed;
   @override
   $PetWeightCopyWith<$Res> get weight;
   @override
@@ -201,14 +204,13 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     Object? id = null,
     Object? owner = null,
     Object? name = null,
-    Object? species = null,
     Object? breed = null,
-    Object? sex = null,
+    Object? gender = null,
     Object? dob = null,
+    Object? adoptionDate = freezed,
     Object? weight = null,
-    Object? story = freezed,
     Object? appearance = null,
-    Object? image = null,
+    Object? images = null,
     Object? createdOn = null,
     Object? updatedOn = null,
   }) {
@@ -225,38 +227,34 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      species: null == species
-          ? _value.species
-          : species // ignore: cast_nullable_to_non_nullable
-              as String,
       breed: null == breed
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
-              as String,
-      sex: null == sex
-          ? _value.sex
-          : sex // ignore: cast_nullable_to_non_nullable
-              as Sex,
+              as PetBreed,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as PetGender,
       dob: null == dob
           ? _value.dob
           : dob // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      adoptionDate: freezed == adoptionDate
+          ? _value.adoptionDate
+          : adoptionDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       weight: null == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as PetWeight,
-      story: freezed == story
-          ? _value.story
-          : story // ignore: cast_nullable_to_non_nullable
-              as String?,
       appearance: null == appearance
           ? _value.appearance
           : appearance // ignore: cast_nullable_to_non_nullable
               as PetAppearance,
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String,
+      images: null == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       createdOn: null == createdOn
           ? _value.createdOn
           : createdOn // ignore: cast_nullable_to_non_nullable
@@ -277,16 +275,16 @@ class _$PetImpl implements _Pet {
       {required this.id,
       required this.owner,
       required this.name,
-      required this.species,
       required this.breed,
-      required this.sex,
+      required this.gender,
       required this.dob,
+      required this.adoptionDate,
       required this.weight,
-      required this.story,
       required this.appearance,
-      required this.image,
+      required final List<String> images,
       required this.createdOn,
-      required this.updatedOn});
+      required this.updatedOn})
+      : _images = images;
 
   factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetImplFromJson(json);
@@ -298,21 +296,25 @@ class _$PetImpl implements _Pet {
   @override
   final String name;
   @override
-  final String species;
+  final PetBreed breed;
   @override
-  final String breed;
-  @override
-  final Sex sex;
+  final PetGender gender;
   @override
   final DateTime dob;
   @override
+  final DateTime? adoptionDate;
+  @override
   final PetWeight weight;
   @override
-  final String? story;
-  @override
   final PetAppearance appearance;
+  final List<String> _images;
   @override
-  final String image;
+  List<String> get images {
+    if (_images is EqualUnmodifiableListView) return _images;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_images);
+  }
+
   @override
   final DateTime createdOn;
   @override
@@ -320,7 +322,7 @@ class _$PetImpl implements _Pet {
 
   @override
   String toString() {
-    return 'Pet(id: $id, owner: $owner, name: $name, species: $species, breed: $breed, sex: $sex, dob: $dob, weight: $weight, story: $story, appearance: $appearance, image: $image, createdOn: $createdOn, updatedOn: $updatedOn)';
+    return 'Pet(id: $id, owner: $owner, name: $name, breed: $breed, gender: $gender, dob: $dob, adoptionDate: $adoptionDate, weight: $weight, appearance: $appearance, images: $images, createdOn: $createdOn, updatedOn: $updatedOn)';
   }
 
   @override
@@ -331,15 +333,15 @@ class _$PetImpl implements _Pet {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.owner, owner) || other.owner == owner) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.species, species) || other.species == species) &&
             (identical(other.breed, breed) || other.breed == breed) &&
-            (identical(other.sex, sex) || other.sex == sex) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.dob, dob) || other.dob == dob) &&
+            (identical(other.adoptionDate, adoptionDate) ||
+                other.adoptionDate == adoptionDate) &&
             (identical(other.weight, weight) || other.weight == weight) &&
-            (identical(other.story, story) || other.story == story) &&
             (identical(other.appearance, appearance) ||
                 other.appearance == appearance) &&
-            (identical(other.image, image) || other.image == image) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
             (identical(other.createdOn, createdOn) ||
                 other.createdOn == createdOn) &&
             (identical(other.updatedOn, updatedOn) ||
@@ -348,8 +350,20 @@ class _$PetImpl implements _Pet {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, owner, name, species, breed,
-      sex, dob, weight, story, appearance, image, createdOn, updatedOn);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      owner,
+      name,
+      breed,
+      gender,
+      dob,
+      adoptionDate,
+      weight,
+      appearance,
+      const DeepCollectionEquality().hash(_images),
+      createdOn,
+      updatedOn);
 
   @JsonKey(ignore: true)
   @override
@@ -370,14 +384,13 @@ abstract class _Pet implements Pet {
       {required final String id,
       required final String owner,
       required final String name,
-      required final String species,
-      required final String breed,
-      required final Sex sex,
+      required final PetBreed breed,
+      required final PetGender gender,
       required final DateTime dob,
+      required final DateTime? adoptionDate,
       required final PetWeight weight,
-      required final String? story,
       required final PetAppearance appearance,
-      required final String image,
+      required final List<String> images,
       required final DateTime createdOn,
       required final DateTime updatedOn}) = _$PetImpl;
 
@@ -390,21 +403,19 @@ abstract class _Pet implements Pet {
   @override
   String get name;
   @override
-  String get species;
+  PetBreed get breed;
   @override
-  String get breed;
-  @override
-  Sex get sex;
+  PetGender get gender;
   @override
   DateTime get dob;
   @override
-  PetWeight get weight;
+  DateTime? get adoptionDate;
   @override
-  String? get story;
+  PetWeight get weight;
   @override
   PetAppearance get appearance;
   @override
-  String get image;
+  List<String> get images;
   @override
   DateTime get createdOn;
   @override

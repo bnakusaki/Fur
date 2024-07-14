@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/shared/assets/app_icons.dart';
-import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:fur/src/home/presentation/interface/widgets/log_out_dialog.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,11 +19,6 @@ class ProfileScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const Row(
-          children: [
-            AppBackButton(),
-          ],
-        ),
         title: Text(localizations.appPageTitlesProfile),
       ),
       body: SafeArea(
@@ -43,6 +37,12 @@ class ProfileScreen extends ConsumerWidget {
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: CachedNetworkImage(
                         imageUrl: user.photoURL!,
+                        errorWidget: (context, url, error) => CircleAvatar(
+                          child: SvgPicture.asset(
+                            AppIcons.user,
+                            height: 50,
+                          ),
+                        ),
                         fit: BoxFit.cover,
                       ),
                     ),

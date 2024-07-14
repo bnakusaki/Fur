@@ -77,8 +77,8 @@ class PetProfileBasicInfoScreen extends HookConsumerWidget with PetsMixin {
         onEdit: (pet) {},
         icon: AppIcons.venusMars,
         value: switch (pet.sex) {
-          Sex.male => localizations.male,
-          Sex.female => localizations.female,
+          PetGender.male => localizations.male,
+          PetGender.female => localizations.female,
         },
         editable: false,
       ),
