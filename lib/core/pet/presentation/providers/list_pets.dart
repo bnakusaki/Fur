@@ -10,7 +10,7 @@ part 'list_pets.g.dart';
 Future<List<Pet>> listPets(ListPetsRef ref, String uid) async {
   final bloc = sl<PetsBloc>();
 
-  final response = await bloc.listPets(uid);
+  final response = await bloc.list(uid);
 
   return response.fold(
     (failure) => throw failure,

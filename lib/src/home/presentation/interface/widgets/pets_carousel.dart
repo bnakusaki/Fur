@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
-import 'package:fur/core/pet/presentation/interface/screens/pet_screen.dart';
 import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -66,12 +65,12 @@ class PetsCarousel extends HookConsumerWidget {
             child: TextButton(
               onPressed: () {
                 ref.watch(petNotifierProvider.notifier).set(pets[page.value]);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return PetScreen();
-                  }),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) {
+                //     // return PetScreen();
+                //   }),
+                // );
               },
               style: TextButton.styleFrom(
                 backgroundColor: theme.primaryColor.withOpacity(0.5),

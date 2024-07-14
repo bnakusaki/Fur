@@ -18,7 +18,7 @@ mixin PetsMixin {
   final bloc = sl<PetsBloc>();
 
   Future<Pet> createPet(Pet pet) async {
-    final reponse = await bloc.createPet(pet);
+    final reponse = await bloc.create(pet);
 
     return reponse.fold(
       (failure) => throw failure,
@@ -27,7 +27,7 @@ mixin PetsMixin {
   }
 
   Future<Pet> updatePet(Pet pet) async {
-    final reponse = await bloc.updatePet(pet);
+    final reponse = await bloc.update(pet);
 
     return reponse.fold(
       (failure) => throw failure,

@@ -2,21 +2,16 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:fur/core/pet/domain/entities/breed.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
-import 'package:fur/core/pet/domain/entities/species.dart';
+import 'package:fur/core/pet/domain/entities/pet_breed.dart';
 import 'package:fur/shared/firebase_collection_references.dart';
-import 'package:logger/logger.dart';
 
 abstract class PetsRemoteDatabase {
-  Future<String> savePetImage(String petId, File image);
   Future<Pet> create(Pet pet);
   Future<Pet> update(Pet pet);
   Future<List<Pet>> list(String uid);
-  Future<List<Species>> listSpecies(String languageCode);
-  Future<List<Breed>> listBreeds(String languageCode, String speciesId);
-  Future<Breed> retrieveBreed(String languageCode, String breedId, String speciesId);
-  Future<Species> retrieveSpecies(String languageCode, String speciesId);
+  Future<String> savePetImage(String petId, File image);
+  Future<List<PetBreed>> listPetBreeds(String languageCode);
 }
 
 class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
@@ -57,77 +52,26 @@ class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
   }
 
   @override
-  Future<List<Species>> listSpecies(String languageCode) async {
-    final response = await FirebaseFirestore.instance
-        .collection(FirebaseCollectionReferences.species)
-        .orderBy('name')
-        .get();
+  Future<List<PetBreed>> listPetBreeds(String languageCode) async {
+    // QuerySnapshot<Map<String, dynamic>> response;
 
-    final species = <Species>[];
+    // response = await FirebaseFirestore.instance
+    //     .collection(FirebaseCollectionReferences.species)
+    //     .collection(FirebaseCollectionReferences.breeds)
+    //     .orderBy('id')
+    //     .get();
 
-    for (final doc in response.docs) {
-      final json = doc.data();
-      json['name'] = json['name'][languageCode];
+    // final breeds = <PetBreed>[];
 
-      species.add(Species.fromJson(json));
-    }
+    // for (final doc in response.docs) {
+    //   final json = doc.data();
+    //   json['name'] = doc['name'][languageCode];
 
-    return species;
-  }
+    //   breeds.add(PetBreed.fromJson(json));
+    // }
 
-  @override
-  Future<List<Breed>> listBreeds(String languageCode, String speciesId) async {
-    QuerySnapshot<Map<String, dynamic>> response;
-
-    response = await FirebaseFirestore.instance
-        .collection(FirebaseCollectionReferences.species)
-        .doc(speciesId)
-        .collection(FirebaseCollectionReferences.breeds)
-        .orderBy('id')
-        .get();
-
-    final breeds = <Breed>[];
-
-    for (final doc in response.docs) {
-      final json = doc.data();
-      json['name'] = doc['name'][languageCode];
-
-      breeds.add(Breed.fromJson(json));
-    }
-
-    return breeds;
-  }
-
-  @override
-  Future<Breed> retrieveBreed(String languageCode, String breedId, String speciesId) async {
-    final reponse = await FirebaseFirestore.instance
-        .collection(FirebaseCollectionReferences.species)
-        .doc(speciesId)
-        .collection(FirebaseCollectionReferences.breeds)
-        .doc(breedId)
-        .get();
-
-    Logger().d(speciesId);
-    Logger().d(breedId);
-
-    final json = reponse.data()!;
-
-    json['name'] = json['name'][languageCode];
-
-    return Breed.fromJson(json);
-  }
-
-  @override
-  Future<Species> retrieveSpecies(String languageCode, String speciesId) async {
-    final doc = await FirebaseFirestore.instance
-        .collection(FirebaseCollectionReferences.species)
-        .doc(speciesId)
-        .get();
-
-    final json = doc.data()!;
-    json['name'] = json['name'][languageCode];
-
-    return Species.fromJson(json);
+    // return breeds;
+    throw UnimplementedError();
   }
 
   @override
