@@ -131,6 +131,10 @@ class AppTheme {
   TextButtonThemeData _textButtonTheme() {
     return TextButtonThemeData(
         style: TextButton.styleFrom(
+      textStyle: const TextStyle(
+        fontFamily: 'Montserrat',
+        fontWeight: FontWeight.w600,
+      ),
       backgroundColor: _colorScheme().primary.withOpacity(0.1),
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(10),

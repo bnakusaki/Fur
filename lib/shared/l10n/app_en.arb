@@ -2,6 +2,12 @@
     "@@locale": "en",
     "appTitle": "Fur",
 
+    "errorMessages_": "",
+    "unknownError": "Oops, something went wrong.",
+
+
+
+
     "messages_": "",
     "appMessagesOnboarding": "Hi pet lover!\nHappy paws in one app.",
 

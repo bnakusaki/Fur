@@ -6,11 +6,8 @@ import 'package:fur/shared/assets/app_images.dart';
 import 'package:fur/shared/exceptions/failure.dart';
 import 'package:lottie/lottie.dart';
 
-class PetsCarouselEmptyState extends StatelessWidget {
-  const PetsCarouselEmptyState({
-    super.key,
-    required this.error,
-  });
+class MyPetsCarouselErrorState extends StatelessWidget {
+  const MyPetsCarouselErrorState({super.key, required this.error});
 
   final Failure error;
 
@@ -41,17 +38,24 @@ class PetsCarouselEmptyState extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   LottieBuilder.asset(
                     AppAnimatedIcons.alertTriangle,
                     repeat: false,
                   ),
                   const SizedBox(width: 5),
-                  Text(
-                    error.code,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    child: Text(
+                      error.message(context),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        height: 1,
+                      ),
                     ),
+                  ),
+                  const Expanded(
+                    child: SizedBox(),
                   ),
                 ],
               ),

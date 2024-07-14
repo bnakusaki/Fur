@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
+import 'package:fur/core/pet/presentation/interface/screens/add_pet_screen.dart';
 import 'package:fur/shared/assets/app_images.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class NoPetsCarousel extends HookWidget {
-  const NoPetsCarousel({super.key});
+class MyPetsCarouselEmptyState extends HookWidget {
+  const MyPetsCarouselEmptyState({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-
     final images = [
       AppImages.dog,
-      AppImages.cat,
       AppImages.dog2,
     ];
 
@@ -52,12 +51,12 @@ class NoPetsCarousel extends HookWidget {
             right: 10,
             child: TextButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => InputPetBasicInfoScreen(),
-                //   ),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AppPetScreen(),
+                  ),
+                );
               },
               style: TextButton.styleFrom(
                 backgroundColor: theme.primaryColor.withOpacity(0.1),

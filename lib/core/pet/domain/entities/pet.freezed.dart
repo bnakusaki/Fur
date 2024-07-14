@@ -40,8 +40,7 @@ mixin _$Pet {
 
 /// @nodoc
 abstract class $PetCopyWith<$Res> {
-  factory $PetCopyWith(Pet value, $Res Function(Pet) then) =
-      _$PetCopyWithImpl<$Res, Pet>;
+  factory $PetCopyWith(Pet value, $Res Function(Pet) then) = _$PetCopyWithImpl<$Res, Pet>;
   @useResult
   $Res call(
       {String id,
@@ -195,8 +194,7 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
 /// @nodoc
 class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     implements _$$PetImplCopyWith<$Res> {
-  __$$PetImplCopyWithImpl(_$PetImpl _value, $Res Function(_$PetImpl) _then)
-      : super(_value, _then);
+  __$$PetImplCopyWithImpl(_$PetImpl _value, $Res Function(_$PetImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -286,8 +284,7 @@ class _$PetImpl implements _Pet {
       required this.updatedOn})
       : _images = images;
 
-  factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PetImplFromJson(json);
+  factory _$PetImpl.fromJson(Map<String, dynamic> json) => _$$PetImplFromJson(json);
 
   @override
   final String id;
@@ -336,34 +333,18 @@ class _$PetImpl implements _Pet {
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.adoptionDate, adoptionDate) ||
-                other.adoptionDate == adoptionDate) &&
+            (identical(other.adoptionDate, adoptionDate) || other.adoptionDate == adoptionDate) &&
             (identical(other.weight, weight) || other.weight == weight) &&
-            (identical(other.appearance, appearance) ||
-                other.appearance == appearance) &&
+            (identical(other.appearance, appearance) || other.appearance == appearance) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
-            (identical(other.createdOn, createdOn) ||
-                other.createdOn == createdOn) &&
-            (identical(other.updatedOn, updatedOn) ||
-                other.updatedOn == updatedOn));
+            (identical(other.createdOn, createdOn) || other.createdOn == createdOn) &&
+            (identical(other.updatedOn, updatedOn) || other.updatedOn == updatedOn));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      owner,
-      name,
-      breed,
-      gender,
-      dob,
-      adoptionDate,
-      weight,
-      appearance,
-      const DeepCollectionEquality().hash(_images),
-      createdOn,
-      updatedOn);
+  int get hashCode => Object.hash(runtimeType, id, owner, name, breed, gender, dob, adoptionDate,
+      weight, appearance, const DeepCollectionEquality().hash(_images), createdOn, updatedOn);
 
   @JsonKey(ignore: true)
   @override
@@ -422,6 +403,5 @@ abstract class _Pet implements Pet {
   DateTime get updatedOn;
   @override
   @JsonKey(ignore: true)
-  _$$PetImplCopyWith<_$PetImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$PetImplCopyWith<_$PetImpl> get copyWith => throw _privateConstructorUsedError;
 }

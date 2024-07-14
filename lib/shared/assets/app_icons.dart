@@ -65,6 +65,7 @@ class AppIcons {
   static const tally1 = '$_path/tally-1.svg';
   static const penField = '$_path/pen-field.svg';
   static const capsules = '$_path/capsules.svg';
+  static const bell = '$_path/bell.svg';
 }
 
 class AppAnimatedIcons {
@@ -78,6 +79,7 @@ class AppAnimatedIcons {
   static const error = '$_path/error.json';
   static const menuV2 = '$_path/menuV2.json';
   static const lineBlink = '$_path/line-blink.json';
+  static const notificationV3 = '$_path/notification-V3.json';
 }
 
 class SpeciesIcons {

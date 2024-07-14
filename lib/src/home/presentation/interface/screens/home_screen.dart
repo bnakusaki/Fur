@@ -1,29 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
-import 'package:fur/core/pet/presentation/providers/list_pets.dart';
-import 'package:fur/shared/assets/app_icons.dart';
+import 'package:fur/core/pet/presentation/interface/widgets/my_pets_carousel.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
-import 'package:fur/src/home/presentation/interface/widgets/no_pets_carousel.dart';
-import 'package:fur/src/home/presentation/interface/widgets/pets_carousel.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
+import 'package:fur/src/home/presentation/interface/widgets/menu_button.dart';
+import 'package:fur/src/notifications/presentation/interface/widgets/notifications_button.dart';
 
-class HomeScreen extends HookConsumerWidget {
+class HomeScreen extends HookWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-
+  Widget build(BuildContext context) {
     final menuAnimationController = useAnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(seconds: 1),
     );
-
-    ref.watch(listPetsProvider(FirebaseAuth.instance.currentUser!.uid));
-    final pets = ref.watch(cachedPetsProvider);
 
     return Scaffold(
       onDrawerChanged: (isOpened) {
@@ -34,18 +24,11 @@ class HomeScreen extends HookConsumerWidget {
         }
       },
       appBar: AppBar(
-        leading: Builder(builder: (context) {
-          return IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: LottieBuilder.asset(
-              controller: menuAnimationController,
-              AppAnimatedIcons.menuV2,
-              frameRate: FrameRate.max,
-            ),
-          );
-        }),
+        leading: MenuButton(animationController: menuAnimationController),
+        actions: const [
+          NotificationsButton(),
+          SizedBox(width: 10),
+        ],
       ),
       drawer: const SafeArea(
         child: Padding(
@@ -53,42 +36,13 @@ class HomeScreen extends HookConsumerWidget {
           child: AppDrawer(),
         ),
       ),
-      body: SafeArea(
-        minimum: const EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
+      body: const SafeArea(
+        minimum: EdgeInsets.symmetric(horizontal: AppSizes.screenHorizontalPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 10),
-            Builder(
-              builder: (context) {
-                if (pets.isNotEmpty) {
-                  return const PetsCarousel();
-                }
-                return const NoPetsCarousel();
-              },
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Reminders',
-              style: theme.textTheme.titleMedium,
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 200,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return const AspectRatio(
-                    aspectRatio: 0.9,
-                    child: Card(
-                      color: Colors.red,
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(width: 10),
-                itemCount: 5,
-              ),
-            )
+            SizedBox(height: 10),
+            MyPetsCarousel(),
           ],
         ),
       ),

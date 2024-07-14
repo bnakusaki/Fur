@@ -1,14 +1,36 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
+import 'package:fur/core/pet/presentation/interface/widgets/my_pets_carousel_empty_state.dart';
+import 'package:fur/core/pet/presentation/interface/widgets/my_pets_carousel_error_state.dart';
+import 'package:fur/core/pet/presentation/interface/widgets/my_pets_carousel_shimmer.dart';
 import 'package:fur/core/pet/presentation/providers/cached_pets.dart';
+import 'package:fur/core/pet/presentation/providers/list_pets.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
+import 'package:fur/shared/exceptions/failure.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class PetsCarousel extends HookConsumerWidget {
-  const PetsCarousel({super.key});
+class MyPetsCarousel extends ConsumerWidget {
+  const MyPetsCarousel({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pets = ref.watch(listPetsProvider(FirebaseAuth.instance.currentUser!.uid));
+
+    return switch (pets) {
+      AsyncData(:final value) =>
+        value.isEmpty ? const MyPetsCarouselEmptyState() : const _PetsCarousel(),
+      AsyncError(:final error as Failure) => MyPetsCarouselErrorState(error: error),
+      _ => const MyPetsCarouselShimmer(),
+    };
+  }
+}
+
+class _PetsCarousel extends HookConsumerWidget {
+  const _PetsCarousel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
