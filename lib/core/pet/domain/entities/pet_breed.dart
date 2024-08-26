@@ -8,7 +8,7 @@ class PetBreed with _$PetBreed {
   const factory PetBreed({
     required String id,
     required String name,
-    required String photoUrl,
+    required String imageUrl,
   }) = _PetBreed;
 
   factory PetBreed.fromJson(Map<String, dynamic> json) => _$PetBreedFromJson(json);
@@ -17,7 +17,7 @@ class PetBreed with _$PetBreed {
     return const PetBreed(
       id: '',
       name: '',
-      photoUrl: '',
+      imageUrl: '',
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fur/core/pet/domain/entities/pet.dart';
 import 'package:fur/core/pet/domain/entities/pet_breed.dart';
 import 'package:fur/shared/firebase_collection_references.dart';
@@ -17,17 +16,18 @@ abstract class PetsRemoteDatabase {
 class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
   @override
   Future<String> savePetImage(String petId, File image) async {
-    final storageRef = FirebaseStorage.instance.ref();
-    final childRef = storageRef.child(FirebaseCollectionReferences.petImages).child(petId);
-    await childRef.putFile(image);
+    // final storageRef = FirebaseStorage.instance.ref();
+    // final childRef = storageRef.child(FirebaseCollectionReferences.petImages).child(petId);
+    // await childRef.putFile(image);
 
-    final downloadUrl = await childRef.getDownloadURL();
-    FirebaseFirestore.instance
-        .collection(FirebaseCollectionReferences.pets)
-        .doc(petId)
-        .update({'image': downloadUrl});
+    // final downloadUrl = await childRef.getDownloadURL();
+    // FirebaseFirestore.instance.collection(FirebaseCollectionReferences.pets).doc(petId).update(
+    //   {
+    //     'images': FieldValue.arrayUnion([downloadUrl])
+    //   },
+    // );
 
-    return downloadUrl;
+    return 'downloadUrl';
   }
 
   @override
@@ -53,25 +53,21 @@ class PetsRemoteDatabaseImpl implements PetsRemoteDatabase {
 
   @override
   Future<List<PetBreed>> listPetBreeds(String languageCode) async {
-    // QuerySnapshot<Map<String, dynamic>> response;
+    QuerySnapshot<Map<String, dynamic>> response;
 
-    // response = await FirebaseFirestore.instance
-    //     .collection(FirebaseCollectionReferences.species)
-    //     .collection(FirebaseCollectionReferences.breeds)
-    //     .orderBy('id')
-    //     .get();
+    response =
+        await FirebaseFirestore.instance.collection(FirebaseCollectionReferences.breeds).get();
 
-    // final breeds = <PetBreed>[];
+    final breeds = <PetBreed>[];
 
-    // for (final doc in response.docs) {
-    //   final json = doc.data();
-    //   json['name'] = doc['name'][languageCode];
+    for (final doc in response.docs) {
+      final json = doc.data();
+      json['name'] = doc['name'][languageCode];
 
-    //   breeds.add(PetBreed.fromJson(json));
-    // }
+      breeds.add(PetBreed.fromJson(json));
+    }
 
-    // return breeds;
-    throw UnimplementedError();
+    return breeds;
   }
 
   @override

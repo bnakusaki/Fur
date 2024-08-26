@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fur/core/pet/domain/entities/pet_appearance.dart';
-import 'package:fur/core/pet/domain/entities/pet_breed.dart';
 import 'package:fur/core/pet/domain/entities/pet_weight.dart';
 
 part 'pet.freezed.dart';
@@ -13,7 +12,7 @@ class Pet with _$Pet {
     required String id,
     required String owner,
     required String name,
-    required PetBreed breed,
+    required String breed,
     required PetGender gender,
     required DateTime dob,
     required DateTime? adoptionDate,
@@ -31,7 +30,7 @@ class Pet with _$Pet {
       id: '',
       owner: '',
       name: '',
-      breed: PetBreed.empty(),
+      breed: '',
       gender: PetGender.male,
       appearance: PetAppearance.empty(),
       images: [],

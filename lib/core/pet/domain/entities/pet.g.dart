@@ -10,7 +10,7 @@ _$PetImpl _$$PetImplFromJson(Map<String, dynamic> json) => _$PetImpl(
       id: json['id'] as String,
       owner: json['owner'] as String,
       name: json['name'] as String,
-      breed: PetBreed.fromJson(json['breed'] as Map<String, dynamic>),
+      breed: json['breed'] as String,
       gender: $enumDecode(_$PetGenderEnumMap, json['gender']),
       dob: DateTime.parse(json['dob'] as String),
       adoptionDate: json['adoptionDate'] == null
@@ -29,7 +29,7 @@ Map<String, dynamic> _$$PetImplToJson(_$PetImpl instance) => <String, dynamic>{
       'id': instance.id,
       'owner': instance.owner,
       'name': instance.name,
-      'breed': instance.breed.toJson(),
+      'breed': instance.breed,
       'gender': _$PetGenderEnumMap[instance.gender]!,
       'dob': instance.dob.toIso8601String(),
       'adoptionDate': instance.adoptionDate?.toIso8601String(),

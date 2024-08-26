@@ -2,12 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 
 class AppTheme {
+  ThemeData theme() {
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: 'Montserrat',
+      colorScheme: _colorScheme(),
+      textTheme: _textTheme(),
+      cardTheme: _cardTheme(),
+      extensions: <ThemeExtension>{
+        _textStyleExtension(),
+      },
+      inputDecorationTheme: _inputDecorationTheme(),
+      elevatedButtonTheme: _elevatedButtonTheme(),
+      appBarTheme: _appBarTheme(),
+      snackBarTheme: _snackBarTheme(),
+      textButtonTheme: _textButtonTheme(),
+      listTileTheme: _listTileTheme(),
+    );
+  }
+
   ColorScheme _colorScheme() {
     return ColorScheme.fromSeed(
-      seedColor: const Color(0xFFF85E00),
-      primary: const Color(0xFFF85E00),
+      seedColor: const Color.fromARGB(255, 24, 23, 29),
+      primary: const Color.fromARGB(255, 24, 23, 29),
       scrim: const Color(0xFF0C0F0A),
       error: Colors.red,
+      surface: Colors.grey,
+    );
+  }
+
+  TextTheme _textTheme() {
+    return const TextTheme(
+      // displayLarge: TextStyle(fontWeight: FontWeight.bold),
+      displayMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 30),
+      // displaySmall: TextStyle(fontWeight: FontWeight.bold),
+      // headlineLarge: TextStyle(fontWeight: FontWeight.bold),
+      // headlineMedium: TextStyle(fontWeight: FontWeight.bold),
+      // headlineSmall: TextStyle(fontWeight: FontWeight.bold),
+      // titleLarge: TextStyle(fontWeight: FontWeight.bold),
+      // titleMedium: TextStyle(fontWeight: FontWeight.bold),
+      // titleSmall: TextStyle(fontWeight: FontWeight.bold),
+      // bodyLarge: TextStyle(fontWeight: FontWeight.bold),
+      // bodyMedium: TextStyle(fontWeight: FontWeight.bold),
+      // bodySmall: TextStyle(fontWeight: FontWeight.bold),
+      labelLarge: TextStyle(fontWeight: FontWeight.w700),
+    );
+  }
+
+  CardTheme _cardTheme() {
+    return CardTheme(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      margin: EdgeInsets.zero,
+      clipBehavior: Clip.hardEdge,
     );
   }
 
@@ -78,15 +125,10 @@ class AppTheme {
   ElevatedButtonThemeData _elevatedButtonTheme() {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: _colorScheme().primary,
-        elevation: 0,
-        shape: ContinuousRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        fixedSize: const Size(double.maxFinite, 45),
-        foregroundColor: Colors.white,
-        overlayColor: _colorScheme().surface,
-      ),
+          backgroundColor: _colorScheme().primary,
+          elevation: 0,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
     );
   }
 
@@ -114,32 +156,8 @@ class AppTheme {
     );
   }
 
-  CardTheme _cardTheme() {
-    return CardTheme(
-      elevation: 0,
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: BorderSide(
-          color: Colors.grey.shade300,
-          width: 4,
-        ),
-      ),
-      clipBehavior: Clip.hardEdge,
-    );
-  }
-
   TextButtonThemeData _textButtonTheme() {
-    return TextButtonThemeData(
-        style: TextButton.styleFrom(
-      textStyle: const TextStyle(
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w600,
-      ),
-      backgroundColor: _colorScheme().primary.withOpacity(0.1),
-      shape: ContinuousRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-    ));
+    return const TextButtonThemeData();
   }
 
   ListTileThemeData _listTileTheme() {
@@ -148,27 +166,6 @@ class AppTheme {
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-    );
-  }
-
-  ThemeData theme() {
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: _colorScheme(),
-      fontFamily: 'Montserrat',
-      bottomSheetTheme: const BottomSheetThemeData(
-        backgroundColor: Colors.transparent,
-      ),
-      extensions: <ThemeExtension>{
-        _textStyleExtension(),
-      },
-      inputDecorationTheme: _inputDecorationTheme(),
-      elevatedButtonTheme: _elevatedButtonTheme(),
-      appBarTheme: _appBarTheme(),
-      snackBarTheme: _snackBarTheme(),
-      cardTheme: _cardTheme(),
-      textButtonTheme: _textButtonTheme(),
-      listTileTheme: _listTileTheme(),
     );
   }
 }

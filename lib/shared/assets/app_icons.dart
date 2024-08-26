@@ -66,6 +66,8 @@ class AppIcons {
   static const penField = '$_path/pen-field.svg';
   static const capsules = '$_path/capsules.svg';
   static const bell = '$_path/bell.svg';
+  static const cross = '$_path/cross.svg';
+  static const boneBreak = '$_path/bone-break.svg';
 }
 
 class AppAnimatedIcons {

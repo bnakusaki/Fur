@@ -23,7 +23,7 @@ mixin _$Pet {
   String get id => throw _privateConstructorUsedError;
   String get owner => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  PetBreed get breed => throw _privateConstructorUsedError;
+  String get breed => throw _privateConstructorUsedError;
   PetGender get gender => throw _privateConstructorUsedError;
   DateTime get dob => throw _privateConstructorUsedError;
   DateTime? get adoptionDate => throw _privateConstructorUsedError;
@@ -40,13 +40,14 @@ mixin _$Pet {
 
 /// @nodoc
 abstract class $PetCopyWith<$Res> {
-  factory $PetCopyWith(Pet value, $Res Function(Pet) then) = _$PetCopyWithImpl<$Res, Pet>;
+  factory $PetCopyWith(Pet value, $Res Function(Pet) then) =
+      _$PetCopyWithImpl<$Res, Pet>;
   @useResult
   $Res call(
       {String id,
       String owner,
       String name,
-      PetBreed breed,
+      String breed,
       PetGender gender,
       DateTime dob,
       DateTime? adoptionDate,
@@ -56,7 +57,6 @@ abstract class $PetCopyWith<$Res> {
       DateTime createdOn,
       DateTime updatedOn});
 
-  $PetBreedCopyWith<$Res> get breed;
   $PetWeightCopyWith<$Res> get weight;
   $PetAppearanceCopyWith<$Res> get appearance;
 }
@@ -102,7 +102,7 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
       breed: null == breed
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
-              as PetBreed,
+              as String,
       gender: null == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -140,14 +140,6 @@ class _$PetCopyWithImpl<$Res, $Val extends Pet> implements $PetCopyWith<$Res> {
 
   @override
   @pragma('vm:prefer-inline')
-  $PetBreedCopyWith<$Res> get breed {
-    return $PetBreedCopyWith<$Res>(_value.breed, (value) {
-      return _then(_value.copyWith(breed: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PetWeightCopyWith<$Res> get weight {
     return $PetWeightCopyWith<$Res>(_value.weight, (value) {
       return _then(_value.copyWith(weight: value) as $Val);
@@ -173,7 +165,7 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       {String id,
       String owner,
       String name,
-      PetBreed breed,
+      String breed,
       PetGender gender,
       DateTime dob,
       DateTime? adoptionDate,
@@ -184,8 +176,6 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
       DateTime updatedOn});
 
   @override
-  $PetBreedCopyWith<$Res> get breed;
-  @override
   $PetWeightCopyWith<$Res> get weight;
   @override
   $PetAppearanceCopyWith<$Res> get appearance;
@@ -194,7 +184,8 @@ abstract class _$$PetImplCopyWith<$Res> implements $PetCopyWith<$Res> {
 /// @nodoc
 class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
     implements _$$PetImplCopyWith<$Res> {
-  __$$PetImplCopyWithImpl(_$PetImpl _value, $Res Function(_$PetImpl) _then) : super(_value, _then);
+  __$$PetImplCopyWithImpl(_$PetImpl _value, $Res Function(_$PetImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -228,7 +219,7 @@ class __$$PetImplCopyWithImpl<$Res> extends _$PetCopyWithImpl<$Res, _$PetImpl>
       breed: null == breed
           ? _value.breed
           : breed // ignore: cast_nullable_to_non_nullable
-              as PetBreed,
+              as String,
       gender: null == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
@@ -284,7 +275,8 @@ class _$PetImpl implements _Pet {
       required this.updatedOn})
       : _images = images;
 
-  factory _$PetImpl.fromJson(Map<String, dynamic> json) => _$$PetImplFromJson(json);
+  factory _$PetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PetImplFromJson(json);
 
   @override
   final String id;
@@ -293,7 +285,7 @@ class _$PetImpl implements _Pet {
   @override
   final String name;
   @override
-  final PetBreed breed;
+  final String breed;
   @override
   final PetGender gender;
   @override
@@ -333,18 +325,34 @@ class _$PetImpl implements _Pet {
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.dob, dob) || other.dob == dob) &&
-            (identical(other.adoptionDate, adoptionDate) || other.adoptionDate == adoptionDate) &&
+            (identical(other.adoptionDate, adoptionDate) ||
+                other.adoptionDate == adoptionDate) &&
             (identical(other.weight, weight) || other.weight == weight) &&
-            (identical(other.appearance, appearance) || other.appearance == appearance) &&
+            (identical(other.appearance, appearance) ||
+                other.appearance == appearance) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
-            (identical(other.createdOn, createdOn) || other.createdOn == createdOn) &&
-            (identical(other.updatedOn, updatedOn) || other.updatedOn == updatedOn));
+            (identical(other.createdOn, createdOn) ||
+                other.createdOn == createdOn) &&
+            (identical(other.updatedOn, updatedOn) ||
+                other.updatedOn == updatedOn));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, owner, name, breed, gender, dob, adoptionDate,
-      weight, appearance, const DeepCollectionEquality().hash(_images), createdOn, updatedOn);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      owner,
+      name,
+      breed,
+      gender,
+      dob,
+      adoptionDate,
+      weight,
+      appearance,
+      const DeepCollectionEquality().hash(_images),
+      createdOn,
+      updatedOn);
 
   @JsonKey(ignore: true)
   @override
@@ -365,7 +373,7 @@ abstract class _Pet implements Pet {
       {required final String id,
       required final String owner,
       required final String name,
-      required final PetBreed breed,
+      required final String breed,
       required final PetGender gender,
       required final DateTime dob,
       required final DateTime? adoptionDate,
@@ -384,7 +392,7 @@ abstract class _Pet implements Pet {
   @override
   String get name;
   @override
-  PetBreed get breed;
+  String get breed;
   @override
   PetGender get gender;
   @override
@@ -403,5 +411,6 @@ abstract class _Pet implements Pet {
   DateTime get updatedOn;
   @override
   @JsonKey(ignore: true)
-  _$$PetImplCopyWith<_$PetImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$PetImplCopyWith<_$PetImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -10,12 +10,12 @@ _$PetBreedImpl _$$PetBreedImplFromJson(Map<String, dynamic> json) =>
     _$PetBreedImpl(
       id: json['id'] as String,
       name: json['name'] as String,
-      photoUrl: json['photoUrl'] as String,
+      imageUrl: json['imageUrl'] as String,
     );
 
 Map<String, dynamic> _$$PetBreedImplToJson(_$PetBreedImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'photoUrl': instance.photoUrl,
+      'imageUrl': instance.imageUrl,
     };

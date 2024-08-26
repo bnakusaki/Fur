@@ -3,7 +3,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 
 extension ElevatedButtonExtension on ElevatedButton {
   Widget withLoadingState({
-    required Future<void> Function() onPressed,
+    // required Future<void> Function() onPressed,
     bool? explicitLoading,
   }) {
     ValueNotifier<bool> loading = ValueNotifier<bool>(false);
@@ -16,9 +16,11 @@ extension ElevatedButtonExtension on ElevatedButton {
           onPressed: explicitLoading ?? loading.value
               ? null
               : () async {
-                  loading.value = true;
-                  await onPressed();
-                  loading.value = false;
+                  if (onPressed != null) {
+                    loading.value = true;
+                    await Future.sync(() => onPressed!());
+                    loading.value = false;
+                  }
                 },
           onLongPress: explicitLoading ?? loading.value ? null : onLongPress,
           onFocusChange: explicitLoading ?? loading.value ? null : onFocusChange,

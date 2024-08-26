@@ -11,8 +11,8 @@ class MyPetsCarouselShimmer extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 0.9,
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
+        baseColor: Colors.grey[100]!,
+        highlightColor: Colors.grey[50]!,
         child: const Card(margin: EdgeInsets.zero),
       ),
     );

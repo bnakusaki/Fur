@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:fur/core/pet/presentation/interface/widgets/my_pets_carousel.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
-import 'package:fur/src/home/presentation/interface/widgets/app_drawer.dart';
 import 'package:fur/src/home/presentation/interface/widgets/menu_button.dart';
 import 'package:fur/src/notifications/presentation/interface/widgets/notifications_button.dart';
 
@@ -33,7 +31,7 @@ class HomeScreen extends HookWidget {
       drawer: const SafeArea(
         child: Padding(
           padding: EdgeInsets.all(19.0),
-          child: AppDrawer(),
+          // child: AppDrawer(),
         ),
       ),
       body: const SafeArea(
@@ -42,7 +40,7 @@ class HomeScreen extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 10),
-            MyPetsCarousel(),
+            // MyPetsCarousel(),
           ],
         ),
       ),

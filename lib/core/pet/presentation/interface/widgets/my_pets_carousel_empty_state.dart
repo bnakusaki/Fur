@@ -54,7 +54,7 @@ class MyPetsCarouselEmptyState extends HookWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const AppPetScreen(),
+                    builder: (context) => const AddPetScreen(),
                   ),
                 );
               },

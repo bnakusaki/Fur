@@ -22,7 +22,7 @@ PetBreed _$PetBreedFromJson(Map<String, dynamic> json) {
 mixin _$PetBreed {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get photoUrl => throw _privateConstructorUsedError;
+  String get imageUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +35,7 @@ abstract class $PetBreedCopyWith<$Res> {
   factory $PetBreedCopyWith(PetBreed value, $Res Function(PetBreed) then) =
       _$PetBreedCopyWithImpl<$Res, PetBreed>;
   @useResult
-  $Res call({String id, String name, String photoUrl});
+  $Res call({String id, String name, String imageUrl});
 }
 
 /// @nodoc
@@ -53,7 +53,7 @@ class _$PetBreedCopyWithImpl<$Res, $Val extends PetBreed>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? photoUrl = null,
+    Object? imageUrl = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -64,9 +64,9 @@ class _$PetBreedCopyWithImpl<$Res, $Val extends PetBreed>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: null == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -80,7 +80,7 @@ abstract class _$$PetBreedImplCopyWith<$Res>
       __$$PetBreedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, String photoUrl});
+  $Res call({String id, String name, String imageUrl});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$PetBreedImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? photoUrl = null,
+    Object? imageUrl = null,
   }) {
     return _then(_$PetBreedImpl(
       id: null == id
@@ -107,9 +107,9 @@ class __$$PetBreedImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: null == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
+      imageUrl: null == imageUrl
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -119,7 +119,7 @@ class __$$PetBreedImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PetBreedImpl implements _PetBreed {
   const _$PetBreedImpl(
-      {required this.id, required this.name, required this.photoUrl});
+      {required this.id, required this.name, required this.imageUrl});
 
   factory _$PetBreedImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetBreedImplFromJson(json);
@@ -129,11 +129,11 @@ class _$PetBreedImpl implements _PetBreed {
   @override
   final String name;
   @override
-  final String photoUrl;
+  final String imageUrl;
 
   @override
   String toString() {
-    return 'PetBreed(id: $id, name: $name, photoUrl: $photoUrl)';
+    return 'PetBreed(id: $id, name: $name, imageUrl: $imageUrl)';
   }
 
   @override
@@ -143,13 +143,13 @@ class _$PetBreedImpl implements _PetBreed {
             other is _$PetBreedImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+            (identical(other.imageUrl, imageUrl) ||
+                other.imageUrl == imageUrl));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, photoUrl);
+  int get hashCode => Object.hash(runtimeType, id, name, imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -169,7 +169,7 @@ abstract class _PetBreed implements PetBreed {
   const factory _PetBreed(
       {required final String id,
       required final String name,
-      required final String photoUrl}) = _$PetBreedImpl;
+      required final String imageUrl}) = _$PetBreedImpl;
 
   factory _PetBreed.fromJson(Map<String, dynamic> json) =
       _$PetBreedImpl.fromJson;
@@ -179,7 +179,7 @@ abstract class _PetBreed implements PetBreed {
   @override
   String get name;
   @override
-  String get photoUrl;
+  String get imageUrl;
   @override
   @JsonKey(ignore: true)
   _$$PetBreedImplCopyWith<_$PetBreedImpl> get copyWith =>

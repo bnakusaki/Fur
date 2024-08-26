@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -25,7 +25,7 @@ class SavePetBasicInfoScreen extends HookConsumerWidget with PetsMixin {
 
     useMemoized(() async {
       try {
-        await createPet(pet.copyWith(owner: FirebaseAuth.instance.currentUser!.uid));
+        // await createPet(pet.copyWith(owner: FirebaseAuth.instance.currentUser!.uid));
         ref.watch(cachedPetsProvider.notifier).add(pet);
 
         if (context.mounted) {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/common_libs.dart';
 import 'package:fur/core/pet/presentation/bloc/pets_mixin.dart';
 import 'package:fur/core/pet/presentation/providers/pet_notifier.dart';
 import 'package:fur/shared/exceptions/failure.dart';
-import 'package:fur/shared/extensions/elevated_button.dart';
 import 'package:fur/shared/styles/app_sizes.dart';
 import 'package:fur/shared/styles/text_styles.dart';
 import 'package:fur/shared/widgets/app_snack_bar.dart';
@@ -77,16 +75,17 @@ class EditPetNameDialog extends HookConsumerWidget with PetsMixin {
             }
 
             return Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).padding.bottom + 20,
-                left: 20,
-                right: 20,
-              ),
-              child: ElevatedButton(
-                onPressed: null,
-                child: Text(localizations.appButtonsUpdate),
-              ).withLoadingState(onPressed: handleSave).animate().fadeIn().slideY(begin: 0.1),
-            );
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).padding.bottom + 20,
+                  left: 20,
+                  right: 20,
+                ),
+                child: ElevatedButton(
+                  onPressed: null,
+                  child: Text(localizations.appButtonsUpdate),
+                )
+                // .withLoadingState(onPressed: handleSave).animate().fadeIn().slideY(begin: 0.1),
+                );
           }),
     );
   }
