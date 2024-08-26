@@ -19,6 +19,7 @@ Future<void> main() async {
   init();
 
   // Gemini.init(apiKey: 'AIzaSyCzL0UWhBTVzvoqiMWjlqlRYpS42WanzFo');
+  // sl<OnboardingBloc>().setOnboardingStatus(OnboardingStatus.notStarted);
 
   runApp(
     const ProviderScope(

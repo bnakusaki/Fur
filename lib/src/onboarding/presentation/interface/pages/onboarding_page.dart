@@ -39,7 +39,7 @@ class OnboardingPage extends HookWidget {
         title: 'Pet-care made easy',
         description:
             'Take great care of your pet effortlessly with our in app tools, no expertise needed.',
-        // description: 'The important things in life are not things. They are pets.',
+        // description: '',
         image: AppImages.pet,
       ),
       OnboardingMessage(
@@ -53,6 +53,11 @@ class OnboardingPage extends HookWidget {
         description:
             'Effortlessly track your pet\'s health and growth with our user-friendly tools.',
         image: AppImages.medicalReport,
+      ),
+      OnboardingMessage(
+        title: 'FUR',
+        description: 'The important things in life are not things. They are pets.',
+        image: '',
       ),
     ];
 
@@ -100,12 +105,22 @@ class OnboardingPage extends HookWidget {
                     offset: currentPage.value,
                     count: onboardingMessages.length,
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
+                  Visibility(
+                    visible: currentPage.value.round() != onboardingMessages.length - 1,
+                    replacement: const SizedBox(height: 48),
+                    child: TextButton(
+                      onPressed: () {
+                        pageController.animateToPage(
+                          onboardingMessages.length - 1,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text('Skip'),
                     ),
-                    child: const Text('Skip'),
                   )
                 ],
               ),
@@ -189,7 +204,7 @@ class _OnboardingMessageCard extends HookWidget {
                       await bloc.setOnboardingStatus(OnboardingStatus.completed);
                     }
                   },
-                  child: Text(onLastPage ? 'Continue' : 'Next'),
+                  child: Text(onLastPage ? 'Sign in' : 'Next'),
                 ).withLoadingState(),
               ],
             ),
