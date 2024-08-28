@@ -1,0 +1,29 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "fur",
+            "request": "launch",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define=SUPABASE_URL=https://ifaerfxnbvacoxmykjxi.supabase.co",
+                "--dart-define=SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmYWVyZnhuYnZhY294bXlranhpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM4MzU5NTcsImV4cCI6MjAzOTQxMTk1N30.exexX0KcYfgJzOOl_4_2NbiKat1YTKfOlvrTYUiMDV0"
+            ]
+        },
+        {
+            "name": "fur (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "fur (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

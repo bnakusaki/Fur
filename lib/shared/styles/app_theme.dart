@@ -9,10 +9,10 @@ class AppTheme {
       colorScheme: _colorScheme(),
       textTheme: _textTheme(),
       cardTheme: _cardTheme(),
+      inputDecorationTheme: _inputDecorationTheme(),
       extensions: <ThemeExtension>{
         _textStyleExtension(),
       },
-      inputDecorationTheme: _inputDecorationTheme(),
       elevatedButtonTheme: _elevatedButtonTheme(),
       appBarTheme: _appBarTheme(),
       snackBarTheme: _snackBarTheme(),
@@ -45,7 +45,7 @@ class AppTheme {
       // bodyLarge: TextStyle(fontWeight: FontWeight.bold),
       // bodyMedium: TextStyle(fontWeight: FontWeight.bold),
       // bodySmall: TextStyle(fontWeight: FontWeight.bold),
-      labelLarge: TextStyle(fontWeight: FontWeight.w700),
+      labelLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
     );
   }
 
@@ -55,6 +55,41 @@ class AppTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       margin: EdgeInsets.zero,
       clipBehavior: Clip.hardEdge,
+    );
+  }
+
+  InputDecorationTheme _inputDecorationTheme() {
+    return InputDecorationTheme(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 2,
+          color: Colors.grey.shade300,
+        ),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 2,
+          color: Colors.grey.shade300,
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 2,
+          color: Colors.grey.shade500,
+        ),
+      ),
+      errorStyle: const TextStyle(fontWeight: FontWeight.w500),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(50),
+        borderSide: BorderSide(
+          width: 2,
+          color: _colorScheme().error,
+        ),
+      ),
     );
   }
 
@@ -88,46 +123,13 @@ class AppTheme {
     );
   }
 
-  InputDecorationTheme _inputDecorationTheme() {
-    return InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey.shade300,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey.shade300,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(
-          width: 2,
-          color: Colors.grey.shade500,
-        ),
-      ),
-      errorStyle: const TextStyle(fontWeight: FontWeight.w500),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(
-          width: 2,
-          color: _colorScheme().error,
-        ),
-      ),
-    );
-  }
-
   ElevatedButtonThemeData _elevatedButtonTheme() {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           backgroundColor: _colorScheme().primary,
           elevation: 0,
           foregroundColor: Colors.white,
+          fixedSize: const Size.fromWidth(double.maxFinite),
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
     );
   }

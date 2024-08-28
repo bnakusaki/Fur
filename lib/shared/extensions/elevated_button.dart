@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:loading_indicator/loading_indicator.dart';
+import 'package:fur/shared/widgets/app_loading_indicator.dart';
 
 extension ElevatedButtonExtension on ElevatedButton {
   Widget withLoadingState({
@@ -26,12 +26,7 @@ extension ElevatedButtonExtension on ElevatedButton {
           onFocusChange: explicitLoading ?? loading.value ? null : onFocusChange,
           focusNode: focusNode,
           style: style,
-          child: explicitLoading ?? loading.value
-              ? const SizedBox(
-                  height: 20,
-                  child: LoadingIndicator(indicatorType: Indicator.circleStrokeSpin),
-                )
-              : this.child,
+          child: explicitLoading ?? loading.value ? const AppLoadingIndicator() : this.child,
         );
       },
     );

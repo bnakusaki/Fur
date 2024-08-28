@@ -7,6 +7,7 @@ import 'package:fur/shared/widgets/app_smooth_indicator.dart';
 import 'package:fur/src/onboarding/domain/entities/onboarding_message.dart';
 import 'package:fur/src/onboarding/domain/entities/onboarding_status.dart';
 import 'package:fur/src/onboarding/presentation/bloc/onboarding_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingPage extends HookWidget {
   const OnboardingPage({super.key});
@@ -175,39 +176,51 @@ class _OnboardingMessageCard extends HookWidget {
           final onLastPage = currentPage.value.round() >= onboardingMessages.length - 1;
           final message = onboardingMessages[currentPage.value.round()];
 
-          return ScaleTransition(
-            scale: animationController,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  message.title,
-                  style: theme.textTheme.displayMedium,
-                  textAlign: TextAlign.center,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: ScaleTransition(
+                  scale: animationController,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        message.title,
+                        style: theme.textTheme.displayMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      Text(
+                        message.description,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(),
+                    ],
+                  ),
                 ),
-                Text(
-                  message.description,
-                  textAlign: TextAlign.center,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (!onLastPage) {
-                      // Move to the next page
-                      pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    } else {
-                      //TODO: Move to auth page
-                      final bloc = sl<OnboardingBloc>();
-                      await bloc.setOnboardingStatus(OnboardingStatus.completed);
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  if (!onLastPage) {
+                    // Move to the next page
+                    pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  } else {
+                    // TODO: Move to auth page
+                    final bloc = sl<OnboardingBloc>();
+                    await bloc.setOnboardingStatus(OnboardingStatus.completed);
+                    if (context.mounted) {
+                      context.replace('email-auth');
+                      // Navigator.of(context).pushReplacementNamed('/');
                     }
-                  },
-                  child: Text(onLastPage ? 'Sign in' : 'Next'),
-                ).withLoadingState(),
-              ],
-            ),
+                  }
+                },
+                child: Text(onLastPage ? 'Sign in' : 'Next'),
+              ).withLoadingState(),
+            ],
           );
         }),
       ),
