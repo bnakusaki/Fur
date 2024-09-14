@@ -17,7 +17,7 @@ class AuthDialog extends StatelessWidget with AuthMixin {
     return SafeArea(
       child: Dialog(
         alignment: Alignment.bottomCenter,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16.0),
           child: Column(
@@ -59,6 +59,18 @@ class AuthDialog extends StatelessWidget with AuthMixin {
                 },
                 label: const Text('Sign in with Google'),
                 icon: SvgPicture.asset(AppIcons.googleBulk32px),
+              ).withLoadingState(),
+              const Gap(10),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  try {
+                    await Future.delayed(Durations.extralong4);
+                  } catch (e) {
+                    //TODO: handle error
+                  }
+                },
+                label: const Text('Sign in with Apple'),
+                icon: SvgPicture.asset(AppIcons.appleBulk32px),
               ).withLoadingState(),
             ],
           ),

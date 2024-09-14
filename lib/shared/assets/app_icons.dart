@@ -2,6 +2,7 @@ class AppIcons {
   static const _path = 'assets/icons/static';
 
   static const googleBulk32px = '$_path/Google-Bulk-32px.svg';
+  static const appleBulk32px = '$_path/Apple-Bulk-32px.svg';
 }
 
 class AppAnimatedIcons {
