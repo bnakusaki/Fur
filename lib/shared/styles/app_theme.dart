@@ -39,13 +39,13 @@ class AppTheme {
       // headlineLarge: TextStyle(fontWeight: FontWeight.bold),
       // headlineMedium: TextStyle(fontWeight: FontWeight.bold),
       // headlineSmall: TextStyle(fontWeight: FontWeight.bold),
-      // titleLarge: TextStyle(fontWeight: FontWeight.bold),
-      // titleMedium: TextStyle(fontWeight: FontWeight.bold),
+      titleLarge: TextStyle(fontWeight: FontWeight.w600),
+      titleMedium: TextStyle(fontWeight: FontWeight.w600),
       // titleSmall: TextStyle(fontWeight: FontWeight.bold),
       // bodyLarge: TextStyle(fontWeight: FontWeight.bold),
       // bodyMedium: TextStyle(fontWeight: FontWeight.bold),
       // bodySmall: TextStyle(fontWeight: FontWeight.bold),
-      labelLarge: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+      labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
     );
   }
 
@@ -130,7 +130,7 @@ class AppTheme {
           elevation: 0,
           foregroundColor: Colors.white,
           fixedSize: const Size.fromWidth(double.maxFinite),
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
     );
   }
 

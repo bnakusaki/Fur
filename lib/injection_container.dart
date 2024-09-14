@@ -11,7 +11,7 @@ void init() {
 
   // Features
   // initHome();
-  initPets();
+  // initPets();
   onboarding.init();
   authentication.init();
 }

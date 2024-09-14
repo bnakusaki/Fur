@@ -7,7 +7,7 @@ class AppLoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      height: 30,
+      height: 20,
       child: LoadingIndicator(indicatorType: Indicator.ballRotateChase),
     );
   }

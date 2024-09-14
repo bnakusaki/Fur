@@ -28,10 +28,6 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Fur access your gallery and camera to set profile pictures</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Fur access you camera to take pictures of your pets</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -49,23 +45,50 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- Google Sign-in Section -->
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.googleusercontent.apps.663808641554-lg1a92ts944gvq1bl117ancsv50npr7a.apps.googleusercontent.com</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.663808641554-lg1a92ts944gvq1bl117ancsv50npr7a</string>
+				<string>1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un.apps.googleusercontent.com</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un</string>
 			</array>
 		</dict>
 	</array>
-	<key>GoogleService-Info</key>
+	<!-- <key>GIDClientID</key>
+	<string>1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un.apps.googleusercontent.com</string>
+	<key>CFBundleURLTypes</key>
+	<array>
 	<dict>
-		<!-- Add other necessary keys here -->
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>com.googleusercontent.apps.1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un</string>
+		</array>
 	</dict>
-
+	</array> -->
+	<!-- <key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>com.googleusercontent.apps.1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un</string>
+		</array>
+	</dict>
+	</array> -->
+	<!-- End of the Google Sign-in Section -->
 </dict>
 </plist>

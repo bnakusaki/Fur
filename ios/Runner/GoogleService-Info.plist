@@ -3,32 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>663808641554-lg1a92ts944gvq1bl117ancsv50npr7a.apps.googleusercontent.com</string>
+	<string>1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.663808641554-lg1a92ts944gvq1bl117ancsv50npr7a</string>
-	<key>API_KEY</key>
-	<string>AIzaSyCvxUL5RpRsA6MrH1GyIva_17pcwLtCqdQ</string>
-	<key>GCM_SENDER_ID</key>
-	<string>663808641554</string>
+	<string>com.googleusercontent.apps.1028694549210-49n51affadjsgfuvf33l1f4ii3pqm1un</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.fur</string>
-	<key>PROJECT_ID</key>
-	<string>fur-petcare-72f58</string>
-	<key>STORAGE_BUCKET</key>
-	<string>fur-petcare-72f58.appspot.com</string>
-	<key>IS_ADS_ENABLED</key>
-	<false></false>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
-	<key>IS_GCM_ENABLED</key>
-	<true></true>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
-	<key>GOOGLE_APP_ID</key>
-	<string>1:663808641554:ios:a0d5f264da1af754ca26cb</string>
+	<string>com.fur.app.mobile</string>
 </dict>
 </plist>
