@@ -3,6 +3,7 @@ class AppIcons {
 
   static const googleBulk32px = '$_path/Google-Bulk-32px.svg';
   static const appleBulk32px = '$_path/Apple-Bulk-32px.svg';
+  static const arrowSmallLeft = '$_path/arrow-small-left.svg';
 }
 
 class AppAnimatedIcons {

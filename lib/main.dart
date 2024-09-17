@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fur/core/user/presentation/interface/pages/profile_setup_page.dart';
 import 'package:fur/injection_container.dart';
 import 'package:fur/routes.dart';
 import 'package:fur/shared/styles/app_theme.dart';
-import 'package:fur/shared/widgets/dialog_page.dart';
-import 'package:fur/src/authentication/presentation/interface/widgets/auth_dialog.dart';
+import 'package:fur/src/authentication/presentation/interface/pages/sign_in_page.dart';
+import 'package:fur/src/authentication/presentation/interface/pages/sign_up_page.dart';
 import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 import 'package:fur/src/onboarding/presentation/interface/pages/onboarding_page.dart';
 import 'package:go_router/go_router.dart';
@@ -57,7 +58,8 @@ final _router = GoRouter(
     /// If there is a user, redirect to the home screen,
     /// else redirect to the onboarding screen
     // if (!noUser) completer.complete('/');
-    if (!noUser) return '/';
+    // if (!noUser) return '/';
+    if (!noUser) return '/profile_setup';
     return null;
     // return '/onboarding';
 
@@ -94,6 +96,13 @@ final _router = GoRouter(
       path: '/',
       name: Routes.home,
       builder: (context, state) => const HomeScreen(),
+      routes: [
+        GoRoute(
+          path: 'profile_setup',
+          name: Routes.profileSetup,
+          builder: (context, state) => const ProfileSetupPage(),
+        ),
+      ],
     ),
     GoRoute(
       path: '/onboarding',
@@ -101,13 +110,23 @@ final _router = GoRouter(
       builder: (context, state) => const OnboardingPage(),
       routes: [
         GoRoute(
-          path: 'auth_dialog',
-          name: Routes.authDialog,
-          pageBuilder: (context, state) => DialogPage(
-            anchorPoint: const Offset(0.5, 1.0),
-            builder: (_) => AuthDialog(),
-          ),
+          path: 'sign_up',
+          name: Routes.signUp,
+          builder: (context, state) => const SignUpPage(),
         ),
+        GoRoute(
+          path: 'sign_in',
+          name: Routes.signIn,
+          builder: (context, state) => const SignInPage(),
+        ),
+        // GoRoute(
+        //   path: 'auth_dialog',
+        //   name: Routes.authDialog,
+        //   pageBuilder: (context, state) => DialogPage(
+        //     anchorPoint: const Offset(0.5, 1.0),
+        //     builder: (_) => AuthDialog(),
+        //   ),
+        // ),
       ],
     ),
   ],

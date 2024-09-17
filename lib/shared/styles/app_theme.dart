@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fur/shared/styles/text_styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   ThemeData theme() {
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'Montserrat',
+      scaffoldBackgroundColor: _colorScheme().primary,
       colorScheme: _colorScheme(),
       textTheme: _textTheme(),
       cardTheme: _cardTheme(),
@@ -24,28 +26,33 @@ class AppTheme {
   ColorScheme _colorScheme() {
     return ColorScheme.fromSeed(
       seedColor: const Color.fromARGB(255, 24, 23, 29),
-      primary: const Color.fromARGB(255, 24, 23, 29),
+      primary: const Color.fromARGB(255, 26, 58, 68),
+      onPrimary: const Color.fromARGB(255, 238, 194, 180),
+      secondary: const Color.fromARGB(255, 200, 221, 133),
       scrim: const Color(0xFF0C0F0A),
       error: Colors.red,
-      surface: Colors.grey,
+      surface: const Color.fromARGB(255, 220, 220, 220),
     );
   }
 
   TextTheme _textTheme() {
-    return const TextTheme(
+    return TextTheme(
       // displayLarge: TextStyle(fontWeight: FontWeight.bold),
-      displayMedium: TextStyle(fontWeight: FontWeight.w600, fontSize: 30),
+      displayMedium: const TextStyle(fontWeight: FontWeight.w600, fontSize: 30),
       // displaySmall: TextStyle(fontWeight: FontWeight.bold),
       // headlineLarge: TextStyle(fontWeight: FontWeight.bold),
-      // headlineMedium: TextStyle(fontWeight: FontWeight.bold),
+      headlineMedium: GoogleFonts.comfortaa(
+        fontWeight: FontWeight.w900,
+        color: _colorScheme().primary,
+      ),
       // headlineSmall: TextStyle(fontWeight: FontWeight.bold),
-      titleLarge: TextStyle(fontWeight: FontWeight.w600),
-      titleMedium: TextStyle(fontWeight: FontWeight.w600),
-      // titleSmall: TextStyle(fontWeight: FontWeight.bold),
+      titleLarge: const TextStyle(fontWeight: FontWeight.w600),
+      titleMedium: const TextStyle(fontWeight: FontWeight.w600),
+      titleSmall: const TextStyle(fontWeight: FontWeight.w600),
       // bodyLarge: TextStyle(fontWeight: FontWeight.bold),
       // bodyMedium: TextStyle(fontWeight: FontWeight.bold),
       // bodySmall: TextStyle(fontWeight: FontWeight.bold),
-      labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+      labelLarge: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
     );
   }
 
@@ -61,32 +68,36 @@ class AppTheme {
   InputDecorationTheme _inputDecorationTheme() {
     return InputDecorationTheme(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      labelStyle: TextStyle(
+        fontWeight: FontWeight.w500,
+        color: _colorScheme().primary,
+      ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
-          width: 2,
+          width: 1.5,
           color: Colors.grey.shade300,
         ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
-          width: 2,
+          width: 1.5,
           color: Colors.grey.shade300,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
-          width: 2,
+          width: 1.5,
           color: Colors.grey.shade500,
         ),
       ),
       errorStyle: const TextStyle(fontWeight: FontWeight.w500),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(16),
         borderSide: BorderSide(
-          width: 2,
+          width: 1.5,
           color: _colorScheme().error,
         ),
       ),
@@ -126,11 +137,13 @@ class AppTheme {
   ElevatedButtonThemeData _elevatedButtonTheme() {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          backgroundColor: _colorScheme().primary,
-          elevation: 0,
-          foregroundColor: Colors.white,
-          fixedSize: const Size.fromWidth(double.maxFinite),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15)),
+        backgroundColor: _colorScheme().onPrimary,
+        elevation: 0,
+        foregroundColor: _colorScheme().primary,
+        fixedSize: const Size.fromWidth(double.maxFinite),
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      ),
     );
   }
 
