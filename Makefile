@@ -4,7 +4,7 @@ FLUTTER = flutter
 all: run
 
 run:
-	${FLUTTER} run --dart-define-from-file=secrets.json
+	${FLUTTER} run
 build:
 	${FLUTTER} build appbundle
 clean:

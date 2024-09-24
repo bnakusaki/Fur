@@ -20,6 +20,7 @@ class AppTheme {
       snackBarTheme: _snackBarTheme(),
       textButtonTheme: _textButtonTheme(),
       listTileTheme: _listTileTheme(),
+      pageTransitionsTheme: _pageTransistionTheme(),
     );
   }
 
@@ -181,6 +182,15 @@ class AppTheme {
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
+    );
+  }
+
+  PageTransitionsTheme _pageTransistionTheme() {
+    return const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+      },
     );
   }
 }

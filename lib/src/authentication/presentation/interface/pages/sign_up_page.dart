@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fur/routes.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/widgets/app_elevated_button.dart';
 import 'package:fur/shared/widgets/app_scaffold.dart';
+import 'package:fur/src/authentication/presentation/bloc/auth_mixin.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class SignUpPage extends StatelessWidget with AuthMixin {
+  SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class SignUpPage extends StatelessWidget {
                   invertColors: true,
                   icon: SvgPicture.asset(AppIcons.googleBulk32px),
                   label: const Text('Sign up with Google'),
-                  onPressed: () {},
+                  onPressed: signInWithGoogle,
                 ),
                 const Gap(15),
                 AppElevatedButton.icon(
@@ -79,9 +82,12 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                     const Gap(10),
-                    Text(
-                      'Sign in',
-                      style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.primary),
+                    InkWell(
+                      onTap: () => context.goNamed(Routes.signIn),
+                      child: Text(
+                        'Sign in',
+                        style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.primary),
+                      ),
                     )
                   ],
                 ),

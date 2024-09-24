@@ -21,11 +21,6 @@ Future<void> main() async {
   /// Initialize dependencies.
   init();
 
-  await Supabase.initialize(
-    url: const String.fromEnvironment('SUPABASE_PROJECT_URL'),
-    anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
-  );
-
   runApp(
     const ProviderScope(
       child: FurApp(),
@@ -112,7 +107,7 @@ final _router = GoRouter(
         GoRoute(
           path: 'sign_up',
           name: Routes.signUp,
-          builder: (context, state) => const SignUpPage(),
+          builder: (context, state) => SignUpPage(),
         ),
         GoRoute(
           path: 'sign_in',

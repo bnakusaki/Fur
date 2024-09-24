@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fur/routes.dart';
 import 'package:fur/shared/assets/app_icons.dart';
 import 'package:fur/shared/widgets/app_elevated_button.dart';
 import 'package:fur/shared/widgets/app_scaffold.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -73,9 +75,12 @@ class SignInPage extends StatelessWidget {
                       ),
                     ),
                     const Gap(10),
-                    Text(
-                      'Sign up',
-                      style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.primary),
+                    InkWell(
+                      onTap: () => context.goNamed(Routes.signUp),
+                      child: Text(
+                        'Sign up',
+                        style: theme.textTheme.titleSmall!.copyWith(color: theme.colorScheme.primary),
+                      ),
                     )
                   ],
                 ),

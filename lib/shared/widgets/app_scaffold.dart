@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fur/shared/widgets/app_back_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_corner/smooth_corner.dart';
 
-class AppScaffold extends StatelessWidget {
+class AppScaffold extends HookWidget {
   const AppScaffold({super.key, this.body});
   final Widget? body;
 
