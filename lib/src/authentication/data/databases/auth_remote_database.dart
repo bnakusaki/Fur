@@ -1,15 +1,12 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AuthRemoteDatabase {
-  Future<AuthResponse> signInWithGoogle();
+  Future<void> signInWithGoogle();
 }
 
 class AuthRemoteDatabaseImpl implements AuthRemoteDatabase {
-  final _supabase = Supabase.instance.client;
-
   @override
-  Future<AuthResponse> signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     /// Web Client ID that you registered with Google Cloud.
     const webClientId = '1028694549210-8k9u6qo9cmae5h00vfuaibpvvq5uqod0.apps.googleusercontent.com';
 
@@ -35,10 +32,10 @@ class AuthRemoteDatabaseImpl implements AuthRemoteDatabase {
       throw 'No ID Token found.';
     }
 
-    return _supabase.auth.signInWithIdToken(
-      provider: OAuthProvider.google,
-      idToken: idToken,
-      accessToken: accessToken,
-    );
+    // return _supabase.auth.signInWithIdToken(
+    //   provider: OAuthProvider.google,
+    //   idToken: idToken,
+    //   accessToken: accessToken,
+    // );
   }
 }

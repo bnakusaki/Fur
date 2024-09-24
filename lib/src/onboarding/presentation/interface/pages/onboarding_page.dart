@@ -136,6 +136,7 @@ class OnboardingPage extends HookWidget {
                     )
                   ],
                 ),
+                const Gap(20),
               ],
             ),
           ],

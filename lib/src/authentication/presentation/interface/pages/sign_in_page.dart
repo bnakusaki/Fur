@@ -84,6 +84,7 @@ class SignInPage extends StatelessWidget {
                     )
                   ],
                 ),
+                const Gap(20),
               ],
             ),
           ),

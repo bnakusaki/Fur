@@ -16,6 +16,7 @@ class AppScaffold extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         leading: canPop ? const AppBackButton() : null,
+        centerTitle: true,
         title: Text(
           'FUR',
           style: GoogleFonts.sofadiOne(

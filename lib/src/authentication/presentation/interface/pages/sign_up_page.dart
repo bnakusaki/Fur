@@ -91,6 +91,7 @@ class SignUpPage extends StatelessWidget with AuthMixin {
                     )
                   ],
                 ),
+                const Gap(20),
               ],
             ),
           ),

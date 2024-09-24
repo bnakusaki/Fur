@@ -12,7 +12,6 @@ import 'package:fur/src/home/presentation/interface/screens/home_screen.dart';
 import 'package:fur/src/onboarding/presentation/interface/pages/onboarding_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// flutter run --dart-define-from-file=secrets.json
 Future<void> main() async {
@@ -48,13 +47,12 @@ class FurApp extends StatelessWidget {
 final _router = GoRouter(
   redirect: (context, state) {
     // final completer = Completer<String?>();
-    final noUser = Supabase.instance.client.auth.currentUser == null;
 
     /// If there is a user, redirect to the home screen,
     /// else redirect to the onboarding screen
     // if (!noUser) completer.complete('/');
     // if (!noUser) return '/';
-    if (!noUser) return '/profile_setup';
+    // if (!noUser) return '/profile_setup';
     return null;
     // return '/onboarding';
 
